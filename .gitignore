@@ -1,3 +1,6 @@
 .DS_Store
 *.xcodeproj/xcuserdata
 *.xcodeproj/project.xcworkspace/xcuserdata
+*.vseproj/Debug
+*.vseproj/Release
+*.vseproj/*.vcxproj.user
