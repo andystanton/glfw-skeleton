@@ -4,7 +4,7 @@ A skeleton c++ application making use of the GLFW library (http://www.glfw.org) 
 
 ## Usage:
 
-### MacOS 10.8 + XCode 5:
+### MacOS X + XCode 5:
 
 1. Follow the instructions to install Brew (http://brew.sh/).
 2. Install GLFW using 'brew install glfw3'.
@@ -13,7 +13,16 @@ A skeleton c++ application making use of the GLFW library (http://www.glfw.org) 
 
 ### Windows 7 + Visual Studio Express 2012:
 
-1. Download the GLFW for 32-bit Windows.
+1. Download the GLFW binary for 32-bit Windows.
 2. Extract to C:\libs\glfw\
 3. Clone the glfw-skeleton repo.
 4. Open the project with Visual Studio.
+
+### MacOS X + Eclipse:
+
+1. Follow the instructions to install Brew (http://brew.sh/).
+2. Install GLFW using 'brew install glfw3'.
+3. Install gdb using 'brew install homebrew/dupes/gdb'.
+4. Follow [these instructions](https://sourceware.org/gdb/wiki/BuildingOnDarwin) for how to trust gdb for code signing.
+5. Clone the glfw-skeleton repo.
+6. Open the project with Eclipse.
