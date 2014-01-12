@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1389433344 source:/home/andy/Development/glfw-skeleton/src/main.cpp
+	<GLFW/glfw3.h>
+
+1388516778 /usr/local/include/GLFW/glfw3.h
+	<stddef.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<GLES3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
