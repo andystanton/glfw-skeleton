@@ -48,10 +48,48 @@ int main(void) {
         /* e.g. */
         glPushMatrix();
         glBegin(GL_QUADS);
-            glVertex2d(width/2 - 50, height / 2 - 50.f);
-            glVertex2d(width/2 + 50, height / 2 - 50.f);
-            glVertex2d(width/2 + 50, height / 2 + 50.f);
-            glVertex2d(width/2 - 50, height / 2 + 50.f);
+            GLfloat center_x = width / 2;
+            GLfloat center_y = height /2;
+        
+            glColor3f(1.f, 1.f, 1.f);
+        
+            glVertex2f(center_x - 50, center_y - 50);
+            glVertex2f(center_x + 50, center_y - 50);
+            glVertex2f(center_x + 50, center_y + 50);
+            glVertex2f(center_x - 50, center_y + 50);
+        
+            glVertex2f(center_x - 30, center_y + 50);
+            glVertex2f(center_x + 30, center_y + 50);
+            glVertex2f(center_x + 30, center_y + 60);
+            glVertex2f(center_x - 30, center_y + 60);
+        
+            glVertex2f(center_x - 50, center_y + 40);
+            glVertex2f(center_x - 60, center_y + 40);
+            glVertex2f(center_x - 60, center_y - 50);
+            glVertex2f(center_x - 50, center_y - 50);
+        
+            glVertex2f(center_x + 50, center_y + 40);
+            glVertex2f(center_x + 60, center_y + 40);
+            glVertex2f(center_x + 60, center_y - 50);
+            glVertex2f(center_x + 50, center_y - 50);
+        
+            glColor3f(0.f, 0.f, 0.f);
+        
+            glVertex2f(center_x - 40, center_y - 0);
+            glVertex2f(center_x - 10, center_y - 0);
+            glVertex2f(center_x - 10, center_y + 30);
+            glVertex2f(center_x - 40, center_y + 30);
+        
+            glVertex2f(center_x + 40, center_y - 0);
+            glVertex2f(center_x + 10, center_y - 0);
+            glVertex2f(center_x + 10, center_y + 30);
+            glVertex2f(center_x + 40, center_y + 30);
+        
+        glEnd();
+        glBegin(GL_TRIANGLES);
+            glVertex2f(center_x, center_y + 30);
+            glVertex2f(center_x + 10, center_y + 40);
+            glVertex2f(center_x - 10, center_y + 40);
         glEnd();
         glPopMatrix();
         
