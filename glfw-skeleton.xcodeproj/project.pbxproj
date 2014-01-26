@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		990A1E7318031E7E00220841 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 990A1E7218031E7E00220841 /* main.cpp */; };
-		996CCE22180315B2007C5BA1 /* libglfw3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 996CCE21180315B2007C5BA1 /* libglfw3.dylib */; };
 		996CCE2418031756007C5BA1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 996CCE2318031756007C5BA1 /* OpenGL.framework */; };
+		A15FAE431871FB810038729C /* libglfw3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A15FAE421871FB810038729C /* libglfw3.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,8 +27,8 @@
 /* Begin PBXFileReference section */
 		990A1E7218031E7E00220841 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		996CCE17180314B5007C5BA1 /* glfw-skeleton */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "glfw-skeleton"; sourceTree = BUILT_PRODUCTS_DIR; };
-		996CCE21180315B2007C5BA1 /* libglfw3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.dylib; path = /usr/local/Cellar/glfw3/3.0.2/lib/libglfw3.dylib; sourceTree = "<absolute>"; };
 		996CCE2318031756007C5BA1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A15FAE421871FB810038729C /* libglfw3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw3.dylib; path = ../../../../usr/local/Cellar/glfw3/3.0.3/lib/libglfw3.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,8 +36,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A15FAE431871FB810038729C /* libglfw3.dylib in Frameworks */,
 				996CCE2418031756007C5BA1 /* OpenGL.framework in Frameworks */,
-				996CCE22180315B2007C5BA1 /* libglfw3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -47,8 +47,8 @@
 		990A1E7118031DB000220841 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				A15FAE421871FB810038729C /* libglfw3.dylib */,
 				996CCE2318031756007C5BA1 /* OpenGL.framework */,
-				996CCE21180315B2007C5BA1 /* libglfw3.dylib */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Cellar/glfw3/3.0.2/lib,
+					/usr/local/Cellar/glfw3/3.0.3/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
@@ -228,7 +228,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Cellar/glfw3/3.0.2/lib,
+					/usr/local/Cellar/glfw3/3.0.3/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,3 +8,6 @@
 
 *.eclipseproj/Debug
 *.eclipseproj/Release
+
+*.blocksproj/bin
+*.blocksproj/obj
