@@ -11,6 +11,42 @@ void reshape(GLFWwindow* window, int width, int height ) {
     glLoadIdentity();
 }
 
+void drawSkullAt(float pos_x, float pos_y) {
+    glPushMatrix();
+        glBegin(GL_QUADS);
+            glColor3f(1.f, 1.f, 1.f);
+
+            glVertex2f(pos_x + 60, pos_y + 40);
+            glVertex2f(pos_x - 60, pos_y + 40);
+            glVertex2f(pos_x - 60, pos_y - 50);
+            glVertex2f(pos_x + 60, pos_y - 50);
+    
+            glVertex2f(pos_x - 30, pos_y + 40);
+            glVertex2f(pos_x + 30, pos_y + 40);
+            glVertex2f(pos_x + 30, pos_y + 55);
+            glVertex2f(pos_x - 30, pos_y + 55);
+    
+            glColor3f(0.f, 0.f, 0.f);
+            
+            glVertex2f(pos_x - 40, pos_y - 0);
+            glVertex2f(pos_x - 10, pos_y - 0);
+            glVertex2f(pos_x - 10, pos_y + 30);
+            glVertex2f(pos_x - 40, pos_y + 30);
+            
+            glVertex2f(pos_x + 40, pos_y - 0);
+            glVertex2f(pos_x + 10, pos_y - 0);
+            glVertex2f(pos_x + 10, pos_y + 30);
+            glVertex2f(pos_x + 40, pos_y + 30);
+        glEnd();
+    
+        glBegin(GL_TRIANGLES);
+            glVertex2f(pos_x, pos_y + 30);
+            glVertex2f(pos_x + 10, pos_y + 40);
+            glVertex2f(pos_x - 10, pos_y + 40);
+        glEnd();
+    glPopMatrix();
+}
+
 int main(void) {
     GLFWwindow* window;
     
@@ -46,52 +82,7 @@ int main(void) {
         glClear(GL_COLOR_BUFFER_BIT);
         
         /* e.g. */
-        glPushMatrix();
-        glBegin(GL_QUADS);
-            GLfloat center_x = width / 2;
-            GLfloat center_y = height /2;
-        
-            glColor3f(1.f, 1.f, 1.f);
-        
-            glVertex2f(center_x - 50, center_y - 50);
-            glVertex2f(center_x + 50, center_y - 50);
-            glVertex2f(center_x + 50, center_y + 50);
-            glVertex2f(center_x - 50, center_y + 50);
-        
-            glVertex2f(center_x - 30, center_y + 50);
-            glVertex2f(center_x + 30, center_y + 50);
-            glVertex2f(center_x + 30, center_y + 60);
-            glVertex2f(center_x - 30, center_y + 60);
-        
-            glVertex2f(center_x - 50, center_y + 40);
-            glVertex2f(center_x - 60, center_y + 40);
-            glVertex2f(center_x - 60, center_y - 50);
-            glVertex2f(center_x - 50, center_y - 50);
-        
-            glVertex2f(center_x + 50, center_y + 40);
-            glVertex2f(center_x + 60, center_y + 40);
-            glVertex2f(center_x + 60, center_y - 50);
-            glVertex2f(center_x + 50, center_y - 50);
-        
-            glColor3f(0.f, 0.f, 0.f);
-        
-            glVertex2f(center_x - 40, center_y - 0);
-            glVertex2f(center_x - 10, center_y - 0);
-            glVertex2f(center_x - 10, center_y + 30);
-            glVertex2f(center_x - 40, center_y + 30);
-        
-            glVertex2f(center_x + 40, center_y - 0);
-            glVertex2f(center_x + 10, center_y - 0);
-            glVertex2f(center_x + 10, center_y + 30);
-            glVertex2f(center_x + 40, center_y + 30);
-        
-        glEnd();
-        glBegin(GL_TRIANGLES);
-            glVertex2f(center_x, center_y + 30);
-            glVertex2f(center_x + 10, center_y + 40);
-            glVertex2f(center_x - 10, center_y + 40);
-        glEnd();
-        glPopMatrix();
+        drawSkullAt(width/2, height/2);
         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
