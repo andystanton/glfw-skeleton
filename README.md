@@ -2,11 +2,13 @@
 
 A skeleton c++ application making use of the GLFW library (http://www.glfw.org) and template projects for various IDEs to speed up initial project setup.
 
+![](http://andystanton.github.io/assets/images/readme.md/glfw-skeleton/glfw-skeleton.png)
+
 ## Usage:
 
-1. ./configure
-2. make
-3. make install
+1. ```./configure```
+2. ```make```
+3. ```make install```
 
 ### MacOS X + XCode 5:
 
