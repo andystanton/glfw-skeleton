@@ -1,5 +1,6 @@
 .DS_Store
 CMakeFiles
+CMakeScripts
 Testing
 CMakeCache.txt
 MakeFile
