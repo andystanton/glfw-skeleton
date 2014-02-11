@@ -1,34 +1,34 @@
-# glfw-skeleton
+# glfw-skeleton [![Build Status](https://travis-ci.org/andystanton/glfw-skeleton.png?branch=master)](https://travis-ci.org/andystanton/glfw-skeleton)
 
-A skeleton c++ application making use of the GLFW library (http://www.glfw.org) and template projects for various IDEs to speed up initial project setup.
+A skeleton c++ application making use of the [GLFW library](http://www.glfw.org) to speed up initial project setup.
+
+Project files for various IDEs can be generated using cmake's -G switch.
 
 ![](http://andystanton.github.io/assets/images/readme.md/glfw-skeleton/glfw-skeleton.png)
 
-## Usage:
+## Requirements
 
-1. ```./configure```
-2. ```make```
-3. ```make install```
+* [cmake](http://www.cmake.org/cmake/resources/software.html) >= 2.8
 
-### MacOS X + XCode 5:
+## Usage
 
-1. Follow [the instructions](http://brew.sh/) to install Brew.
-2. Install GLFW using 'brew install glfw3'.
-3. Clone the glfw-skeleton repo.
-4. Open the project with XCode.
+Run the following commands to generate the makefile and build the project.
 
-### Windows 7 + Visual Studio Express 2012:
+```
+cmake .
+make
+```
 
-1. Download the GLFW binary for 32-bit Windows.
-2. Extract to C:\libs\glfw\
-3. Clone the glfw-skeleton repo.
-4. Open the project with Visual Studio.
+This will create the glfw-skeleton executable in the project directory.
 
-### MacOS X + Eclipse:
+## Generating project files for your IDE
 
-1. Follow [the instructions](http://brew.sh/) to install Brew.
-2. Install GLFW using 'brew install glfw3'.
-3. Install gdb using 'brew install homebrew/dupes/gdb'.
-4. Follow [the instructions](https://sourceware.org/gdb/wiki/BuildingOnDarwin) for how to trust gdb for code signing.
-5. Clone the glfw-skeleton repo.
-6. Open the project with Eclipse.
+Run the following command to generate the project files for your IDE:
+
+```
+cmake . -G {ide_name}
+```
+
+For more information on cmake's project generators see their [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
+
+
