@@ -4,6 +4,10 @@ A skeleton c++ application making use of the GLFW library (http://www.glfw.org) 
 
 ## Usage:
 
+1. ./configure
+2. make
+3. make install
+
 ### MacOS X + XCode 5:
 
 1. Follow [the instructions](http://brew.sh/) to install Brew.
