@@ -13,15 +13,15 @@
 *.blocksproj/bin
 *.blocksproj/obj
 
-CMakeCache.txt
 CMakeFiles
+Testing
+CMakeCache.txt
+MakeFile
 CTestTestfile.cmake
-cleanupCMake.sh
 cmake_install.cmake
 install_manifest.txt
 
-MakeFile
-Testing
+cleanupCMake.sh
 
 glfw-skeleton
 glfw-skeleton.exe
