@@ -15,10 +15,13 @@
 
 CMakeCache.txt
 CMakeFiles
-MakeFile
+CTestTestfile.cmake
 cleanupCMake.sh
 cmake_install.cmake
 install_manifest.txt
+
+MakeFile
+Testing
 
 glfw-skeleton
 glfw-skeleton.exe
