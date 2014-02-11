@@ -9,9 +9,9 @@ A skeleton C++ application that makes use of the [GLFW library](http://www.glfw.
 * A C++ compiler
 * [CMake >= 2.8](http://www.cmake.org/cmake/resources/software.html)
 
-## Usage
+## Quick Start
 
-Run the following commands to generate the makefile and build the project.
+Run the following commands to generate the makefile and build the project:
 
 ```sh
 cmake .
@@ -28,4 +28,4 @@ Run the following command to generate the project files for your IDE:
 cmake . -G {ide_name}
 ```
 
-For more information on cmake's project generators see their [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
+For more information on CMake's project generators and a full list of supported platforms and IDEs, see the [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
