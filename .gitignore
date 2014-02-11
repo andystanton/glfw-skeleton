@@ -12,3 +12,13 @@
 
 *.blocksproj/bin
 *.blocksproj/obj
+
+CMakeCache.txt
+CMakeFiles
+MakeFile
+cleanupCMake.sh
+cmake_install.cmake
+install_manifest.txt
+
+glfw-skeleton
+glfw-skeleton.exe
