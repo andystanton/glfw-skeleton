@@ -12,3 +12,4 @@ include_directories(lib/glfw/include)
 target_link_libraries(glfw-skeleton glfw ${GLFW_LIBRARIES})
 target_link_libraries(glfw-skeleton glfw ${OPENGL_glu_LIBRARY} ${GLFW_LIBRARIES})
 
+enable_testing()
