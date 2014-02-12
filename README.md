@@ -11,7 +11,7 @@ A skeleton C++ application that makes use of the [GLFW library](http://www.glfw.
 
 ## Quick Start
 
-Run the following commands to generate the makefile and build the project:
+Clone the project, then run the following commands to generate the makefile and build:
 
 ```sh
 cmake .
