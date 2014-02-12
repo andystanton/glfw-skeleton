@@ -11,10 +11,16 @@ A skeleton C++ application that makes use of the [GLFW library](http://www.glfw.
 
 ## Quick Start
 
-Clone the project, then run the following commands to generate the makefile and build:
+Clone the 1.0 tag of the project:
 
 ```sh
-cmake .
+git clone --branch tags/1.0 https://github.com/andystanton/glfw-skeleton.git --recursive
+```
+
+Run the following commands to generate the makefile and build:
+
+```sh
+./configure
 make
 ```
 
