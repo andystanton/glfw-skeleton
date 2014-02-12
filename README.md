@@ -14,7 +14,7 @@ A skeleton C++ application that makes use of the [GLFW library](http://www.glfw.
 Clone the project:
 
 ```sh
-git clone https://github.com/andystanton/glfw-skeleton.git --recursive
+git clone https://github.com/andystanton/glfw-skeleton.git --recursive && cd glfw-skeleton
 ```
 
 Run the following commands to generate the makefile and build:
