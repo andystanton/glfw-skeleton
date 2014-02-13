@@ -2,7 +2,7 @@
 
 A skeleton C++ application that makes use of the [GLFW library](http://www.glfw.org) and [CMake](http://www.cmake.org/) to speed up initial project setup.
 
-![](http://andystanton.github.io/assets/images/readme.md/glfw-skeleton/glfw-skeleton.png)
+![](http://andystanton.github.io/glfw-skeleton/images/glfw-skeleton.png)
 
 ## Requirements
 
