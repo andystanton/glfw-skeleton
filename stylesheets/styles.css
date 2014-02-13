@@ -820,6 +820,19 @@ section #title .credits.right {
   float: right;
 }
 
+div #skull_div {
+  width: 240px; 
+  margin: 100px auto 50px auto;
+}
+
+div #content {
+  text-align: center;
+}
+
+div #content p {
+  margin-bottom: 40px;
+}
+
 @media print, screen and (max-width: 720px) {
   #title .credits {
     display: block;
