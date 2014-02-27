@@ -11,4 +11,5 @@ install_manifest.txt
 cleanupCMake.sh
 
 glfw-skeleton
-
+*.build
+*.xcodeproj
