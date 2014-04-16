@@ -6,33 +6,47 @@ void drawSkullAt(float pos_x, float pos_y) {
         glBegin(GL_QUADS);
             glColor3f(1.f, 1.f, 1.f);
 
-            glVertex2f( 60, -40);
+            // top of skull
+            glVertex2f( 60, 50);
+            glVertex2f( 60,  0);
+            glVertex2f(-60,  0);
+            glVertex2f(-60, 50);
+
+            // left of eyes
+            glVertex2f(-40,   0);
+            glVertex2f(-40, -30);
+            glVertex2f(-60, -30);
+            glVertex2f(-60,   0);
+
+            // centre of eyes
+            glVertex2f( 10,   0);
+            glVertex2f( 10, -30);
+            glVertex2f(-10, -30);
+            glVertex2f(-10,   0);
+
+            // right of eyes
+            glVertex2f( 60,   0);
+            glVertex2f( 60, -30);
+            glVertex2f( 40, -30);
+            glVertex2f( 40,   0);
+
+            // left of nose
+            glVertex2f(  0, -30);
+            glVertex2f(-10, -40);
             glVertex2f(-60, -40);
-            glVertex2f(-60,  50);
-            glVertex2f( 60,  50);
-    
+            glVertex2f(-60, -30);
+
+            // right of nose
+            glVertex2f( 60, -30);
+            glVertex2f( 60, -40);
+            glVertex2f( 10, -40);
+            glVertex2f(  0, -30);
+
+            // jaw
             glVertex2f(-30, -40);
             glVertex2f( 30, -40);
             glVertex2f( 30, -55);
             glVertex2f(-30, -55);
-    
-            glColor3f(0.f, 0.f, 0.f);
-            
-            glVertex2f(-40,   0);
-            glVertex2f(-10,   0);
-            glVertex2f(-10, -30);
-            glVertex2f(-40, -30);
-            
-            glVertex2f( 40,   0);
-            glVertex2f( 10,   0);
-            glVertex2f( 10, -30);
-            glVertex2f( 40, -30);
-        glEnd();
-    
-        glBegin(GL_TRIANGLES);
-            glVertex2f(  0, -30);
-            glVertex2f( 10, -40);
-            glVertex2f(-10, -40);
         glEnd();
     glPopMatrix();
 }
@@ -75,6 +89,7 @@ int main(void) {
     
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.164705882, 0.164705882, 0.164705882, 1.0);
         
         drawSkullAt(width/2, height/2);
         
