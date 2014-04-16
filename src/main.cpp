@@ -89,7 +89,7 @@ int main(void) {
     
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.164705882, 0.164705882, 0.164705882, 1.0);
+        glClearColor(0.109803922, 0.109803922, 0.109803922, 1.0);
         
         drawSkullAt(width/2, height/2);
         
