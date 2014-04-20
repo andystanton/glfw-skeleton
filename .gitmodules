@@ -2,3 +2,6 @@
 	path = lib/glfw
     url = https://github.com/glfw/glfw.git
     ignore = dirty
+[submodule "bandit"]
+	path = lib/bandit
+	url = https://github.com/joakimkarlsson/bandit.git
