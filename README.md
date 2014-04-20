@@ -42,6 +42,6 @@ Run the following command to generate the project files for your IDE:
 cmake . -G {ide_name}
 ```
 
-Note that if you have already build the makefile, you'll need to delete the CMakeCache.txt file. For convenience you can run ```./clean``` which will clean the entirety of the project.
+Note that if you have already build the makefile, you'll need to delete the CMakeCache.txt file. For convenience you can run ```./clean``` which will clean all generated files from the project.
 
 For more information on CMake's project generators and a full list of supported platforms and IDEs, see the [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
