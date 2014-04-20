@@ -45,3 +45,15 @@ cmake . -G {ide_name}
 Note that if you have already build the makefile, you'll need to delete the CMakeCache.txt file. For convenience you can run ```./clean``` which will clean all generated files from the project.
 
 For more information on CMake's project generators and a full list of supported platforms and IDEs, see the [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
+
+
+## Scripts
+
+The following scripts are included for convenience:
+
+| Script    | Function                                                  |
+| --------- | ----------------------------------------------------------|
+| clean     | Cleans generated files (anything in .gitignore)           |
+| configure | Creates output dir and runs CMake to generate build files |
+| compile   | Executes the makefile                                     |
+| ccc       | Alias for ```./clean && ./configure && ./compile```       |
