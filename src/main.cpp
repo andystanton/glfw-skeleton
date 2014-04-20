@@ -71,6 +71,7 @@ int main(void) {
     if (!glfwInit()) return -1;
 
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+
     window = glfwCreateWindow(width, height, "GLFW Skeleton", NULL, NULL);
     if (!window) {
         glfwTerminate();

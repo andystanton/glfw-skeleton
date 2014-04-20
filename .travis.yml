@@ -4,4 +4,5 @@ before_install:
   - sudo apt-get install xorg-dev
   - sudo apt-get install libglu1-mesa-dev
   - sudo apt-get install cmake
+script: ./configure && make -C build
 
