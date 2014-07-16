@@ -6,3 +6,7 @@
 	path = lib/bandit
 	url = https://github.com/joakimkarlsson/bandit.git
 	ignore = dirty
+[submodule "glew"]
+	path = lib/glew
+	url = git@github.com:andystanton/glew-cmake.git
+	ignore = dirty
