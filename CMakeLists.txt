@@ -44,7 +44,7 @@ elseif (MSVC)
 endif ()
 
 #
-# Locate Project Prerequisites 
+# Locate Project Prerequisites
 #
 
 # GLFW
@@ -54,6 +54,12 @@ option(GLFW_BUILD_EXAMPLES "Build the GLFW example programs" OFF)
 option(GLFW_BUILD_TESTS "Build the GLFW test programs" OFF)
 option(GLFW_BUILD_DOCS "Build the GLFW documentation" OFF)
 option(GLFW_INSTALL "Generate installation target" OFF)
+
+# GLEW
+
+OPTION( glew-cmake_BUILD_SHARED "Build the shared glew library" OFF)
+add_subdirectory(lib/glew)
+set(GLEW_INCLUDE_PATH "${MAINFOLDER}/lib/glew/include")
 
 # add subdirectory
 add_subdirectory(lib/glfw)
@@ -82,4 +88,3 @@ ADD_SUBDIRECTORY(test)
 IF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
     INSTALL(DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}" DESTINATION "include")
 ENDIF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
-

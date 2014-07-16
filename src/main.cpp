@@ -65,39 +65,44 @@ void reshape(GLFWwindow* window, int width, int height ) {
 
 int main(void) {
     GLFWwindow* window;
-    
+
     const int width=640, height=480;
-    
+
     if (!glfwInit()) return -1;
 
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    // glfwWindowHint(GLFW_SAMPLES, 4);
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     window = glfwCreateWindow(width, height, "GLFW Skeleton", NULL, NULL);
     if (!window) {
         glfwTerminate();
         return -1;
     }
-    
+
     glfwMakeContextCurrent(window);
     reshape(window, width, height);
-    
+
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
+
     glfwSetWindowSizeCallback(window, reshape);
-    
-    
+
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
         glClearColor(0.109803922, 0.109803922, 0.109803922, 1.0);
-        
+
         drawSkullAt(width/2, height/2);
-        
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    
+
     glfwTerminate();
     return 0;
 }

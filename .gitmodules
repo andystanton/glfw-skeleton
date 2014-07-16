@@ -5,3 +5,4 @@
 [submodule "bandit"]
 	path = lib/bandit
 	url = https://github.com/joakimkarlsson/bandit.git
+	ignore = dirty
