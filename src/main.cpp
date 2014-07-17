@@ -1,5 +1,7 @@
 #include <GLFW/glfw3.h>
 
+#include "util/shaderhelper.hpp"
+
 void drawSkullAt(float pos_x, float pos_y) {
     glPushMatrix();
         glTranslatef(pos_x, pos_y, 0);
@@ -63,8 +65,16 @@ void reshape(GLFWwindow* window, int width, int height ) {
     glLoadIdentity();
 }
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 int main(void) {
     GLFWwindow* window;
+
+    cout << *pathhelper::getApplicationPathAndName().get() << endl;
+    cout << *pathhelper::getApplicationPath().get() << endl;
+    cout << *pathhelper::getApplicationName().get() << endl;
 
     const int width=640, height=480;
 

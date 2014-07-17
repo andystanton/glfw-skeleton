@@ -5,14 +5,18 @@
 #include <unistd.h>
 #include <limits.h>
 
+using std::unique_ptr;
+
 #if defined (__APPLE__)
     #include <libproc.h>
 #endif
 
 using std::string;
 
-const string& getApplicationPathAndName();
-const string& getApplicationPath();
-const string& getApplicationName();
+namespace pathhelper {
+    unique_ptr<string> getApplicationPathAndName();
+    unique_ptr<string> getApplicationPath();
+    unique_ptr<string> getApplicationName();
+};
 
 #endif
