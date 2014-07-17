@@ -1,5 +1,5 @@
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
 #include "util/shaderhelper.hpp"
 
 void drawSkullAt(float pos_x, float pos_y) {
@@ -72,20 +72,17 @@ using std::endl;
 int main(void) {
     GLFWwindow* window;
 
-    cout << *pathhelper::getApplicationPathAndName().get() << endl;
-    cout << *pathhelper::getApplicationPath().get() << endl;
-    cout << *pathhelper::getApplicationName().get() << endl;
-
     const int width=640, height=480;
+
 
     if (!glfwInit()) return -1;
 
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    // glfwWindowHint(GLFW_SAMPLES, 4);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_SAMPLES, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     window = glfwCreateWindow(width, height, "GLFW Skeleton", NULL, NULL);
     if (!window) {
@@ -93,7 +90,18 @@ int main(void) {
         return -1;
     }
 
+
+
     glfwMakeContextCurrent(window);
+
+
+    glewExperimental = true; // Needed for core profile
+    if (glewInit() != GLEW_OK) {
+        fprintf(stderr, "Failed to initialize GLEW\n");
+        exit(-1);
+    }
+
+
     reshape(window, width, height);
 
     glEnable(GL_BLEND);
@@ -102,6 +110,8 @@ int main(void) {
 
     glfwSetWindowSizeCallback(window, reshape);
 
+    shaderhelper::loadShaderPair("EntityVertexShader.vertexshader", "EntityFragmentShader.fragmentshader");
+    shaderhelper::loadShader("skull.fragmentshader");
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);

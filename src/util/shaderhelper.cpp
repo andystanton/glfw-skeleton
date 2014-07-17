@@ -12,7 +12,66 @@ using namespace std;
 
 GLuint shaderhelper::loadShader(const char * shaderFilename)
 {
-    return 0;
+    unique_ptr<string> appPath = pathhelper::getApplicationPath();
+    string fullVertexPath = *(appPath.get()) + "/" + shaderFilename;
+
+    GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+
+    // Read the Vertex Shader code from the file
+    string VertexShaderCode;
+    ifstream VertexShaderStream(fullVertexPath.c_str(), ios::in);
+    if (VertexShaderStream.is_open())
+    {
+        string Line = "";
+        while(getline(VertexShaderStream, Line))
+            VertexShaderCode += "\n" + Line;
+        VertexShaderStream.close();
+    } else
+    {
+        cerr << "Unable to open " << shaderFilename << endl;
+        getchar();
+        return 0;
+    }
+
+    GLint Result = GL_FALSE;
+    int InfoLogLength;
+
+    // Compile Vertex Shader
+    cout << "Compiling shader: " << shaderFilename << endl;
+    char const * VertexSourcePointer = VertexShaderCode.c_str();
+    glShaderSource(VertexShaderID, 1, &VertexSourcePointer , NULL);
+    glCompileShader(VertexShaderID);
+
+    // Check Vertex Shader
+    glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+    glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if (InfoLogLength > 0)
+    {
+        vector<char> VertexShaderErrorMessage(InfoLogLength+1);
+        glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+        cerr << &VertexShaderErrorMessage[0] << endl;
+    }
+
+
+    // Link the program
+    cout << "Linking program" << endl;
+    GLuint ProgramID = glCreateProgram();
+    glAttachShader(ProgramID, VertexShaderID);
+    glLinkProgram(ProgramID);
+
+    // Check the program
+    glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+    glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+    if (InfoLogLength > 0)
+    {
+        vector<char> ProgramErrorMessage(InfoLogLength+1);
+        glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+        cerr << &ProgramErrorMessage[0] << endl;
+    }
+
+    glDeleteShader(VertexShaderID);
+
+    return ProgramID;
 }
 
 GLuint shaderhelper::loadShaderPair(const string & vertexFilename, const string & fragmentFilename)
@@ -20,6 +79,7 @@ GLuint shaderhelper::loadShaderPair(const string & vertexFilename, const string 
     unique_ptr<string> appPath = pathhelper::getApplicationPath();
     string fullVertexPath = *(appPath.get()) + "/" + vertexFilename;
     string fullFragmentPath = *(appPath.get()) + "/" + fragmentFilename;
+
 
     cout << fullVertexPath << endl;
     cout << fullFragmentPath << endl;

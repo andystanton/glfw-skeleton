@@ -11,6 +11,23 @@ SET (APPLICATION_VERSION_MINOR 0)
 SET (APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
 SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
 
+
+# Copy directory only
+
+macro(copy_files srcDir destDir)
+    message(STATUS "Copying directory ${destDir}")
+    make_directory(${destDir})
+
+    file(GLOB templateFiles RELATIVE ${srcDir} ${srcDir}/*)
+    foreach(templateFile ${templateFiles})
+        set(srcTemplatePath ${srcDir}/${templateFile})
+        if(NOT IS_DIRECTORY ${srcTemplatePath})
+            message(STATUS "Copying file ${templateFile}")
+            file(COPY ${srcTemplatePath} DESTINATION ${destDir})
+        endif(NOT IS_DIRECTORY ${srcTemplatePath})
+    endforeach(templateFile)
+endmacro(copy_files)
+
 #
 # Debugging Options
 #

@@ -1,0 +1,20 @@
+#version 330 core
+
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 vertexPosition_modelspace;
+
+uniform vec2 offset;
+
+// Values that stay constant for the whole mesh.
+uniform mat4 MVP;
+
+void main(){
+
+    vec3 totalOffset = vec3(offset.x, offset.y, 1.0);
+
+    vec3 moved = vertexPosition_modelspace + totalOffset;
+
+    // Output position of the vertex, in clip space : MVP * position
+    gl_Position =  MVP * vec4(moved, 1);
+
+}
