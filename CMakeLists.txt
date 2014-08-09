@@ -82,6 +82,11 @@ set(GLEW_INCLUDE_PATH "${MAINFOLDER}/lib/glew/include")
 add_subdirectory(lib/glfw)
 set(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
 
+# GLM
+
+set(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
+
+
 # GMOCK
 
 add_subdirectory(lib/gmock-1.7.0)

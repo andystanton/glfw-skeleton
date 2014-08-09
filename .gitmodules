@@ -10,3 +10,6 @@
 	path = lib/glew
 	url = git@github.com:andystanton/glew-cmake.git
 	ignore = dirty
+[submodule "lib/glm"]
+	path = lib/glm
+	url = https://github.com/g-truc/glm.git

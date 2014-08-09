@@ -16,7 +16,7 @@ endforeach()
 
 ADD_EXECUTABLE(${project_BIN} ${project_SRCS})
 
-include_directories(${GLFW_INCLUDE_PATH} ${GLEW_INCLUDE_PATH})
+include_directories(${GLFW_INCLUDE_PATH} ${GLEW_INCLUDE_PATH} ${GLM_INCLUDE_PATH})
 
 TARGET_LINK_LIBRARIES(${project_BIN} ${project_LIBS})
 

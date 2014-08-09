@@ -4,7 +4,7 @@
 #include "util/pathhelper.hpp"
 
 namespace shaderhelper {
-    GLuint loadShader(const char * shaderFileName);
+    GLuint compileShader(const string & shaderFilename, GLenum shaderType);
     GLuint loadShaderPair(const string & vertexFileName, const string & fragmentFileName);
 };
 
