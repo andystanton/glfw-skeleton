@@ -94,9 +94,13 @@ set(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
 
 # GMOCK
 
-add_subdirectory(lib/gmock-1.7.0)
-set(GMOCK_INCLUDE_PATH "${gmock_SOURCE_DIR}/include")
+add_subdirectory(lib/gmock)
+set_property(TARGET gmock APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+set_property(TARGET gmock_main APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+set_property(TARGET gtest APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+set_property(TARGET gtest_main APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
 set(GTEST_INCLUDE_PATH "${gtest_SOURCE_DIR}/include")
+set(GMOCK_INCLUDE_PATH "${gmock_SOURCE_DIR}/include")
 
 # BANDIT
 

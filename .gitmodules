@@ -14,3 +14,11 @@
 	path = lib/glew
 	url = https://github.com/andystanton/glew-cmake.git
 	ignore = dirty
+[submodule "gmock"]
+	path = lib/gmock
+	url = https://chromium.googlesource.com/external/googlemock
+	ignore = dirty
+[submodule "gtest"]
+	path = lib/gtest
+	url = https://chromium.googlesource.com/external/googletest
+	ignore = dirty
