@@ -2,7 +2,29 @@ language: cpp
 compiler: clang
 before_install:
   - git submodule update --init --recursive
-  - sudo apt-get install xorg-dev
-  - sudo apt-get install libglu1-mesa-dev
-  - sudo apt-get install cmake
+install:
+# libc++ for c++11
+    - cwd=$(pwd)
+    - svn co --quiet http://llvm.org/svn/llvm-project/libcxx/trunk@201601 libcxx
+    - cd libcxx/lib && bash buildit
+    - sudo cp ./libc++.so.1.0 /usr/lib/
+    - sudo mkdir -p /usr/include/c++/v1
+    - cd .. && sudo cp -r include/* /usr/include/c++/v1/
+    - cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so
+    - sudo ln -sf libc++.so.1.0 libc++.so.1 && cd $cwd
+# libc++abi
+    - cwd=$(pwd)
+    - svn co --quiet http://llvm.org/svn/llvm-project/libcxxabi/trunk@201601 libcxxabi
+    - cd libcxxabi/lib && bash buildit
+    - sudo cp ./libc++abi.so.1.0 /usr/lib/
+    - sudo mkdir -p /usr/include/c++/v1
+    - cd .. && sudo cp -r include/* /usr/include/c++/v1/
+    - cd /usr/lib && sudo ln -sf libc++abi.so.1.0 libc++abi.so
+    - sudo ln -sf libc++abi.so.1.0 libc++abi.so.1 && cd $cwd
+# required x11 and opengl libs
+    - sudo apt-get -qq update
+    - sudo apt-get -qq install xorg-dev
+    - sudo apt-get -qq install libglu1-mesa-dev
+# cmake
+    - sudo apt-get -qq install cmake
 script: rake all
