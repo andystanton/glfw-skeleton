@@ -19,7 +19,7 @@ install:
     - make
     - sudo cp ./lib/libcxxrt.so /usr/lib
     - sudo mkdir -p /usr/include/c++/v1
-    - cp ./src/*.h /usr/include/c++/v1/
+    - sudo cp ./src/*.h /usr/include/c++/v1/
     - cd /usr/lib && sudo ln -sf libcxxrt.so.1.0 libcxxrt.so
     - sudo ln -sf libcxxrt.so.1.0 libcxxrt.so.1 && cd $cwd
 # libc++abi
