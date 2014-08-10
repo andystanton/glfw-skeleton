@@ -6,10 +6,11 @@
 	path = lib/bandit
 	url = https://github.com/joakimkarlsson/bandit.git
 	ignore = dirty
-[submodule "glew"]
-	path = lib/glew
-	url = https://github.com/andystanton/glew-cmake.git
-	ignore = dirty
 [submodule "glm"]
 	path = lib/glm
 	url = https://github.com/g-truc/glm.git
+	ignore = dirty
+[submodule "lib/glew"]
+	path = lib/glew
+	url = https://github.com/andystanton/glew-cmake.git
+	ignore = dirty
