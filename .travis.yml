@@ -26,7 +26,6 @@ install:
     - git clone https://github.com/pathscale/libcxxrt.git libcxxrt
     - cd libcxxrt && cmake .
     - make
-    - sudo make install
     - ls -la
     - ls -la build
     - ls -la lib
