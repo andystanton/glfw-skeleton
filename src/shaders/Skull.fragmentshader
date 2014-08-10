@@ -1,12 +1,12 @@
 #version 330 core
 
+// Input data
+uniform vec4 skullColour;
+
 // Ouput data
-out vec4 color;
-uniform vec4 colour;
+out vec4 outputColour;
 
 void main()
 {
-    // Output color = red
-    //color = vec3(1,0,0);
-	color = colour;
+	outputColour = skullColour;
 }

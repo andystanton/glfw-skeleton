@@ -10,7 +10,7 @@ unique_ptr<string> pathhelper::getApplicationPathAndName()
 
         pid = getpid();
         ret = proc_pidpath(pid, pathbuf, sizeof(pathbuf));
-        if ( ret <= 0 ) {
+        if (ret <= 0) {
             throw "Unable to ascertain application path";
         } else {
             fullPath = new string(pathbuf);

@@ -2,13 +2,13 @@
 #define _SKELETON_PATH_HELPER
 
 #include <string>
-#include <unistd.h>
-#include <limits.h>
+#include <climits>
 
 using std::unique_ptr;
 
 #if defined (__APPLE__)
     #include <libproc.h>
+    #include <unistd.h>
 #endif
 
 using std::string;
