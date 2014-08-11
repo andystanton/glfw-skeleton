@@ -3,11 +3,14 @@
 
 #include <string>
 #include <climits>
+#include <memory>
 
 using std::unique_ptr;
 
 #if defined (__APPLE__)
     #include <libproc.h>
+    #include <unistd.h>
+#elif defined(__linux__)
     #include <unistd.h>
 #endif
 

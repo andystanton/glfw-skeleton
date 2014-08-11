@@ -48,7 +48,7 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 
 # set compiler warnings
 
-set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter")
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas")
 
 # set c++ 11
 
@@ -63,7 +63,7 @@ elseif (MSVC)
     # On by default
 endif ()
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lc++")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lc++")
 
 #
 # Locate Project Prerequisites

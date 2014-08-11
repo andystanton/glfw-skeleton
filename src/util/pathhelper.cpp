@@ -17,7 +17,7 @@ unique_ptr<string> pathhelper::getApplicationPathAndName()
         }
     #elif defined(__linux__)
         char buff[1024];
-        ssize_t len = ::readlink("/proc/self/exe", buff, sizeof(buff)-1);
+        ssize_t len = readlink("/proc/self/exe", buff, sizeof(buff)-1);
         if (len != -1) {
             buff[len] = '\0';
             fullPath = new string(buff);
