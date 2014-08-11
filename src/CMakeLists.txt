@@ -1,6 +1,6 @@
 FILE (GLOB_RECURSE project_SRCS *.cpp *.cxx *.cc *.C *.c *.h *.hpp)
 
-SET (project_LIBS glfw ${GLFW_LIBRARIES} libglew_static)
+SET (project_LIBS libglew_static glfw ${GLFW_LIBRARIES})
 
 SET (project_BIN ${PROJECT_NAME})
 

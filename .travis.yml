@@ -1,36 +1,18 @@
 language: cpp
 compiler: gcc
 before_install:
-    - git submodule update --init --recursive
     - sudo add-apt-repository -y ppa:kubuntu-ppa/backports
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
 install:
-    - sudo apt-get -qq install xorg-dev
-    - sudo apt-get -qq install cmake=2.8.12.2-0ubuntu1~ubuntu12.04.1~ppa2
-    - sudo apt-get -qq install libglu1-mesa-dev
     - sudo apt-get -qq install gcc-4.8 g++-4.8
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.6 40
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 60
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 40
     - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 60
-# # libc++ for c++11
-#     - cwd=$(pwd)
-#     - svn co --quiet http://llvm.org/svn/llvm-project/libcxx/trunk@201601 libcxx
-#     - cd libcxx/lib && bash buildit
-#     - sudo cp ./libc++.so.1.0 /usr/lib/
-#     - sudo mkdir -p /usr/include/c++/v1
-#     - cd .. && sudo cp -r include/* /usr/include/c++/v1/
-#     - cd /usr/lib && sudo ln -sf libc++.so.1.0 libc++.so
-#     - sudo ln -sf libc++.so.1.0 libc++.so.1 && cd $cwd
-# # libc++abi
-#     - cwd=$(pwd)
-#     - svn co --quiet http://llvm.org/svn/llvm-project/libcxxabi/trunk@201601 libcxxabi
-#     - cd libcxxabi/lib && bash buildit
-#     - sudo cp ./libc++abi.so.1.0 /usr/lib/
-#     - sudo mkdir -p /usr/include/c++/v1
-#     - cd .. && sudo cp -r include/* /usr/include/c++/v1/
-#     - cd /usr/lib && sudo ln -sf libc++abi.so.1.0 libc++abi.so
-#     - sudo ln -sf libc++abi.so.1.0 libc++abi.so.1 && cd $cwd
-# required x11 and opengl libs
+    - sudo apt-get -qq install xorg-dev
+    - sudo apt-get -qq install libglu1-mesa-dev
+    - sudo apt-get -qq install cmake=2.8.12.2-0ubuntu1~ubuntu12.04.1~ppa2
+before_script:
+    - git submodule update --init --recursive
 script: rake all
