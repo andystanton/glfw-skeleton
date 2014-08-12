@@ -1,8 +1,8 @@
 # glfw-skeleton [![Build Status](https://travis-ci.org/andystanton/glfw-skeleton.png?branch=master)](https://travis-ci.org/andystanton/glfw-skeleton)
 
-A skeleton C++11 application that makes use of the [GLFW library](http://www.glfw.org) and [CMake](http://www.cmake.org/) to speed up initial project setup.
+A skeleton C++11 app that uses the [glfw](http://www.glfw.org), [glew](http://glew.sourceforge.net/) and [glm](http://glm.g-truc.net/) libraries and builds with [CMake](http://www.cmake.org/). [Bandit](http://banditcpp.org/) is used for unit testing.
 
-The skeleton includes a Bandit unit testing runner as well as support for Google Mock. All libraries are built from source included either as git submodules which are built from source with the project to ensure portability.
+All libraries are included as git submodules and built from source with the application to ensure portability.
 
 ![](http://andystanton.github.io/glfw-skeleton/images/content/3.0/glfw-skeleton.png)
 
@@ -25,7 +25,7 @@ rake default start
 ## Libraries
 
 * [glfw](http://www.glfw.org/) 3.0.4
-* [glm](https://github.com/g-truc/glm) 0.9.5
+* [glm](http://glm.g-truc.net/) 0.9.5
 * [glew](http://glew.sourceforge.net/) 1.10.0
 * [bandit](http://banditcpp.org/) dfb6b7
 * [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
