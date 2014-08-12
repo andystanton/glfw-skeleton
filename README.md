@@ -1,6 +1,6 @@
 # glfw-skeleton [![Build Status](https://travis-ci.org/andystanton/glfw-skeleton.png?branch=master)](https://travis-ci.org/andystanton/glfw-skeleton)
 
-A skeleton C++11 app that uses the [glfw](http://www.glfw.org), [glew](http://glew.sourceforge.net/) and [glm](http://glm.g-truc.net/) libraries and builds with [CMake](http://www.cmake.org/). [Bandit](http://banditcpp.org/) is used for unit testing.
+A skeleton C++11 app that uses the [glfw](http://www.glfw.org), [glew](http://glew.sourceforge.net/) and [glm](http://glm.g-truc.net/) libraries and builds with [cmake](http://www.cmake.org/). [Bandit](http://banditcpp.org/) is used for unit testing.
 
 All libraries are included as git submodules and built from source with the application to ensure portability.
 
