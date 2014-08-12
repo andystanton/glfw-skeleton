@@ -16,11 +16,11 @@ The skeleton includes a Bandit unit testing runner as well as support for Google
 
 ## Libraries
 
-* [GLFW](http://www.glfw.org/) 3.0.4
-* [GMock](https://code.google.com/p/googlemock/) & [GTest](https://code.google.com/p/googletest/) 1.7.0
-* [Bandit](http://banditcpp.org/) dfb6b7
+* [glfw](http://www.glfw.org/) 3.0.4
 * [glm](https://github.com/g-truc/glm) 0.9.5
-* [GLEW](http://glew.sourceforge.net/) 1.9.0
+* [glew](http://glew.sourceforge.net/) 1.10.0
+* [bandit](http://banditcpp.org/) dfb6b7
+* [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
 
 ## Quick Start
 
