@@ -96,7 +96,7 @@ namespace skeleton {
          30, -55,
     };
 
-    GLFWwindow * initGL();
+    void initGL();
     void drawSkull(float x, float y);
     void setup(const string & appName, float width, float height);
     void loop();
