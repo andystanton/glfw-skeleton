@@ -8,7 +8,8 @@ INCLUDE_DIRECTORIES(${GMOCK_INCLUDE_PATH}
                     ${GTEST_INCLUDE_PATH}
                     ${BANDIT_INCLUDE_PATH}
                     ${GLFW_INCLUDE_PATH}
-                    ${GLEW_INCLUDE_PATH})
+                    ${GLEW_INCLUDE_PATH}
+                    ${GLM_INCLUDE_PATH})
 
 ADD_EXECUTABLE(${test_BIN} ${test_SRCS} ${ALL_SRCS})
 

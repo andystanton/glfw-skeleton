@@ -20,6 +20,7 @@ deep_clean_list = [
 ]
 
 laundry_list = [
+    "cmake",
     "cmake_install.cmake",
     "CMakeCache.txt",
     "CMakeFiles",

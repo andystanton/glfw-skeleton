@@ -1,11 +1,9 @@
 #ifndef _SKELETON_PATH_HELPER
 #define _SKELETON_PATH_HELPER
 
-#include <string>
 #include <climits>
 #include <memory>
-
-using std::unique_ptr;
+#include <string>
 
 #if defined (__APPLE__)
     #include <libproc.h>
@@ -15,6 +13,7 @@ using std::unique_ptr;
 #endif
 
 using std::string;
+using std::unique_ptr;
 
 namespace pathhelper {
     unique_ptr<string> getApplicationPathAndName();
