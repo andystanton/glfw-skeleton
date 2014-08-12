@@ -2,14 +2,16 @@
 
 int main()
 {
-    skeleton::setup("GLFW Skeleton", 640.f, 480.f);
+    Skeleton skeleton("GLFW Skeleton", 640.f, 480.f);
 
-    while (skeleton::isActive())
+    skeleton.setup();
+
+    while (skeleton.isActive())
     {
-        skeleton::loop();
+        skeleton.loop();
     }
 
-    skeleton::teardown();
+    skeleton.teardown();
 
     return 0;
 }

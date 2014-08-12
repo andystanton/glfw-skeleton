@@ -17,91 +17,42 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-namespace skeleton {
-    static float width;
-    static float height;
-    static string appName;
+class Skeleton {
+private:
+    static constexpr int SKULL_COMPONENT_COUNT = 7 * 2 * 3 * 2;
 
-    static const string ok(" ... \033[1;32mOK\033[0m");
-    static const string fail(" ... \033[1;31mFail\033[0m");
+    float width;
+    float height;
+    string appName;
 
-    static GLFWwindow * window;
+    GLFWwindow * window;
 
-    static GLuint posId;
-    static GLuint colourId;
-    static GLuint scaleId;
-    static GLuint matrixId;
-    static GLuint vertexbuffer;
-    static GLuint vertexArrayId;
-    static GLuint programId;
+    GLuint posId;
+    GLuint colourId;
+    GLuint scaleId;
+    GLuint matrixId;
+    GLuint vertexbuffer;
+    GLuint vertexArrayId;
+    GLuint programId;
 
-    static glm::mat4 MVP;
+    glm::mat4 MVP;
 
-    static const GLfloat skullVertices[] =
-    {
-        // top of skull
-         60, 50,
-         60,  0,
-        -60,  0,
-        -60, 50,
-         60, 50,
-        -60,  0,
-
-        // left of eyes
-        -60,   0,
-        -40,   0,
-        -60, -30,
-        -60, -30,
-        -40,   0,
-        -40, -30,
-
-        // centre of eyes
-        -10,   0,
-         10,   0,
-        -10, -30,
-        -10, -30,
-         10,   0,
-         10, -30,
-
-        // right of eyes
-         60,   0,
-         40,   0,
-         60, -30,
-         60, -30,
-         40,   0,
-         40, -30,
-
-        // left of nose
-        -60, -30,
-          0, -30,
-        -10, -40,
-        -10, -40,
-        -60, -40,
-        -60, -30,
-
-        // right of nose
-          0, -30,
-         60, -30,
-         10, -40,
-         10, -40,
-         60, -30,
-         60, -40,
-
-        // jaw
-        -30, -40,
-         30, -40,
-        -30, -55,
-        -30, -55,
-         30, -40,
-         30, -55,
-    };
+    const string ok = string(" ... \033[1;32mOK\033[0m");
+    const string fail = string(" ... \033[1;31mFail\033[0m");
 
     void initGL();
     void drawSkull(float x, float y);
-    void setup(const string & appName, float width, float height);
+
+public:
+    Skeleton(const string & appName, float width, float height);
+    ~Skeleton();
+
+    void setup();
     void loop();
     void teardown();
     bool isActive();
+
+    static const GLfloat skullVertices[SKULL_COMPONENT_COUNT];
 };
 
 #endif
