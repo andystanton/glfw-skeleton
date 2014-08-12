@@ -20,6 +20,7 @@ The skeleton includes a Bandit unit testing runner as well as support for Google
 * [GMock](https://code.google.com/p/googlemock/) & [GTest](https://code.google.com/p/googletest/) 1.7.0
 * [Bandit](http://banditcpp.org/) dfb6b7
 * [glm](https://github.com/g-truc/glm) 0.9.5
+* [GLEW](http://glew.sourceforge.net/) 1.9.0
 
 ## Quick Start
 
