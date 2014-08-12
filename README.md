@@ -17,7 +17,9 @@ All libraries are included as git submodules and built from source with the appl
 ## Quick Start
 
 ```sh
-git clone https://github.com/andystanton/glfw-skeleton.git --recursive && cd glfw-skeleton
+git clone https://github.com/andystanton/glfw-skeleton.git --recursive
+
+cd glfw-skeleton
 
 rake default start
 ```
