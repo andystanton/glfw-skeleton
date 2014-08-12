@@ -1,4 +1,4 @@
-#include "skeleton.hpp"
+#include "Skeleton.hpp"
 
 int main()
 {
