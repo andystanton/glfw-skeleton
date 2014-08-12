@@ -2,7 +2,7 @@
 
 A skeleton C++11 application that makes use of the [GLFW library](http://www.glfw.org) and [CMake](http://www.cmake.org/) to speed up initial project setup.
 
-The skeleton includes a Bandit unit testing runner as well as support for Google Mock. All libraries are built from source included either as git submodules or bundled where this is not possible (e.g. GMock) to ensure portability.
+The skeleton includes a Bandit unit testing runner as well as support for Google Mock. All libraries are built from source included either as git submodules which are built from source with the project to ensure portability.
 
 ![](http://andystanton.github.io/glfw-skeleton/images/content/3.0/glfw-skeleton.png)
 
