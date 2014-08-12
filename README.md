@@ -4,56 +4,27 @@ A skeleton C++11 application that makes use of the [GLFW library](http://www.glf
 
 The skeleton includes a Bandit unit testing runner as well as support for Google Mock. All libraries are built from source included either as git submodules or bundled where this is not possible (e.g. GMock) to ensure portability.
 
-![](http://andystanton.github.io/glfw-skeleton/images/content/2.0/glfw-skeleton.png)
+![](http://andystanton.github.io/glfw-skeleton/images/content/3.0/glfw-skeleton.png)
 
 ## Requirements
 
 * A C++11 compiler
-* [CMake >= 2.8](http://www.cmake.org/cmake/resources/software.html)
+* CMake >= 2.8.8
+* Make >= 3.81
+* Rake >= 10.3
+* OpenGL >= 3.2
 
 ## Libraries
 
 * [GLFW](http://www.glfw.org/) 3.0.4
 * [GMock](https://code.google.com/p/googlemock/) & [GTest](https://code.google.com/p/googletest/) 1.7.0
-* [Bandit](http://banditcpp.org/) 1.1.4
+* [Bandit](http://banditcpp.org/) dfb6b7
+* [glm](https://github.com/g-truc/glm) 0.9.5
 
 ## Quick Start
 
-Clone the project:
-
 ```sh
 git clone https://github.com/andystanton/glfw-skeleton.git --recursive && cd glfw-skeleton
+
+rake default start
 ```
-
-Run the following commands to generate the makefile and build:
-
-```sh
-./configure
-./compile
-```
-
-This will create the glfw-skeleton executable in the project directory.
-
-## Generating project files for your IDE
-
-Run the following command to generate the project files for your IDE:
-
-```sh
-cmake . -G {ide_name}
-```
-
-Note that if you have already build the makefile, you'll need to delete the CMakeCache.txt file. For convenience you can run ```./clean``` which will clean all generated files from the project.
-
-For more information on CMake's project generators and a full list of supported platforms and IDEs, see the [documentation](http://www.cmake.org/Wiki/CMake_Generator_Specific_Information).
-
-
-## Scripts
-
-The following scripts are included for convenience:
-
-| Script    | Function                                                  |
-| --------- | ----------------------------------------------------------|
-| clean     | Cleans generated files (anything in .gitignore)           |
-| configure | Creates output dir and runs CMake to generate build files |
-| compile   | Executes the makefile                                     |
-| ccc       | Alias for ```./clean && ./configure && ./compile```       |
