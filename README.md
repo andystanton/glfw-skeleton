@@ -14,14 +14,6 @@ The skeleton includes a Bandit unit testing runner as well as support for Google
 * Rake >= 10.3
 * OpenGL >= 3.2
 
-## Libraries
-
-* [glfw](http://www.glfw.org/) 3.0.4
-* [glm](https://github.com/g-truc/glm) 0.9.5
-* [glew](http://glew.sourceforge.net/) 1.10.0
-* [bandit](http://banditcpp.org/) dfb6b7
-* [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
-
 ## Quick Start
 
 ```sh
@@ -29,3 +21,11 @@ git clone https://github.com/andystanton/glfw-skeleton.git --recursive && cd glf
 
 rake default start
 ```
+
+## Libraries
+
+* [glfw](http://www.glfw.org/) 3.0.4
+* [glm](https://github.com/g-truc/glm) 0.9.5
+* [glew](http://glew.sourceforge.net/) 1.10.0
+* [bandit](http://banditcpp.org/) dfb6b7
+* [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
