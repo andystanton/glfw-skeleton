@@ -1,85 +1,129 @@
 #
 # Project Properties
 #
-CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
-PROJECT (glfw-skeleton)
-SET (APPLICATION_NAME "GLFW Skeleton")
-SET (APPLICATION_CODENAME "${PROJECT_NAME}")
-SET (APPLICATION_COPYRIGHT_YEARS "2014")
-SET (APPLICATION_VERSION_MAJOR 2)
-SET (APPLICATION_VERSION_MINOR 0)
-SET (APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
-SET (APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+PROJECT(glfw-skeleton)
+SET(APPLICATION_NAME "GLFW Skeleton")
+SET(APPLICATION_CODENAME "${PROJECT_NAME}")
+SET(APPLICATION_COPYRIGHT_YEARS "2014")
+SET(APPLICATION_VERSION_MAJOR 2)
+SET(APPLICATION_VERSION_MINOR 0)
+SET(APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
+SET(APPLICATION_ID "${APPLICATION_VENDOR_ID}.${PROJECT_NAME}")
+
+#
+# Copy directory contents
+#
+MACRO(COPY_FILES srcDir destDir)
+    MESSAGE(STATUS "Copying contents of directory ${srcDir} to ${destDir}")
+    MAKE_DIRECTORY(${destDir})
+
+    FILE(GLOB templateFiles RELATIVE ${srcDir} ${srcDir}/*)
+    FOREACH(templateFile ${templateFiles})
+        SET(srcTemplatePath ${srcDir}/${templateFile})
+        IF(NOT IS_DIRECTORY ${srcTemplatePath})
+            MESSAGE(STATUS "Copying file ${templateFile}")
+            FILE(COPY ${srcTemplatePath} DESTINATION ${destDir})
+        ENDIF(NOT IS_DIRECTORY ${srcTemplatePath})
+    ENDFOREACH(templateFile)
+ENDMACRO()
 
 #
 # Debugging Options
 #
-SET (CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
+SET(CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
 
 #
 # Project Output Paths
 #
-SET (MAINFOLDER ${PROJECT_SOURCE_DIR})
-SET (EXECUTABLE_OUTPUT_PATH "${MAINFOLDER}/bin")
-SET (LIBRARY_OUTPUT_PATH "${MAINFOLDER}/lib")
+SET(MAINFOLDER ${PROJECT_SOURCE_DIR})
+SET(EXECUTABLE_OUTPUT_PATH "${MAINFOLDER}/bin")
+SET(LIBRARY_OUTPUT_PATH "${MAINFOLDER}/lib")
 
 #
 # Project Search Paths
 #
-LIST (APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
+LIST(APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
 INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 
-# set c++ 11
+#
+# Set compiler warnings
+#
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas")
 
-if (CMAKE_COMPILER_IS_GNUCXX)
-    set(CMAKE_CXX_FLAGS "-std=gnu++11")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "-std=c++11")
-    if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        set(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++")
-    endif ()
-elseif (MSVC)
+#
+# Enable C++11
+#
+IF(CMAKE_COMPILER_IS_GNUCXX)
+    IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.7")
+        MESSAGE(FATAL_ERROR "Compiler does not support C++11")
+    ELSE()
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    ENDIF()
+ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
+    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
+    ENDIF()
+ELSEIF(MSVC)
     # On by default
-endif ()
+ELSE()
+    MESSAGE(FATAL_ERROR "Compiler not supported")
+ENDIF()
 
 #
-# Locate Project Prerequisites 
+# glfw
 #
+OPTION(GLFW_BUILD_EXAMPLES  "Build the GLFW example programs"   OFF)
+OPTION(GLFW_BUILD_TESTS     "Build the GLFW test programs"      OFF)
+OPTION(GLFW_BUILD_DOCS      "Build the GLFW documentation"      OFF)
+OPTION(GLFW_INSTALL         "Generate installation target"      OFF)
 
-# GLFW
+ADD_SUBDIRECTORY(lib/glfw)
 
-# disable unnecessary glfw targets
-option(GLFW_BUILD_EXAMPLES "Build the GLFW example programs" OFF)
-option(GLFW_BUILD_TESTS "Build the GLFW test programs" OFF)
-option(GLFW_BUILD_DOCS "Build the GLFW documentation" OFF)
-option(GLFW_INSTALL "Generate installation target" OFF)
-
-# add subdirectory
-add_subdirectory(lib/glfw)
-set(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
-
-# GMOCK
-
-add_subdirectory(lib/gmock-1.7.0)
-set(GMOCK_INCLUDE_PATH "${gmock_SOURCE_DIR}/include")
-set(GTEST_INCLUDE_PATH "${gtest_SOURCE_DIR}/include")
-
-# BANDIT
-
-add_subdirectory(lib/bandit)
-set(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
+SET(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
 
 #
-# Add Build Targets
+# glew
+#
+OPTION(glew-cmake_BUILD_SHARED "Build the shared glew library" OFF)
+ADD_SUBDIRECTORY(lib/glew)
+
+SET(GLEW_INCLUDE_PATH "${MAINFOLDER}/lib/glew/include")
+
+#
+# glm
+#
+SET(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
+
+#
+# gmock
+#
+ADD_SUBDIRECTORY(lib/gmock)
+
+SET(GTEST_INCLUDE_PATH "${gtest_SOURCE_DIR}/include")
+SET(GMOCK_INCLUDE_PATH "${gmock_SOURCE_DIR}/include")
+
+SET_PROPERTY(TARGET gmock       APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+SET_PROPERTY(TARGET gmock_main  APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+SET_PROPERTY(TARGET gtest       APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+SET_PROPERTY(TARGET gtest_main  APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+
+#
+# Bandit
+#
+ADD_SUBDIRECTORY(lib/bandit)
+
+SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
+
+#
+# Add project sources
 #
 ADD_SUBDIRECTORY(src)
+
+#
+# Add test sources and enable testing
+#
+ENABLE_TESTING()
+
 ADD_SUBDIRECTORY(test)
-
-#
-# Add Install Targets
-#
-IF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
-    INSTALL(DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}" DESTINATION "include")
-ENDIF (EXISTS "${MAINFOLDER}/include/${PROJECT_NAME}" AND IS_DIRECTORY "${MAINFOLDER}/include/${PROJECT_NAME}")
-

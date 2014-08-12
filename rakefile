@@ -1,0 +1,130 @@
+require 'fileutils'
+
+def safe_task(&block)
+    yield
+rescue Exception => problem
+    puts "rake task interupted: #{problem}"
+end
+
+deep_clean_list = [
+    "lib/*/*.build",
+    "lib/*/cmake_install.cmake",
+    "lib/*/CMakeFiles",
+    "lib/*/CMakeScripts",
+    "lib/*.a",
+    "lib/gmock/gtest",
+    "lib/freetype2/include/ftconfig.hpp",
+    "lib/Debug",
+    "lib/Release",
+    "build"
+]
+
+laundry_list = [
+    "cmake",
+    "cmake_install.cmake",
+    "CMakeCache.txt",
+    "CMakeFiles",
+    "CMakeScripts",
+    "CPackConfig.cmake",
+    "CPackSourceConfig.cmake",
+    "CTestTestfile.cmake",
+    "src/cmake_install.cmake",
+    "src/CMakeCache.txt",
+    "src/CMakeFiles",
+    "src/CMakeScripts",
+    "src/CTestTestfile.cmake",
+    "test/cmake_install.cmake",
+    "test/CMakeCache.txt",
+    "test/CMakeFiles",
+    "test/CMakeScripts",
+    "test/CTestTestfile.cmake",
+    "Makefile",
+    "bin",
+    "*.build"
+]
+
+desc 'Cleans the project by deleting everything listed in the laundry list'
+task :clean do
+    puts 'Executing clean...'
+
+    count = 0
+    laundry_list.each do |laundry_item|
+        count += 1
+        sh "rm -rf #{laundry_item}"
+    end
+
+    puts "Cleaned #{count} files"
+end
+
+desc 'Deep cleans the project by deleting everything listed in the laundry list and the deep clean list (includes libraries)'
+task :deepclean do
+    puts 'Executing deep clean...'
+
+    count = 0
+    (laundry_list + deep_clean_list).each do |laundry_item|
+        count += 1
+        sh "rm -rf #{laundry_item}"
+    end
+
+    puts "Deep cleaned #{count} files"
+end
+
+desc 'Generates makefiles using CMake'
+task :configure do
+    puts 'Executing configure...'
+
+    mkdir_p('build')
+    Dir.chdir('build') do
+        sh "cmake .."
+    end
+end
+
+desc 'Builds the application and unit tests using Make'
+task :compile do
+    puts 'Executing compile...'
+
+    sh "make -C build"
+end
+
+desc 'Executes the unit tests'
+task :test do
+    puts 'Executing test...'
+
+    safe_task do
+        sh "make -C build test"
+    end
+
+    sh "cat build/Testing/Temporary/LastTest.log"
+end
+
+desc 'Starts the application'
+task :start do
+    puts 'Executing start...'
+
+    sh "bin/glfw-skeleton"
+end
+
+desc 'Alias for rake configure compile test'
+task :default do
+    puts 'Executing default...'
+
+    Rake::Task["configure"].invoke
+    Rake::Task["compile"].invoke
+    Rake::Task["test"].invoke
+end
+
+desc 'Alias for rake default start'
+task :dstart do
+    puts 'Executing default start'
+
+    Rake::Task["default"].invoke
+    Rake::Task["start"].invoke
+end
+
+desc 'Alias for rake clean default'
+task :all do
+    puts 'Executing all...'
+
+    Rake::Task["clean"].invoke
+    Rake::Task["default"].invoke
+end
