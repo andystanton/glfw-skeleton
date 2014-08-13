@@ -21,8 +21,8 @@ using std::string;
 class Skeleton {
 private:
     static constexpr int SKULL_COMPONENT_COUNT = 7 * 2 * 3 * 2;
-    static const string OK;
-    static const string FAIL;
+    static const string MESSAGE_OK;
+    static const string MESSAGE_FAIL;
     static const GLfloat SKULL_VERTICES[SKULL_COMPONENT_COUNT];
 
     unsigned int width;
@@ -42,7 +42,7 @@ private:
     glm::mat4 mvp;
 
     void initGL();
-    void drawSkull(float x, float y, float scale, glm::vec4 colour);
+    void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
 
 public:
     Skeleton(const string & appName, unsigned int width, unsigned int height);
