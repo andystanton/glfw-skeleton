@@ -1,24 +1,24 @@
 [submodule "glfw"]
-	path = lib/glfw
+    path = lib/glfw
     url = https://github.com/glfw/glfw.git
     ignore = dirty
 [submodule "bandit"]
-	path = lib/bandit
-	url = https://github.com/joakimkarlsson/bandit.git
-	ignore = dirty
+    path = lib/bandit
+    url = https://github.com/joakimkarlsson/bandit.git
+    ignore = dirty
 [submodule "glm"]
-	path = lib/glm
-	url = https://github.com/g-truc/glm.git
-	ignore = dirty
+    path = lib/glm
+    url = https://github.com/g-truc/glm.git
+    ignore = dirty
 [submodule "glew"]
-	path = lib/glew
-	url = https://github.com/andystanton/glew-cmake.git
-	ignore = dirty
+    path = lib/glew
+    url = https://github.com/andystanton/glew-cmake.git
+    ignore = dirty
 [submodule "gmock"]
-	path = lib/gmock
-	url = https://chromium.googlesource.com/external/googlemock
-	ignore = dirty
+    path = lib/gmock
+    url = https://chromium.googlesource.com/external/googlemock
+    ignore = dirty
 [submodule "gtest"]
-	path = lib/gtest
-	url = https://chromium.googlesource.com/external/googletest
-	ignore = dirty
+    path = lib/gtest
+    url = https://chromium.googlesource.com/external/googletest
+    ignore = dirty
