@@ -4,7 +4,7 @@ A skeleton C++11 OpenGL 3.2 app that uses the [GLFW](http://www.glfw.org), [GLEW
 
 All libraries are included as git submodules and built from source with the application to ensure portability.
 
-![](http://andystanton.github.io/glfw-skeleton/images/content/3.0/glfw-skeleton.png)
+![](http://andystanton.github.io/glfw-skeleton/images/content/3.0.1/glfw-skeleton.png)
 
 ## Requirements
 
