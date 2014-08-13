@@ -7,7 +7,7 @@ using namespace bandit;
 go_bandit([](){
     describe("the skeleton application", []() {
 
-        Skeleton skeleton("GLFW Skeleton", 640.f, 480.f);
+        Skeleton skeleton("GLFW Skeleton", 640, 480);
 
         it("contains an array of indices that make up the skull", [&]() {
             // there are 7 quads split into 2 triangles that have
