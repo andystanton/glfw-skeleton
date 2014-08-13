@@ -2,7 +2,7 @@
 
 int main()
 {
-    Skeleton skeleton("GLFW Skeleton", 640.f, 480.f);
+    Skeleton skeleton("GLFW Skeleton", 640, 480);
 
     skeleton.setup();
 

@@ -9,6 +9,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "util/shaderhelper.hpp"
+#include "util/colourhelper.hpp"
 
 #include <iostream>
 
@@ -20,9 +21,12 @@ using std::string;
 class Skeleton {
 private:
     static constexpr int SKULL_COMPONENT_COUNT = 7 * 2 * 3 * 2;
+    static const string OK;
+    static const string FAIL;
+    static const GLfloat SKULL_VERTICES[SKULL_COMPONENT_COUNT];
 
-    float width;
-    float height;
+    unsigned int width;
+    unsigned int height;
     string appName;
 
     GLFWwindow * window;
@@ -35,24 +39,19 @@ private:
     GLuint vertexArrayId;
     GLuint programId;
 
-    glm::mat4 MVP;
-
-    const string ok = string(" ... \033[1;32mOK\033[0m");
-    const string fail = string(" ... \033[1;31mFail\033[0m");
+    glm::mat4 mvp;
 
     void initGL();
-    void drawSkull(float x, float y);
+    void drawSkull(float x, float y, float scale, glm::vec4 colour);
 
 public:
-    Skeleton(const string & appName, float width, float height);
+    Skeleton(const string & appName, unsigned int width, unsigned int height);
     ~Skeleton();
 
     void setup();
     void loop();
     void teardown();
     bool isActive();
-
-    static const GLfloat skullVertices[SKULL_COMPONENT_COUNT];
 };
 
 #endif

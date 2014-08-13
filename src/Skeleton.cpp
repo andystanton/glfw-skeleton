@@ -1,6 +1,6 @@
 #include "Skeleton.hpp"
 
-Skeleton::Skeleton(const string & appName, float width, float height)
+Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int height)
 {
     this->appName = appName;
     this->width = width;
@@ -20,10 +20,10 @@ void Skeleton::initGL()
     cout << " - Initialising GLFW";
     if (!glfwInit())
     {
-        cout << fail << endl;
+        cout << FAIL << endl;
         throw "Failed to initialise GLFW";
     }
-    cout << ok << endl;
+    cout << OK << endl;
 
     // Create window with GLFW
     cout << " - Creating window with GLFW";
@@ -44,15 +44,15 @@ void Skeleton::initGL()
     if (window == nullptr)
     {
         glfwTerminate();
-        cout << fail << endl;
+        cout << FAIL << endl;
         throw "Failed to create window with GLFW.";
     }
-    cout << ok << endl;
+    cout << OK << endl;
 
     // Make window the current OpenGL context
     cout << " - Making window the current OpenGL context";
     glfwMakeContextCurrent(window);
-    cout << ok << endl;
+    cout << OK << endl;
 
     // Initialise GLEW
     cout << " - Initialising GLEW";
@@ -60,15 +60,15 @@ void Skeleton::initGL()
     if (glewInit() != GLEW_OK)
     {
         glfwTerminate();
-        cout << fail << endl;
+        cout << FAIL << endl;
         throw "Failed to initialise GLEW";
     }
-    cout << ok << endl;
+    cout << OK << endl;
 
     // Set GLFW Options
     cout << " - Setting GLFW Options";
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    cout << ok << endl;
+    cout << OK << endl;
 
     // Set OpenGL Options
     cout << " - Setting OpenGL Options";
@@ -76,27 +76,24 @@ void Skeleton::initGL()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
-    cout << ok << endl;
+    cout << OK << endl;
 }
 
-void Skeleton::drawSkull(float x, float y)
+void Skeleton::drawSkull(float x, float y, float scale, glm::vec4 colour)
 {
-    glm::vec2 skullPos = { x, y };
-    glm::vec4 skullColour = { 1.f, 1.f, 1.f, 0.4f };
+    glm::vec2 pos = { x, y };
 
-    float skullScale = 0.75f;
+    glUniformMatrix4fv(matrixId, 1, GL_FALSE, & mvp[0][0]);
 
-    glUniformMatrix4fv(matrixId, 1, GL_FALSE, &MVP[0][0]);
-
-    glUniform2fv(posId, 1, &skullPos[0]);
-    glUniform4fv(colourId, 1, &skullColour[0]);
-    glUniform1f(scaleId, skullScale);
+    glUniform2fv(posId, 1, &pos[0]);
+    glUniform4fv(colourId, 1, &colour[0]);
+    glUniform1f(scaleId, scale);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
 
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(skullVertices) / sizeof(GLfloat));
+    glDrawArrays(GL_TRIANGLES, 0, sizeof(SKULL_VERTICES) / sizeof(GLfloat));
 
     glDisableVertexAttribArray(0);
 }
@@ -131,21 +128,25 @@ void Skeleton::setup()
     posId         = glGetUniformLocation(programId, "skullPos");
     colourId      = glGetUniformLocation(programId, "skullColour");
     scaleId       = glGetUniformLocation(programId, "skullScale");
-    matrixId      = glGetUniformLocation(programId, "MVP");
+    matrixId      = glGetUniformLocation(programId, "mvp");
 
-    glm::mat4 projection    = glm::ortho(0.f, width, 0.f, height, 0.0f, 1.0f);
-    glm::mat4 view          = glm::lookAt(
+    glm::mat4 projection = glm::ortho(
+        0.f,  static_cast<float>(width),
+        0.f,  static_cast<float>(height),
+        0.0f, 1.0f
+    );
+    glm::mat4 view = glm::lookAt(
         glm::vec3(0, 0, 1),
         glm::vec3(0, 0, 0),
         glm::vec3(0, 1, 0)
     );
-    glm::mat4 model         = glm::mat4(1.0f);
+    glm::mat4 model = glm::mat4(1.0f);
 
-    MVP = projection * view * model;
+    mvp = projection * view * model;
 
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(skullVertices), skullVertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(SKULL_VERTICES), SKULL_VERTICES, GL_STATIC_DRAW);
 }
 
 void Skeleton::loop()
@@ -153,7 +154,12 @@ void Skeleton::loop()
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(programId);
 
-    drawSkull(width / 2, height / 2);
+    drawSkull(
+        static_cast<float>(width) / 2,
+        static_cast<float>(height) / 4,
+        1.5f,
+        colourhelper::rgbaHexToVec4("FFFFFF", 0.4f)
+    );
 
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -167,11 +173,11 @@ void Skeleton::teardown()
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteProgram(programId);
     glDeleteVertexArrays(1, &vertexArrayId);
-    cout << ok << endl;
+    cout << OK << endl;
 
     cout << " - Terminating GLFW";
     glfwTerminate();
-    cout << ok << endl;
+    cout << OK << endl;
 }
 
 bool Skeleton::isActive()
@@ -180,7 +186,11 @@ bool Skeleton::isActive()
         && glfwWindowShouldClose(window) == 0;
 }
 
-const GLfloat Skeleton::skullVertices[] =
+const string Skeleton::OK(" ... \033[1;32mOK\033[0m");
+
+const string Skeleton::FAIL(" ... \033[1;31mFail\033[0m");
+
+const GLfloat Skeleton::SKULL_VERTICES[] =
 {
     // top of skull
      60, 50,
