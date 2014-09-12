@@ -114,6 +114,11 @@ SET_PROPERTY(TARGET gtest_main  APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
 #
 # Bandit
 #
+OPTION(BANDIT_BUILD_SPECS       "Build the Bandit specs"    OFF)
+OPTION(SNOWHOUSE_BUILD_TESTS    "Build the Snowhouse tests" OFF)
+OPTION(BANDIT_RUN_SPECS         "Run the Bandit specs"      OFF)
+OPTION(SNOWHOUSE_RUN_TESTS      "Run the Snowhouse tests"   OFF)
+
 ADD_SUBDIRECTORY(lib/bandit)
 
 SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
