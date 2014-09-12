@@ -29,5 +29,5 @@ rake default start
 * [glfw](http://www.glfw.org/) 3.0.4
 * [glm](http://glm.g-truc.net/) 0.9.5
 * [glew](http://glew.sourceforge.net/) 1.10.0
-* [bandit](http://banditcpp.org/) dfb6b7
+* [bandit](http://banditcpp.org/) ffa30f3
 * [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
