@@ -1,11 +1,21 @@
-#ifndef _SKELETON_SHADER_HELPER
-#define _SKELETON_SHADER_HELPER
+#pragma once
 
 #include "util/pathhelper.hpp"
 
-namespace shaderhelper {
+#include <GL/glew.h>
+
+#include <string>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+#include "util/log/LoggerFactory.hpp"
+
+using std::vector;
+using std::ifstream;
+using std::ios;
+
+namespace shaderhelper
+{
     GLuint compileShader(const string & shaderFilename, GLenum shaderType);
     GLuint createProgram(const string & vertexFileName, const string & fragmentFileName);
 };
-
-#endif
