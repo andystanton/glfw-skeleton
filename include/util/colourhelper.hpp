@@ -1,5 +1,4 @@
-#ifndef _SKELETON_COLOUR_HELPER
-#define _SKELETON_COLOUR_HELPER
+#pragma once
 
 #include <string>
 
@@ -17,5 +16,3 @@ namespace colourhelper {
 
     int hexPairToInt(char first, char second);
 };
-
-#endif

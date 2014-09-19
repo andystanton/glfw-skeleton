@@ -1,7 +1,13 @@
 #include "Skeleton.hpp"
 
-int main()
+#include "util/cli/CLIParser.hpp"
+
+int main(int argc, char ** argv)
 {
+    Configuration c = CLIParser(argc, argv).getConfiguration();
+
+    LoggerFactory::configure(c.getBoolValue("no-colour"));
+
     Skeleton skeleton("GLFW Skeleton", 640, 480);
 
     skeleton.setup();

@@ -1,28 +1,11 @@
-#include <GL/glew.h>
-
 #include "util/shaderhelper.hpp"
 
-#include <string>
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <algorithm>
+GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType) {
+    auto logger = LoggerFactory::getLogger("shaderhelper");
 
-using std::cerr;
-using std::cout;
-using std::endl;
-using std::vector;
-using std::ifstream;
-using std::ios;
-
-const string ok(" ... \033[1;32mOK\033[0m");
-const string fail(" ... \033[1;31mFail\033[0m");
-
-GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType)
-{
-    cout << " - Loading shader: " << shaderFilename;
+    *logger << " - Loading shader: " << shaderFilename;
     unique_ptr<string> appPath = pathhelper::getApplicationPath();
-    string shaderPath = * (appPath.get()) + "/" + shaderFilename;
+    string shaderPath = *(appPath.get()) + "/" + shaderFilename;
 
     GLuint shaderId = glCreateShader(shaderType);
 
@@ -30,56 +13,55 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
 
     ifstream shaderStream(shaderPath.c_str(), ios::in);
 
-    if (shaderStream.is_open())
-    {
+    if (shaderStream.is_open()) {
         string Line = "";
-        while (getline(shaderStream, Line))
-        {
+        while (getline(shaderStream, Line)) {
             shaderCode += "\n" + Line;
         }
         shaderStream.close();
-        cout << ok << endl;
+        *logger << Logger::ok << Logger::endl;
     }
-    else
-    {
-        cout << fail << endl;
+    else {
+        *logger << Logger::fail << Logger::endl;
         throw string("Unable to open " + shaderFilename);
-        return 0;
     }
 
     // Compile shader
-    cout << " - Compiling shader: " << shaderFilename;
+    *logger << " - Compiling shader: " << shaderFilename;
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
 
-    char const * sourcePointer = shaderCode.c_str();
+    char const *sourcePointer = shaderCode.c_str();
     glShaderSource(shaderId, 1, &sourcePointer, NULL);
     glCompileShader(shaderId);
 
     // Check shader
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compilationSuccess);
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
-    if (infoLogLength > 0)
-    {
+    if (infoLogLength > 0) {
         vector<char> vertexShaderErrorMessage(infoLogLength + 1);
         glGetShaderInfoLog(shaderId, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
-        cerr << &vertexShaderErrorMessage[0] << endl;
+        *logger << Logger::fail << Logger::endl;
+        *logger << " - Shader compilation error: ";
+        *logger << &vertexShaderErrorMessage[0] << Logger::endl;
+    } else {
+        *logger << Logger::ok << Logger::endl;
     }
-    cout << ok << endl;
 
     return shaderId;
 }
 
 GLuint shaderhelper::createProgram(const string & vertexFilename, const string & fragmentFilename)
 {
-    cout << "Creating GLSL Program" << endl;
+    auto logger = LoggerFactory::getLogger("shaderhelper");
+    *logger << "Creating GLSL Program" << Logger::endl;
 
     // Compile shaders
     GLuint vertexShaderId = compileShader(vertexFilename, GL_VERTEX_SHADER);
     GLuint fragmentShaderId = compileShader(fragmentFilename, GL_FRAGMENT_SHADER);
 
     // Link the program
-    cout << " - Linking GLSL Program";
+    *logger << " - Linking GLSL Program";
     GLuint programId = glCreateProgram();
     glAttachShader(programId, vertexShaderId);
     glAttachShader(programId, fragmentShaderId);
@@ -94,15 +76,15 @@ GLuint shaderhelper::createProgram(const string & vertexFilename, const string &
     {
         vector<char> programErrorMessage(infoLogLength + 1);
         glGetProgramInfoLog(programId, infoLogLength, NULL, &programErrorMessage[0]);
-        cout << fail << endl;
+        *logger << Logger::fail << Logger::endl;
         throw &programErrorMessage[0];
     }
-    cout << ok << endl;
+    *logger << Logger::ok << Logger::endl;
 
-    cout << " - Cleaning up shaders";
+    *logger << " - Cleaning up shaders";
     glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
-    cout << ok << endl;
+    *logger << Logger::ok << Logger::endl;
 
     return programId;
 }
