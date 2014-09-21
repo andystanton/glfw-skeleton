@@ -5,16 +5,9 @@ before_install:
     - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
     - sudo apt-get update -qq
 install:
-    - wget ftp://ftp.gwdg.de/pub/misc/gcc/releases/gcc-4.9.1/gcc-4.9.1.tar.gz
-    - tar -xf gcc-4.9.1.tar.gz && cd gcc-4.9.1
-    - ./contrib/download_prerequisites
-    - cd ..
-    - mkdir objdir && cd objdir
-    - ../gcc-4.9.1/configure
-    - make -s
-    - make -s install
-    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.9 80
-    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.9 80
+    - sudo apt-get -qq install gcc-4.8 g++-4.8
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 80
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 80
     - sudo apt-get -qq install xorg-dev
     - sudo apt-get -qq install libglu1-mesa-dev
     - sudo apt-get -qq install cmake=2.8.12.2-0ubuntu1~ubuntu12.04.1~ppa2

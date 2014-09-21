@@ -24,7 +24,7 @@ Logger & Logger::operator << (const string & message)
     }
 
     // Output log message, stripping colours using regex replace if required.
-    logEntry << (noColour ? regex_replace(message, colourPattern, "") : message);
+    logEntry << (noColour ? regex_replace(message, colourPattern, string("")) : message);
 
     return *this;
 }
