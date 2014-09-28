@@ -24,7 +24,7 @@ cd glfw-skeleton
 rake default start
 ```
 
-## Run tests with Docker
+### Run tests with Docker
 
 ```sh
 docker run \
