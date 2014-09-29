@@ -16,9 +16,9 @@
     ignore = dirty
 [submodule "gmock"]
     path = lib/gmock
-    url = https://github.com/andystanton/gmock.git
+    url = https://github.com/cpp-mirrors/gmock.git
     ignore = dirty
 [submodule "gtest"]
     path = lib/gtest
-    url = https://github.com/andystanton/gtest.git
+    url = https://github.com/cpp-mirrors/gtest.git
     ignore = dirty
