@@ -3,7 +3,7 @@
 const string Logger::message_ok = string(" ... \033[1;32mOK\033[0m");
 const string Logger::message_fail = string(" ... \033[1;31mFail\033[0m");
 
-const regex Logger::colourPattern = regex("\\\033\\[\\d+\\;?\\d*m");
+const regex Logger::colourPattern = regex("\\\033\\[\\d+\\;?\\d*m", std::regex_constants::ECMAScript);
 
 Logger::Logger(string loggerName, bool noColour)
     : loggerName(loggerName)
