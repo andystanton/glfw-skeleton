@@ -1,7 +1,7 @@
 #include "util/cli/CLIParser.hpp"
 
-const regex CLIParser::cliKeyValuePattern = regex("--?([\\w\\d-]+)=([\\w\\d-]+)");
-const regex CLIParser::cliSwitchPattern = regex("-?-?([\\w\\d-]+)");
+const string CLIParser::CLI_KEY_VALUE_PATTERN = string("--?([\\w\\d-]+)=([\\w\\d-]+)");
+const string CLIParser::CLI_SWITCH_PATTERN = string("-?-?([\\w\\d-]+)");
 
 Configuration & CLIParser::getConfiguration()
 {
@@ -31,16 +31,22 @@ map<string, string> CLIParser::vecToMap(vector<string> arguments)
 
     if (arguments.size() > 1)
     {
-        for (auto argument : arguments)
+        try
         {
-            std::smatch sm;
-            if (regex_match(argument, sm, cliKeyValuePattern))
+            for (auto argument : arguments)
             {
-                configMap[toLowerCase(sm[1])] = toLowerCase(sm[2]);
-            } else if (regex_match(argument, sm, cliSwitchPattern))
-            {
-                configMap[toLowerCase(sm[1])] = string("true");
+                std::smatch sm;
+                if (regex_match(argument, sm, regex(CLI_KEY_VALUE_PATTERN)))
+                {
+                    configMap[toLowerCase(sm[1])] = toLowerCase(sm[2]);
+                } else if (regex_match(argument, sm, regex(CLI_SWITCH_PATTERN)))
+                {
+                    configMap[toLowerCase(sm[1])] = string("true");
+                }
             }
+        } catch (std::regex_error)
+        {
+            std::cout << "REGEX ERROR - UNABLE TO PARSE COMMAND LINE ARGUMENTS" << std::endl;
         }
     }
     return configMap;
