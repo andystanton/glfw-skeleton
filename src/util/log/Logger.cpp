@@ -3,7 +3,7 @@
 const string Logger::message_ok = string(" ... \033[1;32mOK\033[0m");
 const string Logger::message_fail = string(" ... \033[1;31mFail\033[0m");
 
-const regex Logger::colourPattern = regex("\\\033\\[\\d+\\;?\\d*m", std::regex_constants::ECMAScript);
+const regex Logger::colourPattern = regex("\\\033\\[\\d+\\;?\\d*m");
 
 Logger::Logger(string loggerName, bool noColour)
     : loggerName(loggerName)
@@ -24,7 +24,13 @@ Logger & Logger::operator << (const string & message)
     }
 
     // Output log message, stripping colours using regex replace if required.
-    logEntry << (noColour ? regex_replace(message, colourPattern, string("")) : message);
+    try
+    {
+        logEntry << (noColour ? regex_replace(message, colourPattern, string("")) : message);
+    } catch (std::regex_error)
+    {
+        logEntry << message;
+    }
 
     return *this;
 }
