@@ -13,7 +13,7 @@ try : loggerName(loggerName)
 }
 catch(std::regex_error)
 {
-    noColour = false;
+    noColour = true;
 }
 
 
