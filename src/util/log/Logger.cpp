@@ -1,16 +1,21 @@
 #include "util/log/Logger.hpp"
 
-const string Logger::message_ok = string(" ... \033[1;32mOK\033[0m");
-const string Logger::message_fail = string(" ... \033[1;31mFail\033[0m");
-
-const regex Logger::colourPattern = regex("\\\033\\[\\d+\\;?\\d*m");
+const string Logger::MESSAGE_OK = string(" ... \033[1;32mOK\033[0m");
+const string Logger::MESSAGE_FAIL = string(" ... \033[1;31mFail\033[0m");
+const string Logger::COLOUR_PATTERN = string("\\\033\\[\\d+\\;?\\d*m");
 
 Logger::Logger(string loggerName, bool noColour)
-    : loggerName(loggerName)
+try : loggerName(loggerName)
     , logEntry()
+    , colourRegex(Logger::COLOUR_PATTERN)
     , noColour(noColour)
 {
 }
+catch(std::regex_error)
+{
+    noColour = false;
+}
+
 
 Logger::~Logger()
 {
@@ -24,13 +29,7 @@ Logger & Logger::operator << (const string & message)
     }
 
     // Output log message, stripping colours using regex replace if required.
-    try
-    {
-        logEntry << (noColour ? regex_replace(message, colourPattern, string("")) : message);
-    } catch (std::regex_error)
-    {
-        logEntry << message;
-    }
+    logEntry << (noColour ? regex_replace(message, colourRegex, string("")) : message);
 
     return *this;
 }
@@ -48,10 +47,10 @@ Logger & Logger::operator << (const LoggerMode mode)
             logEntry.str(string(""));
             break;
         case ok:
-            *this << message_ok;
+            *this << MESSAGE_OK;
             break;
         case fail:
-            *this << message_fail;
+            *this << MESSAGE_FAIL;
             break;
         default:
             break;
