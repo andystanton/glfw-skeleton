@@ -32,10 +32,11 @@ private:
 
     string loggerName;
     stringstream logEntry;
+    regex colourRegex;
     bool noColour;
 
-    static const regex colourPattern;
-    static const string message_ok;
-    static const string message_fail;
+    static const string COLOUR_PATTERN;
+    static const string MESSAGE_OK;
+    static const string MESSAGE_FAIL;
 };
 
