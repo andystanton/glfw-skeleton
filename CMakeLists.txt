@@ -51,7 +51,7 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 #
 # Set compiler warnings
 #
-SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas")
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations")
 
 #
 # Enable C++11
