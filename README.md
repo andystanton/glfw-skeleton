@@ -24,6 +24,16 @@ cd glfw-skeleton
 rake default start
 ```
 
+### Run tests with Docker
+
+```sh
+docker run \
+  -e REPO_URL=https://github.com/andystanton/glfw-skeleton.git \
+  -e REPO_BRANCH=feature/3.1.0 \
+  -e BUILD_CMD='rake configure compile test' \
+  -t andystanton/gcc-cmake-gl-project
+```
+
 ## Libraries
 
 * [glfw](http://www.glfw.org/) 3.0.4

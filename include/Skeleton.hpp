@@ -1,5 +1,4 @@
-#ifndef _SKELETON_SKELETON
-#define _SKELETON_SKELETON
+#pragma once
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -10,19 +9,16 @@
 
 #include "util/shaderhelper.hpp"
 #include "util/colourhelper.hpp"
+#include "util/log/LoggerFactory.hpp"
 
 #include <iostream>
+#include <memory>
 
-using std::cout;
-using std::cerr;
-using std::endl;
 using std::string;
 
 class Skeleton {
 private:
     static constexpr int SKULL_COMPONENT_COUNT = 7 * 2 * 3 * 2;
-    static const string MESSAGE_OK;
-    static const string MESSAGE_FAIL;
     static const GLfloat SKULL_VERTICES[SKULL_COMPONENT_COUNT];
 
     unsigned int width;
@@ -41,6 +37,8 @@ private:
 
     glm::mat4 mvp;
 
+    shared_ptr<Logger> logger;
+
     void initGL();
     void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
 
@@ -54,4 +52,3 @@ public:
     bool isActive();
 };
 
-#endif

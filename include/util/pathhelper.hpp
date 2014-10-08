@@ -1,5 +1,4 @@
-#ifndef _SKELETON_PATH_HELPER
-#define _SKELETON_PATH_HELPER
+#pragma once
 
 #include <climits>
 #include <memory>
@@ -21,4 +20,3 @@ namespace pathhelper {
     unique_ptr<string> getApplicationName();
 };
 
-#endif

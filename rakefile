@@ -3,7 +3,7 @@ require 'fileutils'
 def safe_task(&block)
     yield
 rescue Exception => problem
-    puts "rake task interupted: #{problem}"
+    puts "rake task interrupted: #{problem}"
 end
 
 deep_clean_list = [
@@ -11,6 +11,17 @@ deep_clean_list = [
     "lib/*/cmake_install.cmake",
     "lib/*/CMakeFiles",
     "lib/*/CMakeScripts",
+    "lib/*/build",
+    "lib/*/Makefile",
+    "lib/*/cmake_uninstall.cmake",
+    "lib/*/CTestTestfile.cmake",
+    "lib/*/*/cmake_install.cmake",
+    "lib/*/*/CMakeFiles",
+    "lib/*/*/CMakeScripts",
+    "lib/*/*/build",
+    "lib/*/*/Makefile",
+    "lib/*/*/cmake_uninstall.cmake",
+    "lib/*/*/CTestTestfile.cmake",
     "lib/*.a",
     "lib/gmock/gtest",
     "lib/freetype2/include/ftconfig.hpp",
@@ -90,11 +101,15 @@ desc 'Executes the unit tests'
 task :test do
     puts 'Executing test...'
 
-    safe_task do
+    begin
         sh "make -C build test"
+        sh "cat build/Testing/Temporary/LastTest.log"
+    rescue Exception => problem
+        puts "rake task interrupted: #{problem}"
+        sh "cat build/Testing/Temporary/LastTest.log"
+        exit 1
     end
 
-    sh "cat build/Testing/Temporary/LastTest.log"
 end
 
 desc 'Starts the application'

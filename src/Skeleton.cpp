@@ -5,6 +5,7 @@ Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int heig
     this->appName = appName;
     this->width = width;
     this->height = height;
+    this->logger = LoggerFactory::getLogger("Skeleton");
 }
 
 Skeleton::~Skeleton()
@@ -14,19 +15,19 @@ Skeleton::~Skeleton()
 
 void Skeleton::initGL()
 {
-    cout << "Initialising OpenGL" << endl;
+    *logger << "Initialising OpenGL" << Logger::endl;
 
     // Initialise GLFW
-    cout << " - Initialising GLFW";
+    *logger << "Initialising GLFW";
     if (!glfwInit())
     {
-        cout << MESSAGE_FAIL << endl;
+        *logger << Logger::fail << Logger::endl;
         throw "Failed to initialise GLFW";
     }
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
     // Create window with GLFW
-    cout << " - Creating window with GLFW";
+    *logger << " - Creating window with GLFW";
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
@@ -45,39 +46,39 @@ void Skeleton::initGL()
     if (window == nullptr)
     {
         glfwTerminate();
-        cout << MESSAGE_FAIL << endl;
+        *logger << Logger::fail << Logger::endl;
         throw "Failed to create window with GLFW.";
     }
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
     // Make window the current OpenGL context
-    cout << " - Making window the current OpenGL context";
+    *logger << " - Making window the current OpenGL context";
     glfwMakeContextCurrent(window);
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
     // Initialise GLEW
-    cout << " - Initialising GLEW";
+    *logger << " - Initialising GLEW";
     glewExperimental = true;
     if (glewInit() != GLEW_OK)
     {
         glfwTerminate();
-        cout << MESSAGE_FAIL << endl;
+        *logger << Logger::fail << Logger::endl;
         throw "Failed to initialise GLEW";
     }
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
     // Set GLFW Options
-    cout << " - Setting GLFW Options";
+    *logger << " - Setting GLFW Options";
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
     // Set OpenGL Options
-    cout << " - Setting OpenGL Options";
+    *logger << " - Setting OpenGL Options";
     glClearColor(0.3f, 0.2f, 0.2f, 0.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 }
 
 void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
@@ -99,7 +100,7 @@ void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
 
 void Skeleton::setup()
 {
-    cout << endl << "Running \033[1m" << appName << "\033[0m" << endl;
+    *logger << Logger::endl << "Running \033[1m" << appName << "\033[0m" << Logger::endl;
 
     try
     {
@@ -107,7 +108,7 @@ void Skeleton::setup()
     }
     catch (const char * error)
     {
-        cerr << error << endl;
+        *logger << error << Logger::endl;
         exit(-1);
     }
 
@@ -119,7 +120,7 @@ void Skeleton::setup()
     }
     catch (const string & error)
     {
-        cerr << error << endl;
+        *logger << error << Logger::endl;
         teardown();
         exit(-1);
     }
@@ -168,17 +169,17 @@ void Skeleton::loop()
 
 void Skeleton::teardown()
 {
-    cout << "Cleaning up OpenGL" << endl;
+    *logger << "Cleaning up OpenGL" << Logger::endl;
 
-    cout << " - Deleting OpenGL resources";
+    *logger << " - Deleting OpenGL resources";
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteProgram(programId);
     glDeleteVertexArrays(1, &vertexArrayId);
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 
-    cout << " - Terminating GLFW";
+    *logger << " - Terminating GLFW";
     glfwTerminate();
-    cout << MESSAGE_OK << endl;
+    *logger << Logger::ok << Logger::endl;
 }
 
 bool Skeleton::isActive()
@@ -186,10 +187,6 @@ bool Skeleton::isActive()
     return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
         && glfwWindowShouldClose(window) == 0;
 }
-
-const string Skeleton::MESSAGE_OK(" ... \033[1;32mOK\033[0m");
-
-const string Skeleton::MESSAGE_FAIL(" ... \033[1;31mFail\033[0m");
 
 const GLfloat Skeleton::SKULL_VERTICES[] =
 {
