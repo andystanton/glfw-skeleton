@@ -9,7 +9,7 @@ All libraries are included as git submodules and built from source with the appl
 ## Requirements
 
 * A C++11 compiler
-* CMake >= 2.8.8
+* CMake >= 2.8.12
 * Make >= 3.81
 * Rake >= 10.3
 * OpenGL >= 3.2
@@ -22,16 +22,6 @@ git clone https://github.com/andystanton/glfw-skeleton.git --recursive
 cd glfw-skeleton
 
 rake default start
-```
-
-### Run tests with Docker
-
-```sh
-docker run \
-  -e REPO_URL=https://github.com/andystanton/glfw-skeleton.git \
-  -e REPO_BRANCH=feature/3.1.0 \
-  -e BUILD_CMD='rake configure compile test' \
-  -t andystanton/gcc-cmake-gl-project
 ```
 
 ## Libraries
