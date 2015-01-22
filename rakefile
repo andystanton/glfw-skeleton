@@ -50,7 +50,7 @@ laundry_list = [
     "test/CMakeScripts",
     "test/CTestTestfile.cmake",
     "Makefile",
-    "bin",
+    "build/bin",
     "*.build"
 ]
 
@@ -116,7 +116,7 @@ desc 'Starts the application'
 task :start do
     puts 'Executing start...'
 
-    sh "bin/glfw-skeleton"
+    sh "build/bin/glfw-skeleton"
 end
 
 desc 'Alias for rake configure compile test'
