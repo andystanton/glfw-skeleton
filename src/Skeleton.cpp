@@ -100,7 +100,9 @@ void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
 
 void Skeleton::setup()
 {
-    *logger << Logger::endl << "Running \033[1m" << appName << "\033[0m" << Logger::endl;
+    *logger << Logger::bold << string(64, '=') << Logger::endl;
+    *logger << Logger::green << Logger::bold << "Starting up " << Logger::blue << appName << Logger::reset  << "!" << Logger::endl;
+    *logger << Logger::bold << string(64, '=') << Logger::endl;
 
     try
     {
