@@ -27,10 +27,10 @@ private:
 
     GLFWwindow * window;
 
-    GLuint posId;
-    GLuint colourId;
-    GLuint scaleId;
-    GLuint matrixId;
+    GLint posId;
+    GLint colourId;
+    GLint scaleId;
+    GLint matrixId;
     GLuint vertexbuffer;
     GLuint vertexArrayId;
     GLuint programId;

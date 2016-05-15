@@ -55,26 +55,6 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations")
 
 #
-# Enable C++11
-#
-IF(CMAKE_COMPILER_IS_GNUCXX)
-    IF(CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.7")
-        MESSAGE(FATAL_ERROR "Compiler does not support C++11")
-    ELSE()
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    ENDIF()
-ELSEIF(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++")
-    IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-        SET(CMAKE_XCODE_ATTRIBUTE_CLANG_CXX_LIBRARY "libc++")
-    ENDIF()
-ELSEIF(MSVC)
-    # On by default
-ELSE()
-    MESSAGE(FATAL_ERROR "Compiler not supported")
-ENDIF()
-
-#
 # glfw
 #
 OPTION(GLFW_BUILD_EXAMPLES  "Build the GLFW example programs"   OFF)

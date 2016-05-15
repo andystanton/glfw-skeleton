@@ -29,8 +29,8 @@ void Skeleton::initGL()
     // Create window with GLFW
     *logger << " - Creating window with GLFW";
     glfwWindowHint(GLFW_SAMPLES, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
@@ -58,7 +58,7 @@ void Skeleton::initGL()
 
     // Initialise GLEW
     *logger << " - Initialising GLEW";
-    glewExperimental = true;
+    glewExperimental = (GLboolean) true;
     if (glewInit() != GLEW_OK)
     {
         glfwTerminate();
@@ -118,7 +118,7 @@ void Skeleton::setup()
     glBindVertexArray(vertexArrayId);
 
     try {
-        programId = shaderhelper::createProgram("skull.vertexshader", "skull.fragmentshader");
+        programId = shaderhelper::createProgram("2dcolor.vert", "2dcolor.frag");
     }
     catch (const string & error)
     {
@@ -127,9 +127,9 @@ void Skeleton::setup()
         exit(-1);
     }
 
-    posId         = glGetUniformLocation(programId, "skullPos");
-    colourId      = glGetUniformLocation(programId, "skullColour");
-    scaleId       = glGetUniformLocation(programId, "skullScale");
+    posId         = glGetUniformLocation(programId, "position");
+    colourId      = glGetUniformLocation(programId, "color");
+    scaleId       = glGetUniformLocation(programId, "scale");
     matrixId      = glGetUniformLocation(programId, "mvp");
 
     glm::mat4 projection = glm::ortho(

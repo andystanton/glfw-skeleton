@@ -16,7 +16,6 @@ lib/*/cmake_install.cmake
 lib/*/CMakeFiles
 lib/*/CMakeScripts
 lib/*.a
-Makefile
 bin
 build
 .idea
