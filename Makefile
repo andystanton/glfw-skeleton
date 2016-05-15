@@ -10,7 +10,7 @@ clean:
 .PHONY : clean
 
 runonly:
-	pushd build 1>/dev/null && ./bin/glfw-skeleton;
+	cd build 1>/dev/null && ./bin/glfw-skeleton;
 
 .PHONY : runonly
 
@@ -19,7 +19,7 @@ run: | all runonly
 .PHONY : run
 
 testonly:
-	pushd build 1>/dev/null && ./bin/glfw-skeleton-unittests --reporter=spec;
+	cd build 1>/dev/null && ./bin/glfw-skeleton-unittests --reporter=spec;
 
 .PHONY : testonly
 
