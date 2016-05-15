@@ -1,4 +1,4 @@
-# glfw-skeleton [![Build Status](http://drone.cyniq.com/api/badge/github.com/andystanton/glfw-skeleton/status.svg?branch=master)](http://drone.cyniq.com/github.com/andystanton/glfw-skeleton)
+# glfw-skeleton [![Build Status](https://travis-ci.org/andystanton/glfw-skeleton.svg?branch=master)](https://travis-ci.org/andystanton/glfw-skeleton)
 
 A skeleton C++14 OpenGL 3.2 app that uses the [GLFW](http://www.glfw.org), [GLEW](http://glew.sourceforge.net/) and [GLM](http://glm.g-truc.net/) libraries and builds with [CMake](http://www.cmake.org/). [Bandit](http://banditcpp.org/) is used for unit testing.
 
