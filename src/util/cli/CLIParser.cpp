@@ -44,9 +44,10 @@ map<string, string> CLIParser::vecToMap(vector<string> arguments)
                     configMap[toLowerCase(sm[1])] = string("true");
                 }
             }
-        } catch (std::regex_error)
+        } catch (const std::regex_error & error)
         {
-            std::cout << "REGEX ERROR - UNABLE TO PARSE COMMAND LINE ARGUMENTS" << std::endl;
+            std::cerr << "Regex error - unable to parse command line arguments" << std::endl;
+            std::cerr << error.code() << ": " << error.what() << std::endl;
         }
     }
     return configMap;
