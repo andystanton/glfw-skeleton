@@ -1,3 +1,0 @@
-image: andystanton/gcc-cmake-gl:1.0
-script:
-  - rake
