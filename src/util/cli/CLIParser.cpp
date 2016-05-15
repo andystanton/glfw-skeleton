@@ -54,14 +54,14 @@ map<string, string> CLIParser::vecToMap(vector<string> arguments)
 }
 
 CLIParser::CLIParser(int argc, char ** argv)
-        : CLIParser(argToVec(argc, argv))
+        : configuration(vecToMap(argToVec(argc, argv)))
 {
 
 }
 
 
 CLIParser::CLIParser(vector<string> arguments)
-    : configuration(vecToMap(arguments))
+        : configuration(vecToMap(arguments))
 {
 
 }
