@@ -22,3 +22,7 @@
     path = lib/gtest
     url = https://github.com/cpp-mirrors/gtest.git
     ignore = dirty
+[submodule "googletest"]
+	path = lib/googletest
+	url = git@github.com:google/googletest.git
+	ignore = dirty

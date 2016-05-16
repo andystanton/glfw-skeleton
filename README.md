@@ -25,8 +25,8 @@ make test run
 
 ## Libraries
 
-* [glfw](http://www.glfw.org/) 3.1.2
-* [glm](http://glm.g-truc.net/) 0.9.5
-* [glew](http://glew.sourceforge.net/) 1.13.0
-* [bandit](http://banditcpp.org/) ffa30f3
-* [gmock](https://code.google.com/p/googlemock/) & [gtest](https://code.google.com/p/googletest/) 1.7.0
+* [glfw](http://www.glfw.org/)
+* [glm](http://glm.g-truc.net/)
+* [glew](http://glew.sourceforge.net/)
+* [bandit](http://banditcpp.org/)
+* [googletest](https://github.com/google/googletest)
