@@ -14,23 +14,6 @@ SET(APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSI
 SET(APPLICATION_ID "${PROJECT_NAME}")
 
 #
-# Copy directory contents
-#
-MACRO(COPY_FILES srcDir destDir)
-    MESSAGE(STATUS "Copying contents of directory ${srcDir} to ${destDir}")
-    MAKE_DIRECTORY(${destDir})
-
-    FILE(GLOB templateFiles RELATIVE ${srcDir} ${srcDir}/*)
-    FOREACH(templateFile ${templateFiles})
-        SET(srcTemplatePath ${srcDir}/${templateFile})
-        IF(NOT IS_DIRECTORY ${srcTemplatePath})
-            MESSAGE(STATUS "Copying file ${templateFile}")
-            FILE(COPY ${srcTemplatePath} DESTINATION ${destDir})
-        ENDIF(NOT IS_DIRECTORY ${srcTemplatePath})
-    ENDFOREACH(templateFile)
-ENDMACRO()
-
-#
 # Debugging Options
 #
 SET(CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release

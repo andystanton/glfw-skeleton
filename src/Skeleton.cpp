@@ -118,7 +118,7 @@ void Skeleton::setup()
     glBindVertexArray(vertexArrayId);
 
     try {
-        programId = shaderhelper::createProgram("2dcolor.vert", "2dcolor.frag");
+        programId = shaderhelper::createProgram("shaders/2dcolor.vert", "shaders/2dcolor.frag");
     }
     catch (const string & error)
     {

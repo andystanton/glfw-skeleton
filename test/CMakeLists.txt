@@ -1,5 +1,3 @@
-FILE(GLOB_RECURSE test_SRCS *.cpp *.cxx *.cc *.C *.c *.h *.hpp)
-
 SET(test_LIBS gtest gtest_main libglew_static glfw ${GLFW_LIBRARIES})
 
 SET(test_BIN ${PROJECT_NAME}-unittests)
@@ -11,7 +9,23 @@ INCLUDE_DIRECTORIES(
         ${GLEW_INCLUDE_PATH}
         ${GLM_INCLUDE_PATH})
 
-ADD_EXECUTABLE(${test_BIN} ${test_SRCS} ${ALL_SRCS})
+SET(project_SRCS
+        ../src/Skeleton.cpp
+        ../src/util/cli/CLIParser.cpp
+        ../src/util/cli/Configuration.cpp
+        ../src/util/log/Logger.cpp
+        ../src/util/log/LoggerFactory.cpp
+        ../src/util/colourhelper.cpp
+        ../src/util/pathhelper.cpp
+        ../src/util/shaderhelper.cpp)
+
+SET(test_SRCS
+        banditrunner.cpp
+        specs/util/cli/CLIParserSpec.cpp
+        specs/util/cli/ConfigurationSpec.cpp
+        specs/util/colourhelperSpec.cpp)
+
+ADD_EXECUTABLE(${test_BIN} ${test_SRCS} ${project_SRCS})
 
 SET_TARGET_PROPERTIES(
         ${test_BIN}
