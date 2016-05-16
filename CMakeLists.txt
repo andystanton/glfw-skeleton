@@ -85,6 +85,11 @@ ADD_SUBDIRECTORY(lib/bandit)
 SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
 
 #
+# EasyLogging++
+#
+SET(EASYLOGGINGPP_INCLUDE_PATH "${MAINFOLDER}/lib/easyloggingpp/src")
+
+#
 # Add project sources
 #
 ADD_SUBDIRECTORY(src)

@@ -1,6 +1,7 @@
 #include <bandit/bandit.h>
+#include <easylogging++.h>
 
-using namespace bandit;
+INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char* argv[]) {
     return bandit::run(argc, argv);

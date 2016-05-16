@@ -1,4 +1,4 @@
-#include "util/colourhelper.hpp"
+#include "util/colorhelper.hpp"
 
 #include <cassert>
 #include <iostream>
@@ -7,22 +7,22 @@
 
 using namespace std;
 
-glm::vec4 colourhelper::rgbDecToVec4(float r, float g, float b)
+glm::vec4 colorhelper::rgbDecToVec4(float r, float g, float b)
 {
     return rgbaDecToVec4(r, g, b, 1.0f);
 }
 
-glm::vec4 colourhelper::rgbaDecToVec4(float r, float g, float b, float a)
+glm::vec4 colorhelper::rgbaDecToVec4(float r, float g, float b, float a)
 {
     return glm::vec4 { r, g, b, a };
 }
 
-glm::vec4 colourhelper::rgbHexToVec4(const string & rgb)
+glm::vec4 colorhelper::rgbHexToVec4(const string & rgb)
 {
     return rgbaHexToVec4(rgb, 1.0f);
 }
 
-glm::vec4 colourhelper::rgbaHexToVec4(const string & rgb, float a)
+glm::vec4 colorhelper::rgbaHexToVec4(const string & rgb, float a)
 {
     assert(rgb.size() == 6);
     glm::vec4 outputColour;
@@ -37,7 +37,7 @@ glm::vec4 colourhelper::rgbaHexToVec4(const string & rgb, float a)
     return outputColour;
 }
 
-int colourhelper::hexPairToInt(char first, char second)
+int colorhelper::hexPairToInt(char first, char second)
 {
     int component;
     std::stringstream stream;

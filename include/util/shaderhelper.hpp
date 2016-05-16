@@ -8,7 +8,8 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include "util/log/LoggerFactory.hpp"
+
+#include "easylogging++.h"
 
 using std::vector;
 using std::ifstream;

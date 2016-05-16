@@ -8,8 +8,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "util/shaderhelper.hpp"
-#include "util/colourhelper.hpp"
-#include "util/log/LoggerFactory.hpp"
+#include "util/colorhelper.hpp"
+
+#include "easylogging++.h"
 
 #include <iostream>
 #include <memory>
@@ -36,8 +37,6 @@ private:
     GLuint programId;
 
     glm::mat4 mvp;
-
-    shared_ptr<Logger> logger;
 
     void initGL();
     void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
