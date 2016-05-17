@@ -33,12 +33,7 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 #
 # Set compiler warnings
 #
-SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations")
-IF(CMAKE_COMPILER_IS_GNUXX)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-pessimizing-move")
-ENDIF()
-
-
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations -Wno-pessimizing-move")
 
 #
 # glfw
