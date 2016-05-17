@@ -2,6 +2,8 @@ SET(test_LIBS gtest gtest_main libglew_static glfw ${GLFW_LIBRARIES})
 
 SET(test_BIN ${PROJECT_NAME}-unittests)
 
+SET(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/testbin")
+
 INCLUDE_DIRECTORIES(
         ${EASYLOGGINGPP_INCLUDE_PATH}
         ${GTEST_INCLUDE_PATH}
@@ -10,21 +12,10 @@ INCLUDE_DIRECTORIES(
         ${GLEW_INCLUDE_PATH}
         ${GLM_INCLUDE_PATH})
 
-#SET(project_SRCS
-#        ../src/Skeleton.cpp
-#        ../src/util/cli/CLIParser.cpp
-#        ../src/util/cli/Configuration.cpp
-#        ../src/util/log/Logger.cpp
-#        ../src/util/log/LoggerFactory.cpp
-#        ../src/util/colorhelper.cpp
-#        ../src/util/pathhelper.cpp
-#        ../src/util/shaderhelper.cpp)
-
 SET(test_SRCS
         banditrunner.cpp
-        specs/util/cli/CLIParserSpec.cpp
-        specs/util/cli/ConfigurationSpec.cpp
-        specs/util/colorhelperSpec.cpp)
+        specs/util/colorhelperSpec.cpp
+        specs/util/shaderhelperSpec.cpp)
 
 ADD_EXECUTABLE(${test_BIN} ${test_SRCS})
 
@@ -33,8 +24,13 @@ SET_TARGET_PROPERTIES(
         PROPERTIES
         CXX_STANDARD 14)
 
-MESSAGE(STATUS "foo ${project_LIB}")
-
 TARGET_LINK_LIBRARIES(${test_BIN} glfw-skeleton_lib ${test_LIBS})
 
 ADD_TEST(${test_BIN} ${EXECUTABLE_OUTPUT_PATH}/${test_BIN} --reporter=spec)
+
+ADD_CUSTOM_TARGET("${test_BIN}_copy_resources" ALL
+        COMMENT "Copying test resources"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_CURRENT_SOURCE_DIR}/fixtures" "${EXECUTABLE_OUTPUT_PATH}/fixtures")
+
+ADD_DEPENDENCIES("${test_BIN}" "${test_BIN}_copy_resources")

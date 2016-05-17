@@ -1,11 +1,9 @@
 #include "util/shaderhelper.hpp"
 
-GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType) {
+string shaderhelper::loadShader(const string & shaderFilename) {
     LOG(INFO) << " - Loading shader: " << shaderFilename;
     unique_ptr<string> appPath = pathhelper::getApplicationPath();
     string shaderPath = *(appPath.get()) + "/" + shaderFilename;
-
-    GLuint shaderId = glCreateShader(shaderType);
 
     string shaderCode;
 
@@ -22,10 +20,18 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
         throw string("Unable to open " + shaderFilename);
     }
 
+    return shaderCode;
+}
+
+GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType) {
+    string shaderCode = loadShader(shaderFilename);
+
     // Compile shader
     LOG(INFO) << " - Compiling shader: " << shaderFilename;
+
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
+    GLuint shaderId = glCreateShader(shaderType);
 
     char const *sourcePointer = shaderCode.c_str();
     glShaderSource(shaderId, 1, &sourcePointer, NULL);
@@ -35,7 +41,7 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compilationSuccess);
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0) {
-        vector<char> vertexShaderErrorMessage(infoLogLength + 1);
+        vector<char> vertexShaderErrorMessage((unsigned long) (infoLogLength + 1));
         glGetShaderInfoLog(shaderId, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
         LOG(INFO) << " - Shader compilation error: ";
         LOG(INFO) << &vertexShaderErrorMessage[0];
@@ -66,7 +72,7 @@ GLuint shaderhelper::createProgram(const string & vertexFilename, const string &
 
     if (infoLogLength > 0)
     {
-        vector<char> programErrorMessage(infoLogLength + 1);
+        vector<char> programErrorMessage((unsigned long) (infoLogLength + 1));
         glGetProgramInfoLog(programId, infoLogLength, NULL, &programErrorMessage[0]);
         throw &programErrorMessage[0];
     }

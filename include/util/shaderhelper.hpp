@@ -17,6 +17,7 @@ using std::ios;
 
 namespace shaderhelper
 {
+    string loadShader(const string & shaderFilename);
     GLuint compileShader(const string & shaderFilename, GLenum shaderType);
     GLuint createProgram(const string & vertexFileName, const string & fragmentFileName);
 };
