@@ -22,9 +22,7 @@ SET(CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
 # Project Output Paths
 #
 SET(MAINFOLDER ${PROJECT_SOURCE_DIR})
-SET(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 SET(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${EXECUTABLE_OUTPUT_PATH}")
 
 #
 # Project Search Paths
@@ -35,7 +33,7 @@ INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
 #
 # Set compiler warnings
 #
-SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations")
+SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations -Wno-pessimizing-move")
 
 #
 # glfw
@@ -83,6 +81,11 @@ OPTION(SNOWHOUSE_RUN_TESTS      "Run the Snowhouse tests"   OFF)
 ADD_SUBDIRECTORY(lib/bandit)
 
 SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
+
+#
+# EasyLogging++
+#
+SET(EASYLOGGINGPP_INCLUDE_PATH "${MAINFOLDER}/lib/easyloggingpp/src")
 
 #
 # Add project sources

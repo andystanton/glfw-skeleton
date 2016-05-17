@@ -5,7 +5,6 @@ Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int heig
     this->appName = appName;
     this->width = width;
     this->height = height;
-    this->logger = LoggerFactory::getLogger("Skeleton");
 }
 
 Skeleton::~Skeleton()
@@ -15,19 +14,17 @@ Skeleton::~Skeleton()
 
 void Skeleton::initGL()
 {
-    *logger << "Initialising OpenGL" << Logger::endl;
+    LOG(INFO) << "Initialising OpenGL";
 
     // Initialise GLFW
-    *logger << "Initialising GLFW";
+    LOG(INFO) << "Initialising GLFW";
     if (!glfwInit())
     {
-        *logger << Logger::fail << Logger::endl;
         throw "Failed to initialise GLFW";
     }
-    *logger << Logger::ok << Logger::endl;
 
     // Create window with GLFW
-    *logger << " - Creating window with GLFW";
+    LOG(INFO) << " - Creating window with GLFW";
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -46,39 +43,32 @@ void Skeleton::initGL()
     if (window == nullptr)
     {
         glfwTerminate();
-        *logger << Logger::fail << Logger::endl;
         throw "Failed to create window with GLFW.";
     }
-    *logger << Logger::ok << Logger::endl;
 
     // Make window the current OpenGL context
-    *logger << " - Making window the current OpenGL context";
+    LOG(INFO) << " - Making window the current OpenGL context";
     glfwMakeContextCurrent(window);
-    *logger << Logger::ok << Logger::endl;
 
     // Initialise GLEW
-    *logger << " - Initialising GLEW";
+    LOG(INFO) << " - Initialising GLEW";
     glewExperimental = (GLboolean) true;
     if (glewInit() != GLEW_OK)
     {
         glfwTerminate();
-        *logger << Logger::fail << Logger::endl;
         throw "Failed to initialise GLEW";
     }
-    *logger << Logger::ok << Logger::endl;
 
     // Set GLFW Options
-    *logger << " - Setting GLFW Options";
+    LOG(INFO) << " - Setting GLFW Options";
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
-    *logger << Logger::ok << Logger::endl;
 
     // Set OpenGL Options
-    *logger << " - Setting OpenGL Options";
+    LOG(INFO) << " - Setting OpenGL Options";
     glClearColor(0.3f, 0.2f, 0.2f, 0.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
-    *logger << Logger::ok << Logger::endl;
 }
 
 void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
@@ -100,9 +90,9 @@ void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
 
 void Skeleton::setup()
 {
-    *logger << Logger::bold << string(64, '=') << Logger::endl;
-    *logger << Logger::green << Logger::bold << "Starting up " << Logger::blue << appName << Logger::reset  << "!" << Logger::endl;
-    *logger << Logger::bold << string(64, '=') << Logger::endl;
+    LOG(INFO) << string(64, '=');
+    LOG(INFO) << "Starting up " << appName << "!";
+    LOG(INFO) << string(64, '=');
 
     try
     {
@@ -110,7 +100,7 @@ void Skeleton::setup()
     }
     catch (const char * error)
     {
-        *logger << error << Logger::endl;
+        LOG(INFO) << error;
         exit(-1);
     }
 
@@ -122,7 +112,7 @@ void Skeleton::setup()
     }
     catch (const string & error)
     {
-        *logger << error << Logger::endl;
+        LOG(ERROR) << error;
         teardown();
         exit(-1);
     }
@@ -162,7 +152,7 @@ void Skeleton::loop()
             static_cast<float>(height) / 2
         },
         1.6f,
-        colourhelper::rgbaHexToVec4("FFFFFF", 0.4f)
+        colorhelper::rgbaHexToVec4("FFFFFF", 0.4f)
     );
 
     glfwSwapBuffers(window);
@@ -171,17 +161,15 @@ void Skeleton::loop()
 
 void Skeleton::teardown()
 {
-    *logger << "Cleaning up OpenGL" << Logger::endl;
+    LOG(INFO) << "Cleaning up OpenGL";
 
-    *logger << " - Deleting OpenGL resources";
+    LOG(INFO) << " - Deleting OpenGL resources";
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteProgram(programId);
     glDeleteVertexArrays(1, &vertexArrayId);
-    *logger << Logger::ok << Logger::endl;
 
-    *logger << " - Terminating GLFW";
+    LOG(INFO) << " - Terminating GLFW";
     glfwTerminate();
-    *logger << Logger::ok << Logger::endl;
 }
 
 bool Skeleton::isActive()

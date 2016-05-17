@@ -7,7 +7,7 @@
 
 using std::string;
 
-namespace colourhelper {
+namespace colorhelper {
     glm::vec4 rgbaDecToVec4(float r, float g, float b, float a);
     glm::vec4 rgbDecToVec4(float r, float g, float b);
 

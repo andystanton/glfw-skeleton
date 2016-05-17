@@ -8,7 +8,8 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include "util/log/LoggerFactory.hpp"
+
+#include "easylogging++.h"
 
 using std::vector;
 using std::ifstream;
@@ -16,6 +17,7 @@ using std::ios;
 
 namespace shaderhelper
 {
+    string loadShader(const string & shaderFilename);
     GLuint compileShader(const string & shaderFilename, GLenum shaderType);
     GLuint createProgram(const string & vertexFileName, const string & fragmentFileName);
 };
