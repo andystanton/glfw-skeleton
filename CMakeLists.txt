@@ -1,22 +1,21 @@
 #
 # Project Properties
 #
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.7)
 PROJECT(glfw-skeleton)
+
+include(ExternalProject)
+find_package (OpenGL REQUIRED)
+set(CMAKE_CXX_STANDARD 17)
 SET(APPLICATION_NAME "GLFW Skeleton")
 SET(APPLICATION_CODENAME "${PROJECT_NAME}")
-SET(APPLICATION_COPYRIGHT_YEARS "2014-2016")
-SET(APPLICATION_VERSION_MAJOR 4)
+SET(APPLICATION_COPYRIGHT_YEARS "2014-2018")
+SET(APPLICATION_VERSION_MAJOR 5)
 SET(APPLICATION_VERSION_MINOR 0)
 SET(APPLICATION_VERSION_PATCH 0)
 SET(APPLICATION_VERSION_TYPE "RELEASE")
 SET(APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
 SET(APPLICATION_ID "${PROJECT_NAME}")
-
-#
-# Debugging Options
-#
-SET(CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
 
 #
 # Project Output Paths
@@ -29,11 +28,6 @@ SET(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
 #
 LIST(APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
 INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
-
-#
-# Set compiler warnings
-#
-SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations -Wno-pessimizing-move")
 
 #
 # glfw
@@ -50,51 +44,68 @@ SET(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
 #
 # glew
 #
-OPTION(glew-cmake_BUILD_SHARED "Build the shared glew library" OFF)
-ADD_SUBDIRECTORY(lib/glew)
+ExternalProject_Add(
+    glew
+    PREFIX lib/glew
+    URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
+    URL_HASH SHA256=04de91e7e6763039bc11940095cd9c7f880baba82196a7765f727ac05a993c95
+    TLS_VERIFY true
+    SOURCE_SUBDIR "build/cmake"
+    BINARY_DIR lib/glew
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../ -DBUILD_UTILS=OFF -DBUILD_SHARED_LIBS=OFF
+)
 
-SET(GLEW_INCLUDE_PATH "${MAINFOLDER}/lib/glew/include")
+#set (prefix ${CMAKE_INSTALL_PREFIX})
+#set (exec_prefix ${CMAKE_INSTALL_PREFIX})
+#set (libdir ${CMAKE_INSTALL_FULL_LIBDIR})
+#set (includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
+
+SET(GLEW_INCLUDE_PATH "${CMAKE_BINARY_DIR}/include")
 
 #
 # glm
 #
 SET(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
+MESSAGE("FOO ${CMAKE_BINARY_DIR}/lib/libGLEW.a")
+SET(project_LIBS ${OPENGL_LIBRARIES} ${CMAKE_BINARY_DIR}/lib/libGLEW.a glfw ${GLFW_LIBRARIES})
 
-#
-# gmock
-#
-ADD_SUBDIRECTORY(lib/googletest/googletest)
+SET(project_BIN ${PROJECT_NAME})
 
-SET(GTEST_INCLUDE_PATH "${gtest_SOURCE_DIR}/include")
+SET(
+    project_SRCS
+    src/main.cpp
+    src/Skeleton.cpp
+    src/util/colorhelper.cpp
+    src/util/pathhelper.cpp
+    src/util/shaderhelper.cpp
+)
 
-SET_PROPERTY(TARGET gtest       APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
-SET_PROPERTY(TARGET gtest_main  APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+SET(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 
-#
-# Bandit
-#
-OPTION(BANDIT_BUILD_SPECS       "Build the Bandit specs"    OFF)
-OPTION(SNOWHOUSE_BUILD_TESTS    "Build the Snowhouse tests" OFF)
-OPTION(BANDIT_RUN_SPECS         "Run the Bandit specs"      OFF)
-OPTION(SNOWHOUSE_RUN_TESTS      "Run the Snowhouse tests"   OFF)
+ADD_EXECUTABLE(${project_BIN} ${project_SRCS})
 
-ADD_SUBDIRECTORY(lib/bandit)
+SET_TARGET_PROPERTIES(
+    ${project_BIN}
+    PROPERTIES
+    OUTPUT_NAME ${APPLICATION_NAME}
+    CXX_STANDARD 17)
 
-SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
+INCLUDE_DIRECTORIES(
+    ${GLFW_INCLUDE_PATH}
+    ${GLEW_INCLUDE_PATH}
+    ${GLM_INCLUDE_PATH})
 
-#
-# EasyLogging++
-#
-SET(EASYLOGGINGPP_INCLUDE_PATH "${MAINFOLDER}/lib/easyloggingpp/src")
+TARGET_LINK_LIBRARIES(${project_BIN} ${project_LIBS})
 
-#
-# Add project sources
-#
-ADD_SUBDIRECTORY(src)
+SET_TARGET_PROPERTIES(${project_BIN} PROPERTIES
+    OUTPUT_NAME ${project_BIN}
+    CLEAN_DIRECT_OUTPUT 1)
 
-#
-# Add test sources and enable testing
-#
-ENABLE_TESTING()
+add_custom_target(
+    glfw-copy-shaders ALL
+    COMMENT "Copying shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
+)
 
-ADD_SUBDIRECTORY(test)
+ADD_DEPENDENCIES("${project_BIN}" glew glfw-copy-shaders)

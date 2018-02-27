@@ -14,17 +14,12 @@ Skeleton::~Skeleton()
 
 void Skeleton::initGL()
 {
-    LOG(INFO) << "Initialising OpenGL";
-
     // Initialise GLFW
-    LOG(INFO) << "Initialising GLFW";
-    if (!glfwInit())
-    {
+    if (!glfwInit()) {
         throw "Failed to initialise GLFW";
     }
 
     // Create window with GLFW
-    LOG(INFO) << " - Creating window with GLFW";
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
@@ -40,31 +35,25 @@ void Skeleton::initGL()
         nullptr
     );
 
-    if (window == nullptr)
-    {
+    if (window == nullptr) {
         glfwTerminate();
         throw "Failed to create window with GLFW.";
     }
 
     // Make window the current OpenGL context
-    LOG(INFO) << " - Making window the current OpenGL context";
     glfwMakeContextCurrent(window);
 
     // Initialise GLEW
-    LOG(INFO) << " - Initialising GLEW";
     glewExperimental = (GLboolean) true;
-    if (glewInit() != GLEW_OK)
-    {
+    if (glewInit() != GLEW_OK) {
         glfwTerminate();
         throw "Failed to initialise GLEW";
     }
 
     // Set GLFW Options
-    LOG(INFO) << " - Setting GLFW Options";
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Set OpenGL Options
-    LOG(INFO) << " - Setting OpenGL Options";
     glClearColor(0.3f, 0.2f, 0.2f, 0.0f);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -73,7 +62,7 @@ void Skeleton::initGL()
 
 void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
 {
-    glUniformMatrix4fv(matrixId, 1, GL_FALSE, & mvp[0][0]);
+    glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
 
     glUniform2fv(posId, 1, &pos[0]);
     glUniform4fv(colourId, 1, &colour[0]);
@@ -90,17 +79,9 @@ void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
 
 void Skeleton::setup()
 {
-    LOG(INFO) << string(64, '=');
-    LOG(INFO) << "Starting up " << appName << "!";
-    LOG(INFO) << string(64, '=');
-
-    try
-    {
+    try {
         initGL();
-    }
-    catch (const char * error)
-    {
-        LOG(INFO) << error;
+    } catch (const char * error) {
         exit(-1);
     }
 
@@ -110,21 +91,19 @@ void Skeleton::setup()
     try {
         programId = shaderhelper::createProgram("shaders/2dcolor.vert", "shaders/2dcolor.frag");
     }
-    catch (const string & error)
-    {
-        LOG(ERROR) << error;
+    catch (const string & error) {
         teardown();
         exit(-1);
     }
 
-    posId         = glGetUniformLocation(programId, "position");
-    colourId      = glGetUniformLocation(programId, "color");
-    scaleId       = glGetUniformLocation(programId, "scale");
-    matrixId      = glGetUniformLocation(programId, "mvp");
+    posId = glGetUniformLocation(programId, "position");
+    colourId = glGetUniformLocation(programId, "color");
+    scaleId = glGetUniformLocation(programId, "scale");
+    matrixId = glGetUniformLocation(programId, "mvp");
 
     glm::mat4 projection = glm::ortho(
-        0.f,  static_cast<float>(width),
-        0.f,  static_cast<float>(height),
+        0.f, static_cast<float>(width),
+        0.f, static_cast<float>(height),
         0.0f, 1.0f
     );
     glm::mat4 view = glm::lookAt(
@@ -161,78 +140,74 @@ void Skeleton::loop()
 
 void Skeleton::teardown()
 {
-    LOG(INFO) << "Cleaning up OpenGL";
-
-    LOG(INFO) << " - Deleting OpenGL resources";
     glDeleteBuffers(1, &vertexbuffer);
     glDeleteProgram(programId);
     glDeleteVertexArrays(1, &vertexArrayId);
 
-    LOG(INFO) << " - Terminating GLFW";
     glfwTerminate();
 }
 
 bool Skeleton::isActive()
 {
     return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
-        && glfwWindowShouldClose(window) == 0;
+           && glfwWindowShouldClose(window) == 0;
 }
 
 const GLfloat Skeleton::SKULL_VERTICES[] =
-{
-    // top of skull
-     60, 50,
-     60,  0,
-    -60,  0,
-    -60, 50,
-     60, 50,
-    -60,  0,
+    {
+        // top of skull
+        60, 50,
+        60, 0,
+        -60, 0,
+        -60, 50,
+        60, 50,
+        -60, 0,
 
-    // left of eyes
-    -60,   0,
-    -40,   0,
-    -60, -30,
-    -60, -30,
-    -40,   0,
-    -40, -30,
+        // left of eyes
+        -60, 0,
+        -40, 0,
+        -60, -30,
+        -60, -30,
+        -40, 0,
+        -40, -30,
 
-    // centre of eyes
-    -10,   0,
-     10,   0,
-    -10, -30,
-    -10, -30,
-     10,   0,
-     10, -30,
+        // centre of eyes
+        -10, 0,
+        10, 0,
+        -10, -30,
+        -10, -30,
+        10, 0,
+        10, -30,
 
-    // right of eyes
-     60,   0,
-     40,   0,
-     60, -30,
-     60, -30,
-     40,   0,
-     40, -30,
+        // right of eyes
+        60, 0,
+        40, 0,
+        60, -30,
+        60, -30,
+        40, 0,
+        40, -30,
 
-    // left of nose
-    -60, -30,
-      0, -30,
-    -10, -40,
-    -10, -40,
-    -60, -40,
-    -60, -30,
+        // left of nose
+        -60, -30,
+        0, -30,
+        -10, -40,
+        -10, -40,
+        -60, -40,
+        -60, -30,
 
-    // right of nose
-      0, -30,
-     60, -30,
-     10, -40,
-     10, -40,
-     60, -30,
-     60, -40,
+        // right of nose
+        0, -30,
+        60, -30,
+        10, -40,
+        10, -40,
+        60, -30,
+        60, -40,
 
-    // jaw
-    -30, -40,
-     30, -40,
-    -30, -55,
-    -30, -55,
-     30, -40,
-     30, -55,
-};
+        // jaw
+        -30, -40,
+        30, -40,
+        -30, -55,
+        -30, -55,
+        30, -40,
+        30, -55,
+    };

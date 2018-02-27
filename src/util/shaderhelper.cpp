@@ -1,7 +1,6 @@
 #include "util/shaderhelper.hpp"
 
 string shaderhelper::loadShader(const string & shaderFilename) {
-    LOG(INFO) << " - Loading shader: " << shaderFilename;
     unique_ptr<string> appPath = pathhelper::getApplicationPath();
     string shaderPath = *(appPath.get()) + "/" + shaderFilename;
 
@@ -15,8 +14,7 @@ string shaderhelper::loadShader(const string & shaderFilename) {
             shaderCode += "\n" + Line;
         }
         shaderStream.close();
-    }
-    else {
+    } else {
         throw string("Unable to open " + shaderFilename);
     }
 
@@ -27,8 +25,6 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
     string shaderCode = loadShader(shaderFilename);
 
     // Compile shader
-    LOG(INFO) << " - Compiling shader: " << shaderFilename;
-
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
     GLuint shaderId = glCreateShader(shaderType);
@@ -43,8 +39,6 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
     if (infoLogLength > 0) {
         vector<char> vertexShaderErrorMessage((unsigned long) (infoLogLength + 1));
         glGetShaderInfoLog(shaderId, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
-        LOG(INFO) << " - Shader compilation error: ";
-        LOG(INFO) << &vertexShaderErrorMessage[0];
     }
 
     return shaderId;
@@ -52,14 +46,11 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
 
 GLuint shaderhelper::createProgram(const string & vertexFilename, const string & fragmentFilename)
 {
-    LOG(INFO) << "Creating GLSL Program";
-
     // Compile shaders
     GLuint vertexShaderId = compileShader(vertexFilename, GL_VERTEX_SHADER);
     GLuint fragmentShaderId = compileShader(fragmentFilename, GL_FRAGMENT_SHADER);
 
     // Link the program
-    LOG(INFO) << " - Linking GLSL Program";
     GLuint programId = glCreateProgram();
     glAttachShader(programId, vertexShaderId);
     glAttachShader(programId, fragmentShaderId);
@@ -77,7 +68,6 @@ GLuint shaderhelper::createProgram(const string & vertexFilename, const string &
         throw &programErrorMessage[0];
     }
 
-    LOG(INFO) << " - Cleaning up shaders";
     glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
 

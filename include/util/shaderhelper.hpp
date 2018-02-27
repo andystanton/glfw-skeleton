@@ -9,8 +9,6 @@
 #include <fstream>
 #include <algorithm>
 
-#include "easylogging++.h"
-
 using std::vector;
 using std::ifstream;
 using std::ios;

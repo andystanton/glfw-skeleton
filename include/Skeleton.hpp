@@ -10,8 +10,6 @@
 #include "util/shaderhelper.hpp"
 #include "util/colorhelper.hpp"
 
-#include "easylogging++.h"
-
 #include <iostream>
 #include <memory>
 
