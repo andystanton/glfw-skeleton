@@ -60,13 +60,12 @@ ExternalProject_Add(
 #set (libdir ${CMAKE_INSTALL_FULL_LIBDIR})
 #set (includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
 
-SET(GLEW_INCLUDE_PATH "${CMAKE_BINARY_DIR}/include")
+SET(GLEW_INCLUDE_PATH "${CMAKE_BINARY_DIR}/lib/glew/src/glew/include")
 
 #
 # glm
 #
 SET(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
-MESSAGE("FOO ${CMAKE_BINARY_DIR}/lib/libGLEW.a")
 SET(project_LIBS ${OPENGL_LIBRARIES} ${CMAKE_BINARY_DIR}/lib/libGLEW.a glfw ${GLFW_LIBRARIES})
 
 SET(project_BIN ${PROJECT_NAME})
@@ -95,6 +94,7 @@ INCLUDE_DIRECTORIES(
     ${GLEW_INCLUDE_PATH}
     ${GLM_INCLUDE_PATH})
 
+ADD_DEPENDENCIES("${project_BIN}" glew glfw-copy-shaders)
 TARGET_LINK_LIBRARIES(${project_BIN} ${project_LIBS})
 
 SET_TARGET_PROPERTIES(${project_BIN} PROPERTIES
@@ -108,4 +108,4 @@ add_custom_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-ADD_DEPENDENCIES("${project_BIN}" glew glfw-copy-shaders)
+
