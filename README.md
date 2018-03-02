@@ -16,11 +16,9 @@ All libraries are included as git submodules or CMake ExternalProjects and built
 ## Quick Start
 
 ```sh
-git clone https://github.com/andystanton/glfw-skeleton.git --recursive
-
-cd glfw-skeleton
-
-make run
+$ git clone https://github.com/andystanton/glfw-skeleton.git --recursive
+$ cd glfw-skeleton
+$ make run
 ```
 
 ## Libraries

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <fstream>
+#include <stdexcept>
 
 std::string shaderhelper::loadShader(const std::string & shaderFilename)
 {
