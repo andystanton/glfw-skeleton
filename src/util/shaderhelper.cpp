@@ -1,15 +1,15 @@
 #include "util/shaderhelper.hpp"
 
-string shaderhelper::loadShader(const string & shaderFilename) {
-    string appPath = pathhelper::getApplicationPath();
-    string shaderPath = appPath + "/" + shaderFilename;
+std::string shaderhelper::loadShader(const std::string & shaderFilename) {
+    std::string appPath = pathhelper::getApplicationPath();
+    std::string shaderPath = appPath + "/" + shaderFilename;
 
-    string shaderCode;
+    std::string shaderCode;
 
     ifstream shaderStream(shaderPath.c_str(), ios::in);
 
     if (shaderStream.is_open()) {
-        string Line;
+        std::string Line;
         while (getline(shaderStream, Line)) {
             shaderCode += "\n" + Line;
         }
@@ -21,8 +21,8 @@ string shaderhelper::loadShader(const string & shaderFilename) {
     return shaderCode;
 }
 
-GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType) {
-    string shaderCode = loadShader(shaderFilename);
+GLuint shaderhelper::compileShader(const std::string & shaderFilename, GLenum shaderType) {
+    std::string shaderCode = loadShader(shaderFilename);
 
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
@@ -43,7 +43,7 @@ GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderT
     return shaderId;
 }
 
-GLuint shaderhelper::createProgram(const string & vertexFilename, const string & fragmentFilename)
+GLuint shaderhelper::createProgram(const std::string & vertexFilename, const std::string & fragmentFilename)
 {
     GLuint vertexShaderId = compileShader(vertexFilename, GL_VERTEX_SHADER);
     GLuint fragmentShaderId = compileShader(fragmentFilename, GL_FRAGMENT_SHADER);

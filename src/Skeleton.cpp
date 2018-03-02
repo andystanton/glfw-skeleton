@@ -5,11 +5,13 @@ Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int heig
     this->appName = appName;
     this->width = width;
     this->height = height;
+
+    setup();
 }
 
 Skeleton::~Skeleton()
 {
-
+    teardown();
 }
 
 void Skeleton::initGL()

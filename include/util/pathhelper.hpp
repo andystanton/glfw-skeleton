@@ -11,12 +11,9 @@
     #include <unistd.h>
 #endif
 
-using std::string;
-using std::unique_ptr;
-
 namespace pathhelper {
-    string getApplicationPathAndName();
-    string getApplicationPath();
-    string getApplicationName();
+    std::string getApplicationPathAndName();
+    std::string getApplicationPath();
+    std::string getApplicationName();
 };
 

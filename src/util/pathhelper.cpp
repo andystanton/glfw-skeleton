@@ -2,7 +2,7 @@
 
 std::string pathhelper::getApplicationPathAndName()
 {
-    string fullPath;
+    std::string fullPath;
     #if defined (__APPLE__)
         char pathBuffer[PROC_PIDPATHINFO_MAXSIZE];
         pid_t pid = getpid();
@@ -28,14 +28,14 @@ std::string pathhelper::getApplicationPathAndName()
     return fullPath;
 }
 
-string pathhelper::getApplicationPath()
+std::string pathhelper::getApplicationPath()
 {
-    string fullPath = getApplicationPathAndName();
-    return fullPath.substr(0, fullPath.find_last_of("/"));
+    std::string fullPath = getApplicationPathAndName();
+    return fullPath.substr(0, fullPath.find_last_of('/'));
 }
 
-string pathhelper::getApplicationName()
+std::string pathhelper::getApplicationName()
 {
-    string fullPath = getApplicationPathAndName();
-    return fullPath.substr(fullPath.find_last_of("/") + 1, fullPath.length());
+    std::string fullPath = getApplicationPathAndName();
+    return fullPath.substr(fullPath.find_last_of('/') + 1, fullPath.length());
 }

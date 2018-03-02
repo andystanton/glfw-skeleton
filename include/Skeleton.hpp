@@ -36,6 +36,8 @@ private:
 
     glm::mat4 mvp;
 
+    void setup();
+    void teardown();
     void initGL();
     void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
 
@@ -43,9 +45,7 @@ public:
     Skeleton(const string & appName, unsigned int width, unsigned int height);
     ~Skeleton();
 
-    void setup();
     void loop();
-    void teardown();
     bool isActive();
 };
 
