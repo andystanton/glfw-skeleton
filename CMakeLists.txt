@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 PROJECT(glfw-skeleton)
 
 include(ExternalProject)
-find_package(opengl)
+find_package(OpenGL REQUIRED)
 
 set(CMAKE_CXX_STANDARD 17)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
@@ -70,7 +70,6 @@ add_custom_target(
 )
 
 add_dependencies(${PROJECT_NAME} glew glfw-copy-shaders)
-message(STATUS "${GLFW_CONFIG_PATH} asdg")
 target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
