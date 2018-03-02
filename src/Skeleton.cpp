@@ -39,6 +39,12 @@ Skeleton::Skeleton(const std::string & appName, unsigned int width, unsigned int
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * SKULL_VERTICES.size(), SKULL_VERTICES.data(), GL_STATIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 Skeleton::~Skeleton()
@@ -100,24 +106,26 @@ void Skeleton::initialiseGL(const std::string & name)
 
 void Skeleton::drawSkull(glm::vec2 offset, float scale, glm::vec4 color)
 {
+    // Use shader and set uniforms
+    glUseProgram(programId);
+
     glUniformMatrix4fv(uniform_viewProjection, 1, GL_FALSE, glm::value_ptr(viewProjection));
     glUniform2fv(uniform_offset, 1, glm::value_ptr(offset));
     glUniform4fv(uniform_color, 1, glm::value_ptr(color));
     glUniform1f(uniform_scale, scale);
 
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
-
+    // Bind the Vertex Array Object and draw the contents of its bound vertex buffer as triangles
+    glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(SKULL_VERTICES.size()));
 
-    glDisableVertexAttribArray(0);
+    // Unbind VAO and shader
+    glBindVertexArray(0);
+    glUseProgram(0);
 }
 
 void Skeleton::loop()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    glUseProgram(programId);
 
     drawSkull(glm::vec2(width / 2.f, height / 2.f), 1.6f, foregroundColor);
 
