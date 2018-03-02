@@ -16,7 +16,7 @@ void Skeleton::initGL()
 {
     // Initialise GLFW
     if (!glfwInit()) {
-        throw "Failed to initialise GLFW";
+        throw std::runtime_error("Failed to initialise GLFW");
     }
 
     // Create window with GLFW
@@ -37,7 +37,7 @@ void Skeleton::initGL()
 
     if (window == nullptr) {
         glfwTerminate();
-        throw "Failed to create window with GLFW.";
+        throw std::runtime_error("Failed to create window with GLFW");
     }
 
     // Make window the current OpenGL context
@@ -47,14 +47,14 @@ void Skeleton::initGL()
     glewExperimental = (GLboolean) true;
     if (glewInit() != GLEW_OK) {
         glfwTerminate();
-        throw "Failed to initialise GLEW";
+        throw std::runtime_error("Failed to initialise GLEW");
     }
 
     // Set GLFW Options
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Set OpenGL Options
-    glClearColor(0.3f, 0.2f, 0.2f, 0.0f);
+    colorhelper::callWithColor(glClearColor, 0x9922FF);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
@@ -131,7 +131,7 @@ void Skeleton::loop()
             static_cast<float>(height) / 2
         },
         1.6f,
-        colorhelper::rgbaHexToVec4("FFFFFF", 0.4f)
+        colorhelper::hexToVec4(0xFF00FF66)
     );
 
     glfwSwapBuffers(window);
@@ -153,61 +153,60 @@ bool Skeleton::isActive()
            && glfwWindowShouldClose(window) == 0;
 }
 
-const GLfloat Skeleton::SKULL_VERTICES[] =
-    {
-        // top of skull
-        60, 50,
-        60, 0,
-        -60, 0,
-        -60, 50,
-        60, 50,
-        -60, 0,
+const GLfloat Skeleton::SKULL_VERTICES[] = {
+    // top of skull
+    60, 50,
+    60, 0,
+    -60, 0,
+    -60, 50,
+    60, 50,
+    -60, 0,
 
-        // left of eyes
-        -60, 0,
-        -40, 0,
-        -60, -30,
-        -60, -30,
-        -40, 0,
-        -40, -30,
+    // left of eyes
+    -60, 0,
+    -40, 0,
+    -60, -30,
+    -60, -30,
+    -40, 0,
+    -40, -30,
 
-        // centre of eyes
-        -10, 0,
-        10, 0,
-        -10, -30,
-        -10, -30,
-        10, 0,
-        10, -30,
+    // centre of eyes
+    -10, 0,
+    10, 0,
+    -10, -30,
+    -10, -30,
+    10, 0,
+    10, -30,
 
-        // right of eyes
-        60, 0,
-        40, 0,
-        60, -30,
-        60, -30,
-        40, 0,
-        40, -30,
+    // right of eyes
+    60, 0,
+    40, 0,
+    60, -30,
+    60, -30,
+    40, 0,
+    40, -30,
 
-        // left of nose
-        -60, -30,
-        0, -30,
-        -10, -40,
-        -10, -40,
-        -60, -40,
-        -60, -30,
+    // left of nose
+    -60, -30,
+    0, -30,
+    -10, -40,
+    -10, -40,
+    -60, -40,
+    -60, -30,
 
-        // right of nose
-        0, -30,
-        60, -30,
-        10, -40,
-        10, -40,
-        60, -30,
-        60, -40,
+    // right of nose
+    0, -30,
+    60, -30,
+    10, -40,
+    10, -40,
+    60, -30,
+    60, -40,
 
-        // jaw
-        -30, -40,
-        30, -40,
-        -30, -55,
-        -30, -55,
-        30, -40,
-        30, -55,
-    };
+    // jaw
+    -30, -40,
+    30, -40,
+    -30, -55,
+    -30, -55,
+    30, -40,
+    30, -55,
+};

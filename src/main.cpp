@@ -1,7 +1,7 @@
 #include "Skeleton.hpp"
 
 int main(int argc, char ** argv) {
-    string applicationPath = * pathhelper::getApplicationPath();
+    string applicationPath = pathhelper::getApplicationPath();
 
     Skeleton skeleton("GLFW Skeleton", 640, 480);
 

@@ -15,8 +15,8 @@ using std::string;
 using std::unique_ptr;
 
 namespace pathhelper {
-    unique_ptr<string> getApplicationPathAndName();
-    unique_ptr<string> getApplicationPath();
-    unique_ptr<string> getApplicationName();
+    string getApplicationPathAndName();
+    string getApplicationPath();
+    string getApplicationName();
 };
 
