@@ -1,6 +1,6 @@
 # glfw-skeleton [![Build Status](https://travis-ci.org/andystanton/glfw-skeleton.svg?branch=master)](https://travis-ci.org/andystanton/glfw-skeleton)
 
-A skeleton C++17 OpenGL 4.1 app that uses the [GLFW](http://www.glfw.org), [GLEW](http://glew.sourceforge.net/) and [GLM](http://glm.g-truc.net/) libraries and builds with [CMake](http://www.cmake.org/). [Bandit](http://banditcpp.org/) is used for unit testing.
+A skeleton C++17 OpenGL 4.1 app that uses the [GLFW](http://www.glfw.org), [GLEW](http://glew.sourceforge.net/) and [GLM](http://glm.g-truc.net/) libraries and builds with [CMake](http://www.cmake.org/).
 
 All libraries are included as git submodules and built from source with the application to ensure portability.
 
@@ -8,8 +8,8 @@ All libraries are included as git submodules and built from source with the appl
 
 ## Requirements
 
-* A C++14 compiler
-* CMake >= 2.8.12
+* A C++17 compiler
+* CMake >= 3.7
 * Make >= 3.81
 * OpenGL >= 4.1
 
