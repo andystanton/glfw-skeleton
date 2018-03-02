@@ -92,8 +92,7 @@ void Skeleton::setup()
 
     try {
         programId = shaderhelper::createProgram("shaders/2dcolor.vert", "shaders/2dcolor.frag");
-    }
-    catch (const string & error) {
+    } catch (const string & error) {
         teardown();
         exit(-1);
     }
@@ -127,14 +126,7 @@ void Skeleton::loop()
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(programId);
 
-    drawSkull(
-        {
-            static_cast<float>(width) / 2,
-            static_cast<float>(height) / 2
-        },
-        1.6f,
-        colorhelper::hexToVec4(0xFF00FF66)
-    );
+    drawSkull(glm::vec2(width / 2.f, height / 2.f), 1.6f, colorhelper::hexToVec4(0xFF00FF66));
 
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -151,8 +143,7 @@ void Skeleton::teardown()
 
 bool Skeleton::isActive()
 {
-    return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS
-           && glfwWindowShouldClose(window) == 0;
+    return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window);
 }
 
 const GLfloat Skeleton::SKULL_VERTICES[] = {
