@@ -1,8 +1,12 @@
 #include "Skeleton.hpp"
 
+#include "util/colorhelper.hpp"
+#include "util/shaderhelper.hpp"
+
+#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int height)
+Skeleton::Skeleton(const std::string & appName, unsigned int width, unsigned int height)
     : width { width }
     , height { height }
     , foregroundColor { colorhelper::hexToVec4(0xA3B9FF) }
@@ -34,7 +38,7 @@ Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int heig
 
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(SKULL_VERTICES), SKULL_VERTICES, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * SKULL_VERTICES.size(), SKULL_VERTICES.data(), GL_STATIC_DRAW);
 }
 
 Skeleton::~Skeleton()
@@ -98,14 +102,14 @@ void Skeleton::drawSkull(glm::vec2 offset, float scale, glm::vec4 color)
 {
     glUniformMatrix4fv(uniform_viewProjection, 1, GL_FALSE, glm::value_ptr(viewProjection));
     glUniform2fv(uniform_offset, 1, glm::value_ptr(offset));
-    glUniform4fv(uniform_color, 1, glm::value_ptr(foregroundColor));
+    glUniform4fv(uniform_color, 1, glm::value_ptr(color));
     glUniform1f(uniform_scale, scale);
 
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
 
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(SKULL_VERTICES) / sizeof(GLfloat));
+    glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(SKULL_VERTICES.size()));
 
     glDisableVertexAttribArray(0);
 }
@@ -126,60 +130,60 @@ bool Skeleton::isActive()
     return glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window);
 }
 
-const GLfloat Skeleton::SKULL_VERTICES[] = {
+const std::vector<GLfloat> Skeleton::SKULL_VERTICES {
     // top of skull
-    60, 50,
-    60, 0,
-    -60, 0,
-    -60, 50,
-    60, 50,
-    -60, 0,
+    60.f, 50.f,
+    60.f, 0.f,
+    -60.f, 0.f,
+    -60.f, 50.f,
+    60.f, 50.f,
+    -60.f, 0.f,
 
     // left of eyes
-    -60, 0,
-    -40, 0,
-    -60, -30,
-    -60, -30,
-    -40, 0,
-    -40, -30,
+    -60.f, 0.f,
+    -40.f, 0.f,
+    -60.f, -30.f,
+    -60.f, -30.f,
+    -40.f, 0.f,
+    -40.f, -30.f,
 
     // centre of eyes
-    -10, 0,
-    10, 0,
-    -10, -30,
-    -10, -30,
-    10, 0,
-    10, -30,
+    -10.f, 0.f,
+    10.f, 0.f,
+    -10.f, -30.f,
+    -10.f, -30.f,
+    10.f, 0.f,
+    10.f, -30.f,
 
     // right of eyes
-    60, 0,
-    40, 0,
-    60, -30,
-    60, -30,
-    40, 0,
-    40, -30,
+    60.f, 0.f,
+    40.f, 0.f,
+    60.f, -30.f,
+    60.f, -30.f,
+    40.f, 0.f,
+    40.f, -30.f,
 
     // left of nose
-    -60, -30,
-    0, -30,
-    -10, -40,
-    -10, -40,
-    -60, -40,
-    -60, -30,
+    -60.f, -30.f,
+    0.f, -30.f,
+    -10.f, -40.f,
+    -10.f, -40.f,
+    -60.f, -40.f,
+    -60.f, -30.f,
 
     // right of nose
-    0, -30,
-    60, -30,
-    10, -40,
-    10, -40,
-    60, -30,
-    60, -40,
+    0.f, -30.f,
+    60.f, -30.f,
+    10.f, -40.f,
+    10.f, -40.f,
+    60.f, -30.f,
+    60.f, -40.f,
 
     // jaw
-    -30, -40,
-    30, -40,
-    -30, -55,
-    -30, -55,
-    30, -40,
-    30, -55,
+    -30.f, -40.f,
+    30.f, -40.f,
+    -30.f, -55,
+    -30.f, -55,
+    30.f, -40.f,
+    30.f, -55.f,
 };

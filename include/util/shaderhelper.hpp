@@ -4,15 +4,6 @@
 
 #include <GL/glew.h>
 
-#include <string>
-#include <vector>
-#include <fstream>
-#include <algorithm>
-
-using std::vector;
-using std::ifstream;
-using std::ios;
-
 namespace shaderhelper
 {
     std::string loadShader(const std::string & shaderFilename);

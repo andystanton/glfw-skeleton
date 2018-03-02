@@ -1,8 +1,6 @@
 #include "util/pathhelper.hpp"
 
 #include <climits>
-#include <memory>
-
 #if defined (__APPLE__)
 #include <libproc.h>
 #include <unistd.h>

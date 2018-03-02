@@ -2,23 +2,14 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
-#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
-#include "util/shaderhelper.hpp"
-#include "util/colorhelper.hpp"
-
-#include <iostream>
-#include <memory>
-
-using std::string;
+#include <string>
+#include <vector>
 
 class Skeleton {
 private:
-    static constexpr int SKULL_COMPONENT_COUNT = 7 * 2 * 3 * 2;
-    static const GLfloat SKULL_VERTICES[SKULL_COMPONENT_COUNT];
+    static const std::vector<GLfloat> SKULL_VERTICES;
 
     unsigned int width;
     unsigned int height;
@@ -42,7 +33,7 @@ private:
     void drawSkull(glm::vec2 pos, float scale, glm::vec4 color);
 
 public:
-    Skeleton(const string & appName, unsigned int width, unsigned int height);
+    Skeleton(const std::string & appName, unsigned int width, unsigned int height);
     ~Skeleton();
 
     void loop();

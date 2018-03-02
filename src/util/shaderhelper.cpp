@@ -1,12 +1,16 @@
 #include "util/shaderhelper.hpp"
 
-std::string shaderhelper::loadShader(const std::string & shaderFilename) {
+#include <vector>
+#include <fstream>
+
+std::string shaderhelper::loadShader(const std::string & shaderFilename)
+{
     std::string appPath = pathhelper::getApplicationPath();
     std::string shaderPath = appPath + "/" + shaderFilename;
 
     std::string shaderCode;
 
-    ifstream shaderStream(shaderPath.c_str(), ios::in);
+    std::ifstream shaderStream(shaderPath.c_str(), std::ios::in);
 
     if (shaderStream.is_open()) {
         std::string Line;
@@ -21,21 +25,22 @@ std::string shaderhelper::loadShader(const std::string & shaderFilename) {
     return shaderCode;
 }
 
-GLuint shaderhelper::compileShader(const std::string & shaderFilename, GLenum shaderType) {
+GLuint shaderhelper::compileShader(const std::string & shaderFilename, GLenum shaderType)
+{
     std::string shaderCode = loadShader(shaderFilename);
 
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
     GLuint shaderId = glCreateShader(shaderType);
 
-    char const *sourcePointer = shaderCode.c_str();
+    char const * sourcePointer = shaderCode.c_str();
     glShaderSource(shaderId, 1, &sourcePointer, nullptr);
     glCompileShader(shaderId);
 
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compilationSuccess);
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0) {
-        vector<char> shaderErrorMessage((unsigned long) (infoLogLength + 1));
+        std::vector<char> shaderErrorMessage((unsigned long) (infoLogLength + 1));
         glGetShaderInfoLog(shaderId, infoLogLength, nullptr, &shaderErrorMessage[0]);
         throw std::runtime_error(&shaderErrorMessage[0]);
     }
@@ -58,9 +63,8 @@ GLuint shaderhelper::createProgram(const std::string & vertexFilename, const std
     glGetProgramiv(programId, GL_LINK_STATUS, &compilationSuccess);
     glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    if (infoLogLength > 0)
-    {
-        vector<char> programErrorMessage((unsigned long) (infoLogLength + 1));
+    if (infoLogLength > 0) {
+        std::vector<char> programErrorMessage((unsigned long) (infoLogLength + 1));
         glGetProgramInfoLog(programId, infoLogLength, nullptr, &programErrorMessage[0]);
         throw std::runtime_error(&programErrorMessage[0]);
     }
