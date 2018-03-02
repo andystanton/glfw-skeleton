@@ -6,6 +6,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <stdexcept>
+
 Skeleton::Skeleton(const std::string & appName, unsigned int width, unsigned int height)
     : width { width }
     , height { height }
