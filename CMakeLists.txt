@@ -2,20 +2,10 @@ cmake_minimum_required(VERSION 3.7)
 PROJECT(glfw-skeleton)
 
 include(ExternalProject)
-find_package (OpenGL REQUIRED)
+find_package(opengl)
+
 set(CMAKE_CXX_STANDARD 17)
-
-#
-# Project Output Paths
-#
-set(MAINFOLDER ${PROJECT_SOURCE_DIR})
-set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
-
-#
-# Project Search Paths
-#
-list(APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
-include_directories("${MAINFOLDER}/include")
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 #
 # glfw
@@ -26,8 +16,8 @@ option(GLFW_BUILD_DOCS      "Build the GLFW documentation"      OFF)
 option(GLFW_INSTALL         "Generate installation target"      OFF)
 
 add_subdirectory(lib/glfw)
-
-set(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
+set(GLFW_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glfw/include)
+set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glew
@@ -38,25 +28,28 @@ ExternalProject_Add(
     URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
     URL_HASH SHA256=04de91e7e6763039bc11940095cd9c7f880baba82196a7765f727ac05a993c95
     TLS_VERIFY true
-    SOURCE_SUBDIR "build/cmake"
+    SOURCE_SUBDIR build/cmake
     BINARY_DIR lib/glew
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../ -DBUILD_UTILS=OFF -DBUILD_SHARED_LIBS=OFF
 )
 
-#set (prefix ${CMAKE_INSTALL_PREFIX})
-#set (exec_prefix ${CMAKE_INSTALL_PREFIX})
-#set (libdir ${CMAKE_INSTALL_FULL_LIBDIR})
-#set (includedir ${CMAKE_INSTALL_FULL_INCLUDEDIR})
-
-set(GLEW_INCLUDE_PATH "${CMAKE_BINARY_DIR}/lib/glew/src/glew/include")
+set(GLEW_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glew/src/glew/include)
+set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glm
 #
-set(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
-set(project_LIBS ${OPENGL_LIBRARIES} ${CMAKE_BINARY_DIR}/lib/libGLEW.a glfw ${GLFW_LIBRARIES})
+set(GLM_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glm)
 
-set(project_BIN ${PROJECT_NAME})
+#
+# glfw-skeleton
+#
+include_directories(
+    ${PROJECT_SOURCE_DIR}/include
+    ${GLFW_INCLUDE_PATH}
+    ${GLEW_INCLUDE_PATH}
+    ${GLM_INCLUDE_PATH}
+)
 
 set(
     project_SRCS
@@ -67,24 +60,7 @@ set(
     src/util/shaderhelper.cpp
 )
 
-set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
-
-add_executable(${project_BIN} ${project_SRCS})
-
-set_target_properties(
-    ${project_BIN} PROPERTIES
-    OUTPUT_NAME ${project_BIN}
-    CXX_STANDARD 17
-)
-
-include_directories(
-    ${GLFW_INCLUDE_PATH}
-    ${GLEW_INCLUDE_PATH}
-    ${GLM_INCLUDE_PATH}
-)
-
-add_dependencies("${project_BIN}" glew glfw-copy-shaders)
-target_link_libraries(${project_BIN} ${project_LIBS})
+add_executable(${PROJECT_NAME} ${project_SRCS})
 
 add_custom_target(
     glfw-copy-shaders ALL
@@ -93,4 +69,11 @@ add_custom_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-
+add_dependencies(${PROJECT_NAME} glew glfw-copy-shaders)
+message(STATUS "${GLFW_CONFIG_PATH} asdg")
+target_link_libraries(
+    ${PROJECT_NAME}
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIB}
+    glfw
+)

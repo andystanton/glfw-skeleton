@@ -22,23 +22,23 @@ private:
 
     unsigned int width;
     unsigned int height;
-    string appName;
+    glm::vec4 foregroundColor;
+    glm::vec4 backgroundColor;
 
     GLFWwindow * window;
 
-    GLint posId;
-    GLint colourId;
-    GLint scaleId;
-    GLint matrixId;
-    GLuint vertexbuffer;
-    GLuint vertexArrayId;
+    GLint uniform_viewProjection;
+    GLint uniform_offset;
+    GLint uniform_color;
+    GLint uniform_scale;
+
+    GLuint vbo;
+    GLuint vao;
     GLuint programId;
 
-    glm::mat4 mvp;
+    glm::mat4 viewProjection;
 
-    void setup();
-    void teardown();
-    void initGL();
+    void initialiseGL(const std::string &);
     void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
 
 public:

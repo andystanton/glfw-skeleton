@@ -1,12 +1,12 @@
 #version 330 core
 
-layout(location = 0) in vec2 vertexPosition_modelspace;
+layout(location = 0) in vec2 attribute_pos;
 
-uniform mat4    mvp;
-uniform vec2    position;
-uniform float   scale;
+uniform mat4 uniform_viewProjection;
+uniform vec2 uniform_offset;
+uniform float uniform_scale;
 
 void main()
 {
-    gl_Position =  mvp * vec4(vertexPosition_modelspace * scale + position, 0, 1);
+    gl_Position = uniform_viewProjection * vec4(attribute_pos * uniform_scale + uniform_offset, 0, 1);
 }

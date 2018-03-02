@@ -19,9 +19,3 @@ glm::vec4 colorhelper::hexToVec4(unsigned int hex)
         ) / divisor;
     }
 }
-
-void colorhelper::callWithColor(void(* f)(float, float, float, float), unsigned int hex)
-{
-    glm::vec4 colour = hexToVec4(hex);
-    f(colour.r, colour.g, colour.b, colour.a);
-}

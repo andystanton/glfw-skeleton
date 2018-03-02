@@ -1,20 +1,52 @@
 #include "Skeleton.hpp"
 
-Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int height)
-{
-    this->appName = appName;
-    this->width = width;
-    this->height = height;
+#include <glm/gtc/type_ptr.hpp>
 
-    setup();
+Skeleton::Skeleton(const string & appName, unsigned int width, unsigned int height)
+    : width { width }
+    , height { height }
+    , foregroundColor { colorhelper::hexToVec4(0xA3B9FF) }
+    , backgroundColor { colorhelper::hexToVec4(0x577EFF) }
+{
+    initialiseGL(appName);
+
+    programId = shaderhelper::createProgram("shaders/2dcolor.vert", "shaders/2dcolor.frag");
+
+    glm::mat4 projection = glm::ortho(
+        0.f, static_cast<float>(width),
+        0.f, static_cast<float>(height),
+        0.0f, 1.0f
+    );
+    glm::mat4 view = glm::lookAt(
+        glm::vec3(0, 0, 1),
+        glm::vec3(0, 0, 0),
+        glm::vec3(0, 1, 0)
+    );
+    viewProjection = projection * view;
+
+    uniform_offset = glGetUniformLocation(programId, "uniform_offset");
+    uniform_scale = glGetUniformLocation(programId, "uniform_scale");
+    uniform_color = glGetUniformLocation(programId, "uniform_color");
+    uniform_viewProjection = glGetUniformLocation(programId, "uniform_viewProjection");
+
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(SKULL_VERTICES), SKULL_VERTICES, GL_STATIC_DRAW);
 }
 
 Skeleton::~Skeleton()
 {
-    teardown();
+    glDeleteBuffers(1, &vbo);
+    glDeleteProgram(programId);
+    glDeleteVertexArrays(1, &vao);
+
+    glfwTerminate();
 }
 
-void Skeleton::initGL()
+void Skeleton::initialiseGL(const std::string & name)
 {
     // Initialise GLFW
     if (!glfwInit()) {
@@ -32,7 +64,7 @@ void Skeleton::initGL()
     window = glfwCreateWindow(
         width,
         height,
-        appName.c_str(),
+        name.c_str(),
         nullptr,
         nullptr
     );
@@ -56,22 +88,21 @@ void Skeleton::initGL()
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     // Set OpenGL Options
-    colorhelper::callWithColor(glClearColor, 0x9922FF);
+    glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
     glDisable(GL_DEPTH_TEST);
 }
 
-void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
+void Skeleton::drawSkull(glm::vec2 offset, float scale, glm::vec4 color)
 {
-    glUniformMatrix4fv(matrixId, 1, GL_FALSE, &mvp[0][0]);
-
-    glUniform2fv(posId, 1, &pos[0]);
-    glUniform4fv(colourId, 1, &colour[0]);
-    glUniform1f(scaleId, scale);
+    glUniformMatrix4fv(uniform_viewProjection, 1, GL_FALSE, glm::value_ptr(viewProjection));
+    glUniform2fv(uniform_offset, 1, glm::value_ptr(offset));
+    glUniform4fv(uniform_color, 1, glm::value_ptr(foregroundColor));
+    glUniform1f(uniform_scale, scale);
 
     glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, reinterpret_cast<void *>(0));
 
     glDrawArrays(GL_TRIANGLES, 0, sizeof(SKULL_VERTICES) / sizeof(GLfloat));
@@ -79,66 +110,15 @@ void Skeleton::drawSkull(glm::vec2 pos, float scale, glm::vec4 colour)
     glDisableVertexAttribArray(0);
 }
 
-void Skeleton::setup()
-{
-    try {
-        initGL();
-    } catch (const char * error) {
-        exit(-1);
-    }
-
-    glGenVertexArrays(1, &vertexArrayId);
-    glBindVertexArray(vertexArrayId);
-
-    try {
-        programId = shaderhelper::createProgram("shaders/2dcolor.vert", "shaders/2dcolor.frag");
-    } catch (const string & error) {
-        teardown();
-        exit(-1);
-    }
-
-    posId = glGetUniformLocation(programId, "position");
-    colourId = glGetUniformLocation(programId, "color");
-    scaleId = glGetUniformLocation(programId, "scale");
-    matrixId = glGetUniformLocation(programId, "mvp");
-
-    glm::mat4 projection = glm::ortho(
-        0.f, static_cast<float>(width),
-        0.f, static_cast<float>(height),
-        0.0f, 1.0f
-    );
-    glm::mat4 view = glm::lookAt(
-        glm::vec3(0, 0, 1),
-        glm::vec3(0, 0, 0),
-        glm::vec3(0, 1, 0)
-    );
-    glm::mat4 model = glm::mat4(1.0f);
-
-    mvp = projection * view * model;
-
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(SKULL_VERTICES), SKULL_VERTICES, GL_STATIC_DRAW);
-}
-
 void Skeleton::loop()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(programId);
 
-    drawSkull(glm::vec2(width / 2.f, height / 2.f), 1.6f, colorhelper::hexToVec4(0xFF00FF66));
+    drawSkull(glm::vec2(width / 2.f, height / 2.f), 1.6f, foregroundColor);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
-}
-
-void Skeleton::teardown()
-{
-    glDeleteBuffers(1, &vertexbuffer);
-    glDeleteProgram(programId);
-    glDeleteVertexArrays(1, &vertexArrayId);
-
-    glfwTerminate();
 }
 
 bool Skeleton::isActive()
