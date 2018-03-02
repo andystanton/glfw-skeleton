@@ -13,7 +13,7 @@ All libraries are included as git submodules or CMake ExternalProjects and built
 * Make >= 3.81
 * OpenGL >= 4.1
 
-## Quick Start
+## Quick Start
 
 ```sh
 git clone https://github.com/andystanton/glfw-skeleton.git --recursive
