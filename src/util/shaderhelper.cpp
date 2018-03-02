@@ -1,65 +1,53 @@
 #include "util/shaderhelper.hpp"
 
-string shaderhelper::loadShader(const string & shaderFilename) {
-    LOG(INFO) << " - Loading shader: " << shaderFilename;
-    unique_ptr<string> appPath = pathhelper::getApplicationPath();
-    string shaderPath = *(appPath.get()) + "/" + shaderFilename;
+std::string shaderhelper::loadShader(const std::string & shaderFilename) {
+    std::string appPath = pathhelper::getApplicationPath();
+    std::string shaderPath = appPath + "/" + shaderFilename;
 
-    string shaderCode;
+    std::string shaderCode;
 
     ifstream shaderStream(shaderPath.c_str(), ios::in);
 
     if (shaderStream.is_open()) {
-        string Line = "";
+        std::string Line;
         while (getline(shaderStream, Line)) {
             shaderCode += "\n" + Line;
         }
         shaderStream.close();
-    }
-    else {
-        throw string("Unable to open " + shaderFilename);
+    } else {
+        throw std::invalid_argument("Unable to open " + shaderPath);
     }
 
     return shaderCode;
 }
 
-GLuint shaderhelper::compileShader(const string & shaderFilename, GLenum shaderType) {
-    string shaderCode = loadShader(shaderFilename);
-
-    // Compile shader
-    LOG(INFO) << " - Compiling shader: " << shaderFilename;
+GLuint shaderhelper::compileShader(const std::string & shaderFilename, GLenum shaderType) {
+    std::string shaderCode = loadShader(shaderFilename);
 
     GLint compilationSuccess = GL_FALSE;
     int infoLogLength;
     GLuint shaderId = glCreateShader(shaderType);
 
     char const *sourcePointer = shaderCode.c_str();
-    glShaderSource(shaderId, 1, &sourcePointer, NULL);
+    glShaderSource(shaderId, 1, &sourcePointer, nullptr);
     glCompileShader(shaderId);
 
-    // Check shader
     glGetShaderiv(shaderId, GL_COMPILE_STATUS, &compilationSuccess);
     glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &infoLogLength);
     if (infoLogLength > 0) {
-        vector<char> vertexShaderErrorMessage((unsigned long) (infoLogLength + 1));
-        glGetShaderInfoLog(shaderId, infoLogLength, NULL, &vertexShaderErrorMessage[0]);
-        LOG(INFO) << " - Shader compilation error: ";
-        LOG(INFO) << &vertexShaderErrorMessage[0];
+        vector<char> shaderErrorMessage((unsigned long) (infoLogLength + 1));
+        glGetShaderInfoLog(shaderId, infoLogLength, nullptr, &shaderErrorMessage[0]);
+        throw std::runtime_error(&shaderErrorMessage[0]);
     }
 
     return shaderId;
 }
 
-GLuint shaderhelper::createProgram(const string & vertexFilename, const string & fragmentFilename)
+GLuint shaderhelper::createProgram(const std::string & vertexFilename, const std::string & fragmentFilename)
 {
-    LOG(INFO) << "Creating GLSL Program";
-
-    // Compile shaders
     GLuint vertexShaderId = compileShader(vertexFilename, GL_VERTEX_SHADER);
     GLuint fragmentShaderId = compileShader(fragmentFilename, GL_FRAGMENT_SHADER);
 
-    // Link the program
-    LOG(INFO) << " - Linking GLSL Program";
     GLuint programId = glCreateProgram();
     glAttachShader(programId, vertexShaderId);
     glAttachShader(programId, fragmentShaderId);
@@ -73,11 +61,10 @@ GLuint shaderhelper::createProgram(const string & vertexFilename, const string &
     if (infoLogLength > 0)
     {
         vector<char> programErrorMessage((unsigned long) (infoLogLength + 1));
-        glGetProgramInfoLog(programId, infoLogLength, NULL, &programErrorMessage[0]);
-        throw &programErrorMessage[0];
+        glGetProgramInfoLog(programId, infoLogLength, nullptr, &programErrorMessage[0]);
+        throw std::runtime_error(&programErrorMessage[0]);
     }
 
-    LOG(INFO) << " - Cleaning up shaders";
     glDeleteShader(vertexShaderId);
     glDeleteShader(fragmentShaderId);
 

@@ -1,32 +1,15 @@
-all: | test
+.PHONY : build clean runonly run
 
-.PHONY : test
+all: | build
 
 clean:
-	rm -rf build
-
-.PHONY : clean
+	@rm -rf build
 
 build:
-	mkdir -p build;
-	cd build && cmake .. && make;
-
-.PHONY : build
-
-testonly:
-	build/testbin/glfw-skeleton-unittests --reporter=spec;
-
-.PHONY : testonly
-
-test: | build testonly
-
-.PHONY : test
+	@mkdir -p build
+	@cd build && cmake .. && make
 
 runonly:
-	build/bin/glfw-skeleton;
-
-.PHONY : runonly
+	@build/bin/glfw-skeleton
 
 run: | all runonly
-
-.PHONY : run

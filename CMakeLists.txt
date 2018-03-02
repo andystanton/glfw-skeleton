@@ -1,100 +1,78 @@
-#
-# Project Properties
-#
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.7)
 PROJECT(glfw-skeleton)
-SET(APPLICATION_NAME "GLFW Skeleton")
-SET(APPLICATION_CODENAME "${PROJECT_NAME}")
-SET(APPLICATION_COPYRIGHT_YEARS "2014-2016")
-SET(APPLICATION_VERSION_MAJOR 4)
-SET(APPLICATION_VERSION_MINOR 0)
-SET(APPLICATION_VERSION_PATCH 0)
-SET(APPLICATION_VERSION_TYPE "RELEASE")
-SET(APPLICATION_VERSION_STRING "${APPLICATION_VERSION_MAJOR}.${APPLICATION_VERSION_MINOR}.${APPLICATION_VERSION_PATCH}-${APPLICATION_VERSION_TYPE}")
-SET(APPLICATION_ID "${PROJECT_NAME}")
 
-#
-# Debugging Options
-#
-SET(CMAKE_VERBOSE_MAKEFILE 0) # Use 1 for debugging, 0 for release
+include(ExternalProject)
+find_package(OpenGL REQUIRED)
 
-#
-# Project Output Paths
-#
-SET(MAINFOLDER ${PROJECT_SOURCE_DIR})
-SET(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
-
-#
-# Project Search Paths
-#
-LIST(APPEND CMAKE_PREFIX_PATH "${MAINFOLDER}")
-INCLUDE_DIRECTORIES("${MAINFOLDER}/include")
-
-#
-# Set compiler warnings
-#
-SET(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Werror -Wfloat-equal -Wno-unused-parameter -Wno-unknown-pragmas -Wno-deprecated-declarations -Wno-pessimizing-move")
+set(CMAKE_CXX_STANDARD 17)
+set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 #
 # glfw
 #
-OPTION(GLFW_BUILD_EXAMPLES  "Build the GLFW example programs"   OFF)
-OPTION(GLFW_BUILD_TESTS     "Build the GLFW test programs"      OFF)
-OPTION(GLFW_BUILD_DOCS      "Build the GLFW documentation"      OFF)
-OPTION(GLFW_INSTALL         "Generate installation target"      OFF)
+option(GLFW_BUILD_EXAMPLES  "Build the GLFW example programs"   OFF)
+option(GLFW_BUILD_TESTS     "Build the GLFW test programs"      OFF)
+option(GLFW_BUILD_DOCS      "Build the GLFW documentation"      OFF)
+option(GLFW_INSTALL         "Generate installation target"      OFF)
 
-ADD_SUBDIRECTORY(lib/glfw)
-
-SET(GLFW_INCLUDE_PATH "${MAINFOLDER}/lib/glfw/include")
+add_subdirectory(lib/glfw)
+set(GLFW_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glfw/include)
+set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glew
 #
-OPTION(glew-cmake_BUILD_SHARED "Build the shared glew library" OFF)
-ADD_SUBDIRECTORY(lib/glew)
+ExternalProject_Add(
+    glew
+    PREFIX lib/glew
+    URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
+    URL_HASH SHA256=04de91e7e6763039bc11940095cd9c7f880baba82196a7765f727ac05a993c95
+    TLS_VERIFY true
+    SOURCE_SUBDIR build/cmake
+    BINARY_DIR lib/glew
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../ -DBUILD_UTILS=OFF -DBUILD_SHARED_LIBS=OFF
+)
 
-SET(GLEW_INCLUDE_PATH "${MAINFOLDER}/lib/glew/include")
+set(GLEW_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glew/src/glew/include)
+set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glm
 #
-SET(GLM_INCLUDE_PATH "${MAINFOLDER}/lib/glm")
+set(GLM_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glm)
 
 #
-# gmock
+# glfw-skeleton
 #
-ADD_SUBDIRECTORY(lib/googletest/googletest)
+include_directories(
+    ${PROJECT_SOURCE_DIR}/include
+    ${GLFW_INCLUDE_PATH}
+    ${GLEW_INCLUDE_PATH}
+    ${GLM_INCLUDE_PATH}
+)
 
-SET(GTEST_INCLUDE_PATH "${gtest_SOURCE_DIR}/include")
+set(
+    project_SRCS
+    src/main.cpp
+    src/Skeleton.cpp
+    src/util/colorhelper.cpp
+    src/util/pathhelper.cpp
+    src/util/shaderhelper.cpp
+)
 
-SET_PROPERTY(TARGET gtest       APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
-SET_PROPERTY(TARGET gtest_main  APPEND_STRING PROPERTY COMPILE_FLAGS " -w")
+add_executable(${PROJECT_NAME} ${project_SRCS})
 
-#
-# Bandit
-#
-OPTION(BANDIT_BUILD_SPECS       "Build the Bandit specs"    OFF)
-OPTION(SNOWHOUSE_BUILD_TESTS    "Build the Snowhouse tests" OFF)
-OPTION(BANDIT_RUN_SPECS         "Run the Bandit specs"      OFF)
-OPTION(SNOWHOUSE_RUN_TESTS      "Run the Snowhouse tests"   OFF)
+add_custom_target(
+    glfw-copy-shaders ALL
+    COMMENT "Copying shaders"
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
+)
 
-ADD_SUBDIRECTORY(lib/bandit)
-
-SET(BANDIT_INCLUDE_PATH "${MAINFOLDER}/lib/bandit")
-
-#
-# EasyLogging++
-#
-SET(EASYLOGGINGPP_INCLUDE_PATH "${MAINFOLDER}/lib/easyloggingpp/src")
-
-#
-# Add project sources
-#
-ADD_SUBDIRECTORY(src)
-
-#
-# Add test sources and enable testing
-#
-ENABLE_TESTING()
-
-ADD_SUBDIRECTORY(test)
+add_dependencies(${PROJECT_NAME} glew glfw-copy-shaders)
+target_link_libraries(
+    ${PROJECT_NAME}
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIB}
+    glfw
+)
