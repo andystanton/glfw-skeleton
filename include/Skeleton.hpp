@@ -39,7 +39,7 @@ private:
     glm::mat4 viewProjection;
 
     void initialiseGL(const std::string &);
-    void drawSkull(glm::vec2 pos, float scale, glm::vec4 colour);
+    void drawSkull(glm::vec2 pos, float scale, glm::vec4 color);
 
 public:
     Skeleton(const string & appName, unsigned int width, unsigned int height);

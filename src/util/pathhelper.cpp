@@ -1,5 +1,15 @@
 #include "util/pathhelper.hpp"
 
+#include <climits>
+#include <memory>
+
+#if defined (__APPLE__)
+#include <libproc.h>
+#include <unistd.h>
+#elif defined(__linux__)
+#include <unistd.h>
+#endif
+
 std::string pathhelper::getApplicationPathAndName()
 {
     std::string fullPath;
@@ -32,10 +42,4 @@ std::string pathhelper::getApplicationPath()
 {
     std::string fullPath = getApplicationPathAndName();
     return fullPath.substr(0, fullPath.find_last_of('/'));
-}
-
-std::string pathhelper::getApplicationName()
-{
-    std::string fullPath = getApplicationPathAndName();
-    return fullPath.substr(fullPath.find_last_of('/') + 1, fullPath.length());
 }
