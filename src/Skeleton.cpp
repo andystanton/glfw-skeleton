@@ -21,8 +21,10 @@ Skeleton::Skeleton(const std::string & name, unsigned short width, unsigned shor
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(VERTICES), VERTICES, GL_STATIC_DRAW);
+
     glEnableVertexAttribArray(attribute_pos);
     glVertexAttribPointer(attribute_pos, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
@@ -38,11 +40,14 @@ void Skeleton::loop()
 {
     glClearColor(backgroundColor.r, backgroundColor.g, backgroundColor.b, backgroundColor.a);
     glClear(GL_COLOR_BUFFER_BIT);
+
     glUseProgram(programId);
     glUniform4fv(uniform_color, 1, glm::value_ptr(foregroundColor));
+
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, VERTICES_COUNT);
     glBindVertexArray(0);
+
     glUseProgram(0);
 
     context.loop();
@@ -53,7 +58,7 @@ bool Skeleton::isActive() const
     return context.isActive();
 }
 
-const GLfloat Skeleton::VERTICES[Skeleton::VERTICES_COUNT] {
+const GLfloat Skeleton::VERTICES[VERTICES_COUNT] {
     // top of skull
     0.225f, 0.25f,
     0.225f, 0.f,
