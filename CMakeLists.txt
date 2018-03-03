@@ -14,10 +14,7 @@ option(GLFW_BUILD_EXAMPLES "Build the GLFW example programs" OFF)
 option(GLFW_BUILD_TESTS "Build the GLFW test programs" OFF)
 option(GLFW_BUILD_DOCS "Build the GLFW documentation" OFF)
 option(GLFW_INSTALL "Generate installation target" OFF)
-
 add_subdirectory(lib/glfw)
-set(GLFW_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glfw/include)
-set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glew
@@ -32,9 +29,7 @@ ExternalProject_Add(
     BINARY_DIR lib/glew
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
 )
-
-set(GLEW_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glew/src/glew/include)
-set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
+set(GLEW_LIBRARY ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 
 #
 # glm
@@ -45,18 +40,17 @@ ExternalProject_Add(
     URL https://github.com/g-truc/glm/releases/download/0.9.8.5/glm-0.9.8.5.7z
     URL_HASH SHA256=753b7b60122ee78afbeb6343a1e53f9335ababa1c25cd53b0f6a32e6813db43a
     TLS_VERIFY true
+    BINARY_DIR lib/glm
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
 )
-set(GLM_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glm/include)
 
 #
 # glfw-skeleton
 #
 include_directories(
     ${PROJECT_SOURCE_DIR}/include
+    ${CMAKE_BINARY_DIR}/include
     ${GLFW_INCLUDE_PATH}
-    ${GLEW_INCLUDE_PATH}
-    ${GLM_INCLUDE_PATH}
 )
 
 set(
@@ -80,9 +74,10 @@ add_custom_target(
 )
 
 add_dependencies(${PROJECT_NAME} glm glew copy-shaders)
+
 target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
-    ${GLEW_LIB}
+    ${GLEW_LIBRARY}
     glfw
 )
