@@ -30,8 +30,7 @@ ExternalProject_Add(
     TLS_VERIFY true
     SOURCE_SUBDIR build/cmake
     BINARY_DIR lib/glew
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../ -DBUILD_UTILS=OFF -DBUILD_SHARED_LIBS=OFF
-    # try CMAKE_CACHE_ARGS
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
 )
 
 set(GLEW_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glew/src/glew/include)
@@ -61,24 +60,26 @@ include_directories(
 )
 
 set(
-    project_SRCS
+    PROJECT_SOURCES
     src/app.cpp
+    src/GLContext.cpp
     src/Skeleton.cpp
+    src/util/camerahelper.cpp
     src/util/colorhelper.cpp
     src/util/pathhelper.cpp
     src/util/shaderhelper.cpp
-    src/GLContext.cpp src/util/camerahelper.cpp)
+)
 
-add_executable(${PROJECT_NAME} ${project_SRCS})
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
 add_custom_target(
-    glfw-copy-shaders ALL
+    copy-shaders ALL
     COMMENT "Copying shaders"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-add_dependencies(${PROJECT_NAME} glm glew glfw-copy-shaders)
+add_dependencies(${PROJECT_NAME} glm glew copy-shaders)
 target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
