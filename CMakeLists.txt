@@ -58,7 +58,6 @@ set(
     src/app.cpp
     src/GLContext.cpp
     src/Skeleton.cpp
-    src/util/camerahelper.cpp
     src/util/colorhelper.cpp
     src/util/pathhelper.cpp
     src/util/shaderhelper.cpp
