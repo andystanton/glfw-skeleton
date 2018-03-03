@@ -1,7 +1,7 @@
 #pragma once
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GLContext.hpp"
+
 #include <glm/glm.hpp>
 
 #include <string>
@@ -11,29 +11,22 @@ class Skeleton {
 private:
     static const std::vector<GLfloat> SKULL_VERTICES;
 
-    unsigned int width;
-    unsigned int height;
-    glm::vec4 foregroundColor;
-    glm::vec4 backgroundColor;
-
-    GLFWwindow * window;
-
-    GLint uniform_viewProjection;
-    GLint uniform_offset;
-    GLint uniform_color;
-    GLint uniform_scale;
-
+    GLContext context;
     GLuint vbo;
     GLuint vao;
     GLuint programId;
-
+    GLint uniform_viewProjection;
+    GLint uniform_color;
     glm::mat4 viewProjection;
+    glm::vec4 foregroundColor;
+    glm::vec4 backgroundColor;
 
-    void initialiseGL(const std::string &);
-    void drawSkull(glm::vec2 pos, float scale, glm::vec4 color);
+    static glm::mat4 getNormalisedViewProjection(unsigned short width, unsigned short height);
+
+    void drawSkull(glm::vec4 color);
 
 public:
-    Skeleton(const std::string & appName, unsigned int width, unsigned int height);
+    Skeleton(const std::string & appName, unsigned short width, unsigned short height);
     ~Skeleton();
 
     void loop();

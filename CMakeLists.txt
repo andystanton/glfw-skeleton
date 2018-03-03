@@ -10,10 +10,10 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 #
 # glfw
 #
-option(GLFW_BUILD_EXAMPLES  "Build the GLFW example programs"   OFF)
-option(GLFW_BUILD_TESTS     "Build the GLFW test programs"      OFF)
-option(GLFW_BUILD_DOCS      "Build the GLFW documentation"      OFF)
-option(GLFW_INSTALL         "Generate installation target"      OFF)
+option(GLFW_BUILD_EXAMPLES "Build the GLFW example programs" OFF)
+option(GLFW_BUILD_TESTS "Build the GLFW test programs" OFF)
+option(GLFW_BUILD_DOCS "Build the GLFW documentation" OFF)
+option(GLFW_INSTALL "Generate installation target" OFF)
 
 add_subdirectory(lib/glfw)
 set(GLFW_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glfw/include)
@@ -31,6 +31,7 @@ ExternalProject_Add(
     SOURCE_SUBDIR build/cmake
     BINARY_DIR lib/glew
     CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../ -DBUILD_UTILS=OFF -DBUILD_SHARED_LIBS=OFF
+    # try CMAKE_CACHE_ARGS
 )
 
 set(GLEW_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glew/src/glew/include)
@@ -39,7 +40,15 @@ set(GLEW_LIB ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
 #
 # glm
 #
-set(GLM_INCLUDE_PATH ${PROJECT_SOURCE_DIR}/lib/glm)
+ExternalProject_Add(
+    glm
+    PREFIX lib/glm
+    URL https://github.com/g-truc/glm/releases/download/0.9.8.5/glm-0.9.8.5.7z
+    URL_HASH SHA256=753b7b60122ee78afbeb6343a1e53f9335ababa1c25cd53b0f6a32e6813db43a
+    TLS_VERIFY true
+    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
+)
+set(GLM_INCLUDE_PATH ${CMAKE_BINARY_DIR}/lib/glm/include)
 
 #
 # glfw-skeleton
@@ -53,12 +62,12 @@ include_directories(
 
 set(
     project_SRCS
-    src/main.cpp
+    src/app.cpp
     src/Skeleton.cpp
     src/util/colorhelper.cpp
     src/util/pathhelper.cpp
     src/util/shaderhelper.cpp
-)
+    src/GLContext.cpp)
 
 add_executable(${PROJECT_NAME} ${project_SRCS})
 
@@ -69,7 +78,7 @@ add_custom_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-add_dependencies(${PROJECT_NAME} glew glfw-copy-shaders)
+add_dependencies(${PROJECT_NAME} glm glew glfw-copy-shaders)
 target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
