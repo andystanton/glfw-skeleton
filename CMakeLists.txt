@@ -67,7 +67,7 @@ set(
     src/util/colorhelper.cpp
     src/util/pathhelper.cpp
     src/util/shaderhelper.cpp
-    src/GLContext.cpp)
+    src/GLContext.cpp src/util/camerahelper.cpp)
 
 add_executable(${PROJECT_NAME} ${project_SRCS})
 

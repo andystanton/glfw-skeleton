@@ -2,7 +2,8 @@
 
 #include <string>
 
-namespace pathhelper {
+namespace pathhelper
+{
     std::string getApplicationPathAndName();
     std::string getApplicationPath();
 };

@@ -9,8 +9,8 @@ class GLContext
 {
 private:
     GLFWwindow * window;
-    unsigned short width;
-    unsigned short height;
+
+    static GLFWwindow * initialiseGLFW(const std::string &, unsigned short, unsigned short);
 public:
     GLContext(const std::string & name, unsigned short width, unsigned short height);
     ~GLContext();

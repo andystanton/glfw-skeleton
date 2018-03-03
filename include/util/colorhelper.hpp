@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace colorhelper {
+namespace colorhelper
+{
     glm::vec4 hexToVec4(unsigned int);
 };
