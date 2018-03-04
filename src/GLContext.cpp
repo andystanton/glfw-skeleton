@@ -3,11 +3,6 @@
 #include <iostream>
 #include <stdexcept>
 
-void glfwErrorCallback(int error, const char * description)
-{
-    std::cerr << "GLFW Error (" << error << ") " << description << std::endl;
-}
-
 GLContext::GLContext(const std::string & name, unsigned short width, unsigned short height)
     : window { initialiseGLFW(name, width, height) }
 {
@@ -36,7 +31,7 @@ bool GLContext::isActive() const
 
 GLFWwindow * GLContext::initialiseGLFW(const std::string & name, unsigned short width, unsigned short height)
 {
-    glfwSetErrorCallback(glfwErrorCallback);
+    glfwSetErrorCallback(GLContext::errorCallback);
 
     if (!glfwInit()) {
         throw std::runtime_error("Failed to initialise GLFW");
@@ -60,4 +55,9 @@ GLFWwindow * GLContext::initialiseGLFW(const std::string & name, unsigned short 
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     return window;
+}
+
+void GLContext::errorCallback(int error, const char * description)
+{
+    std::cerr << "GLFW Error (" << error << ") " << description << std::endl;
 }
