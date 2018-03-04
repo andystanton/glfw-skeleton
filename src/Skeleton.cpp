@@ -3,7 +3,6 @@
 #include "util/colorhelper.hpp"
 #include "util/shaderhelper.hpp"
 
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 Skeleton::Skeleton(const std::string & name, unsigned short width, unsigned short height)
@@ -45,7 +44,7 @@ void Skeleton::loop()
     glUniform4fv(uniform_color, 1, glm::value_ptr(foregroundColor));
 
     glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, VERTICES_COUNT);
+    glDrawArrays(GL_TRIANGLES, 0, VERTEX_COUNT);
     glBindVertexArray(0);
 
     glUseProgram(0);
@@ -58,60 +57,60 @@ bool Skeleton::isActive() const
     return context.isActive();
 }
 
-const GLfloat Skeleton::VERTICES[VERTICES_COUNT] {
+const float Skeleton::VERTICES[VERTEX_COUNT][2] {
     // top of skull
-    0.225f, 0.25f,
-    0.225f, 0.f,
-    -0.225f, 0.f,
-    -0.225f, 0.25f,
-    0.225f, 0.25f,
-    -0.225f, 0.f,
+    { 0.225f, 0.25f },
+    { 0.225f, 0.f },
+    { -0.225f, 0.f },
+    { -0.225f, 0.25f },
+    { 0.225f, 0.25f },
+    { -0.225f, 0.f },
 
     // left of eyes
-    -0.225f, 0.f,
-    -0.15f, 0.f,
-    -0.225f, -0.15f,
-    -0.225f, -0.15f,
-    -0.15f, 0.f,
-    -0.15f, -0.15f,
+    { -0.225f, 0.f },
+    { -0.15f, 0.f },
+    { -0.225f, -0.15f },
+    { -0.225f, -0.15f },
+    { -0.15f, 0.f },
+    { -0.15f, -0.15f },
 
     // centre of eyes
-    -0.04f, 0.f,
-    0.04f, 0.f,
-    -0.04f, -0.15f,
-    -0.04f, -0.15f,
-    0.04f, 0.f,
-    0.04f, -0.15f,
+    { -0.04f, 0.f },
+    { 0.04f, 0.f },
+    { -0.04f, -0.15f },
+    { -0.04f, -0.15f },
+    { 0.04f, 0.f },
+    { 0.04f, -0.15f },
 
     // right of eyes
-    0.225f, 0.f,
-    0.15f, 0.f,
-    0.225f, -0.15f,
-    0.225f, -0.15f,
-    0.15f, 0.f,
-    0.15f, -0.15f,
+    { 0.225f, 0.f },
+    { 0.15f, 0.f },
+    { 0.225f, -0.15f },
+    { 0.225f, -0.15f },
+    { 0.15f, 0.f },
+    { 0.15f, -0.15f },
 
     // left of nose
-    -0.225f, -0.15f,
-    0.f, -0.15f,
-    -0.04f, -0.2f,
-    -0.04f, -0.2f,
-    -0.225f, -0.2f,
-    -0.225f, -0.15f,
+    { -0.225f, -0.15f },
+    { 0.f, -0.15f },
+    { -0.04f, -0.2f },
+    { -0.04f, -0.2f },
+    { -0.225f, -0.2f },
+    { -0.225f, -0.15f },
 
     // right of nose
-    0.f, -0.15f,
-    0.225f, -0.15f,
-    0.04f, -0.2f,
-    0.04f, -0.2f,
-    0.225f, -0.15f,
-    0.225f, -0.2f,
+    { 0.f, -0.15f },
+    { 0.225f, -0.15f },
+    { 0.04f, -0.2f },
+    { 0.04f, -0.2f },
+    { 0.225f, -0.15f },
+    { 0.225f, -0.2f },
 
     // jaw
-    -0.115f, -0.2f,
-    0.115f, -0.2f,
-    -0.115f, -0.275f,
-    -0.115f, -0.275f,
-    0.115f, -0.2f,
-    0.115f, -0.275f,
+    { -0.115f, -0.2f },
+    { 0.115f, -0.2f },
+    { -0.115f, -0.275f },
+    { -0.115f, -0.275f },
+    { 0.115f, -0.2f },
+    { 0.115f, -0.275f },
 };

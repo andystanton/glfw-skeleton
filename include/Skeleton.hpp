@@ -18,8 +18,8 @@ private:
     glm::vec4 foregroundColor;
     glm::vec4 backgroundColor;
 
-    static constexpr unsigned int VERTICES_COUNT = 84;
-    static const GLfloat VERTICES[VERTICES_COUNT];
+    static constexpr unsigned int VERTEX_COUNT = 42;
+    static const float VERTICES[VERTEX_COUNT][2];
 public:
     Skeleton(const std::string & appName, unsigned short width, unsigned short height);
     ~Skeleton();
