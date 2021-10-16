@@ -1,6 +1,6 @@
 # glfw-skeleton [![Build](https://github.com/andystanton/glfw-skeleton/actions/workflows/build.yml/badge.svg)](https://github.com/andystanton/glfw-skeleton/actions/workflows/build.yml)
 
-A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](https://glad.dav1d.de) and [glm](http://glm.g-truc.net) libraries and builds with [CMake](http://www.cmake.org/) so you can start hacking rapidly on OpenGL.
+A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](https://glad.dav1d.de), and [glm](http://glm.g-truc.net) libraries and builds with [CMake](http://www.cmake.org/) so you can start hacking rapidly on OpenGL.
 
 All libraries are retrieved and built using CMake's FetchContent capability to ensure portability.
 
