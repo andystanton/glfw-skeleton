@@ -3,13 +3,13 @@
 all: | build
 
 clean:
-	@rm -rf build
+	@rm -rf cmake-build-debug
 
 build:
-	@mkdir -p build
-	@cd build && cmake .. && make
+	@mkdir -p cmake-build-debug
+	@cd cmake-build-debug && cmake .. && make
 
 runonly:
-	@build/bin/glfw-skeleton
+	@cmake-build-debug/bin/glfw-skeleton
 
 run: | all runonly

@@ -1,48 +1,54 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.20)
 PROJECT(glfw-skeleton)
 
 include(ExternalProject)
 find_package(OpenGL REQUIRED)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 #
 # glfw
 #
-option(GLFW_BUILD_EXAMPLES "Build the GLFW example programs" OFF)
-option(GLFW_BUILD_TESTS "Build the GLFW test programs" OFF)
-option(GLFW_BUILD_DOCS "Build the GLFW documentation" OFF)
-option(GLFW_INSTALL "Generate installation target" OFF)
-add_subdirectory(lib/glfw)
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+
+set(GLFW_BUILD_DOCS FALSE)
+set(GLFW_BUILD_EXAMPLES FALSE)
+set(GLFW_BUILD_TESTS FALSE)
+
+FetchContent_Declare(
+  glfw
+  GIT_REPOSITORY https://github.com/glfw/glfw.git
+  GIT_TAG 3.3.4
+  GIT_PROGRESS TRUE)
 
 #
-# glew
+# glad
 #
-ExternalProject_Add(
-    glew
-    PREFIX lib/glew
-    URL https://github.com/nigels-com/glew/releases/download/glew-2.1.0/glew-2.1.0.tgz
-    URL_HASH SHA256=04de91e7e6763039bc11940095cd9c7f880baba82196a7765f727ac05a993c95
-    TLS_VERIFY true
-    SOURCE_SUBDIR build/cmake
-    BINARY_DIR lib/glew
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
-)
-set(GLEW_LIBRARY ${CMAKE_BINARY_DIR}/lib/libGLEW.a)
+FetchContent_Declare(
+  glad
+  GIT_REPOSITORY https://github.com/Dav1dde/glad
+  GIT_TAG v0.1.34
+  GIT_PROGRESS TRUE)
 
 #
 # glm
 #
-ExternalProject_Add(
-    glm
-    PREFIX lib/glm
-    URL https://github.com/g-truc/glm/releases/download/0.9.8.5/glm-0.9.8.5.7z
-    URL_HASH SHA256=753b7b60122ee78afbeb6343a1e53f9335ababa1c25cd53b0f6a32e6813db43a
-    TLS_VERIFY true
-    BINARY_DIR lib/glm
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=../../
-)
+FetchContent_Declare(
+  glm
+  GIT_REPOSITORY https://github.com/g-truc/glm
+  GIT_TAG 0.9.9.8
+  GIT_PROGRESS TRUE)
+
+#
+# Fetch dependencies
+#
+FetchContent_MakeAvailable(glfw glad glfw)
+
+
 
 #
 # glfw-skeleton
@@ -72,11 +78,6 @@ add_custom_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-add_dependencies(${PROJECT_NAME} glm glew copy-shaders)
+add_dependencies(${PROJECT_NAME} glfw glad glfw copy-shaders)
 
-target_link_libraries(
-    ${PROJECT_NAME}
-    ${OPENGL_LIBRARIES}
-    ${GLEW_LIBRARY}
-    glfw
-)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad)

@@ -6,11 +6,6 @@
 GLContext::GLContext(const std::string & name, unsigned short width, unsigned short height)
     : window { initialiseGLFW(name, width, height) }
 {
-    glewExperimental = static_cast<GLboolean>(true);
-    if (glewInit() != GLEW_OK) {
-        glfwTerminate();
-        throw std::runtime_error("Failed to initialise GLEW");
-    }
 }
 
 GLContext::~GLContext()
@@ -52,6 +47,7 @@ GLFWwindow * GLContext::initialiseGLFW(const std::string & name, unsigned short 
     }
 
     glfwMakeContextCurrent(window);
+    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     return window;

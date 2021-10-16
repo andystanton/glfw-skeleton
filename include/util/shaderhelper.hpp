@@ -1,8 +1,7 @@
 #pragma once
 
 #include "util/pathhelper.hpp"
-
-#include <GL/glew.h>
+#include "../GLContext.hpp"
 
 namespace shaderhelper
 {
