@@ -16,7 +16,7 @@ All libraries are retrieved and built using CMake's FetchContent capability to e
 ## Quick Start
 
 ```sh
-$ git clone https://github.com/andystanton/glfw-skeleton.git
-$ cd glfw-skeleton
-$ make run
+git clone https://github.com/andystanton/glfw-skeleton.git
+cd glfw-skeleton
+make run
 ```
