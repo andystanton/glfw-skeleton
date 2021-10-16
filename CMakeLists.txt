@@ -50,8 +50,6 @@ FetchContent_MakeAvailable(glfw glad glm)
 #
 # glfw-skeleton
 #
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-
 set(
     PROJECT_SOURCES
     src/app.cpp
@@ -71,4 +69,5 @@ add_custom_target(
 
 add_dependencies(${PROJECT_NAME} glfw glad glm copy-shaders)
 
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad glm)
