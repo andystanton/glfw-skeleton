@@ -46,7 +46,7 @@ FetchContent_Declare(
 #
 # Fetch dependencies
 #
-FetchContent_MakeAvailable(glfw glad glfw)
+FetchContent_MakeAvailable(glfw glad glm)
 
 
 
@@ -78,6 +78,6 @@ add_custom_target(
     ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
 )
 
-add_dependencies(${PROJECT_NAME} glfw glad glfw copy-shaders)
+add_dependencies(${PROJECT_NAME} glfw glad glm copy-shaders)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad)
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw glad glm)
