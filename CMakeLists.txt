@@ -7,14 +7,13 @@ find_package(OpenGL REQUIRED)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
 
 #
 # glfw
 #
-include(FetchContent)
-set(FETCHCONTENT_QUIET FALSE)
-
 set(GLFW_BUILD_DOCS FALSE)
 set(GLFW_BUILD_EXAMPLES FALSE)
 set(GLFW_BUILD_TESTS FALSE)
@@ -44,20 +43,15 @@ FetchContent_Declare(
   GIT_PROGRESS TRUE)
 
 #
-# Fetch dependencies
+# fetch dependencies
 #
 FetchContent_MakeAvailable(glfw glad glm)
-
 
 
 #
 # glfw-skeleton
 #
-include_directories(
-    ${PROJECT_SOURCE_DIR}/include
-    ${CMAKE_BINARY_DIR}/include
-    ${GLFW_INCLUDE_PATH}
-)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(
     PROJECT_SOURCES
@@ -66,8 +60,7 @@ set(
     src/Skeleton.cpp
     src/util/colorhelper.cpp
     src/util/pathhelper.cpp
-    src/util/shaderhelper.cpp
-)
+    src/util/shaderhelper.cpp)
 
 add_executable(${PROJECT_NAME} ${PROJECT_SOURCES})
 
@@ -75,8 +68,7 @@ add_custom_target(
     copy-shaders ALL
     COMMENT "Copying shaders"
     COMMAND ${CMAKE_COMMAND} -E copy_directory
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${EXECUTABLE_OUTPUT_PATH}/shaders
-)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/shaders ${CMAKE_BINARY_DIR}/shaders)
 
 add_dependencies(${PROJECT_NAME} glfw glad glm copy-shaders)
 

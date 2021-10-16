@@ -10,6 +10,6 @@ build:
 	@cd cmake-build-debug && cmake .. && make
 
 runonly:
-	@cmake-build-debug/bin/glfw-skeleton
+	@cmake-build-debug/glfw-skeleton
 
 run: | all runonly
