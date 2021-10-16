@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-PROJECT(glfw-skeleton)
+project(glfw-skeleton)
 
 include(ExternalProject)
 find_package(OpenGL REQUIRED)
@@ -46,7 +46,6 @@ FetchContent_Declare(
 # fetch dependencies
 #
 FetchContent_MakeAvailable(glfw glad glm)
-
 
 #
 # glfw-skeleton
