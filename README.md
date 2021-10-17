@@ -27,6 +27,6 @@ make run
 ### Windows
 
 - Clone the repository.
-- Open the folder and switch to CMake Targets View as described in [CMake projects in Visual Studio](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio).
+- Open the folder in Visual Studio and switch to CMake Targets View as described in [CMake projects in Visual Studio](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio).
 - Right click on the `glfw-skeleton` target and choose Debug.
 
