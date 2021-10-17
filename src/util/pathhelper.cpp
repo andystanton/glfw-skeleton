@@ -7,6 +7,13 @@
 #include <unistd.h>
 #elif defined(__linux__)
 #include <unistd.h>
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#include <Windows.h>
+#include <string>
+#include <iostream>
+#include <Shlobj.h>
+#include <locale>
+#include <codecvt>
 #endif
 
 std::string pathhelper::getApplicationPathAndName()
@@ -30,6 +37,12 @@ std::string pathhelper::getApplicationPathAndName()
     } else {
         throw std::runtime_error("Unable to ascertain application path");
     }
+#elif defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+	wchar_t buffer[MAX_PATH] = { 0 };
+	GetModuleFileNameW(NULL, buffer, MAX_PATH);
+	std::wstring::size_type pos = std::wstring(buffer).find_last_of(L"\\/");
+	auto exePath = std::wstring(buffer).substr(0, pos);
+	fullPath = std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(exePath);
 #else
     throw std::runtime_error("OS not supported for finding paths");
 #endif
