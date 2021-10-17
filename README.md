@@ -1,6 +1,6 @@
 # glfw-skeleton [![Build](https://github.com/andystanton/glfw-skeleton/actions/workflows/build.yml/badge.svg)](https://github.com/andystanton/glfw-skeleton/actions/workflows/build.yml)
 
-A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](https://glad.dav1d.de), and [glm](http://glm.g-truc.net) libraries and builds with [CMake](http://www.cmake.org/) to enable rapid hacking with OpenGL.
+A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](https://glad.dav1d.de), and [glm](http://glm.g-truc.net) libraries and builds with [CMake](http://www.cmake.org/) to enable rapid cross-platform hacking with OpenGL.
 
 All libraries are retrieved and built using CMake's FetchContent capability to ensure portability.
 
@@ -11,12 +11,12 @@ All libraries are retrieved and built using CMake's FetchContent capability to e
 - C++20
 - OpenGL 4.1
 - CMake 3.16
-- Make (MacOS/Linux)
+- Make (macOS/Linux)
 - Visual Studio 2019 (Windows)
 
 ## Quick Start
 
-### MacOS and Linux
+### macOS and Linux
 
 ```sh
 git clone https://github.com/andystanton/glfw-skeleton.git
