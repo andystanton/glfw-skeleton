@@ -4,7 +4,7 @@ A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](ht
 
 All libraries are retrieved and built using CMake's FetchContent capability to ensure portability.
 
-![](http://andystanton.github.io/glfw-skeleton/images/content/5.0/glfw-skeleton.png)
+![](docs/images/content/5.0/glfw-skeleton.png)
 
 ## Requirements
 
