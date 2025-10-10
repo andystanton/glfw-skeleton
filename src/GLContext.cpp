@@ -47,7 +47,13 @@ GLFWwindow * GLContext::initialiseGLFW(const std::string & name, unsigned short 
     }
 
     glfwMakeContextCurrent(window);
-    gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
+
+    int version = gladLoadGL(glfwGetProcAddress);
+    if (version == 0) {
+        glfwTerminate();
+        throw std::runtime_error("Failed to initialize OpenGL context");
+    }
+
     glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
     return window;

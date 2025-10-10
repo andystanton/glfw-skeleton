@@ -8,6 +8,7 @@ on:
     - include/**
     - .github/workflows/build.yml
     - CMakeLists.txt
+    - CMakePresets.json
     - Makefile
   pull_request:
     branches: [ master ]
@@ -16,16 +17,49 @@ on:
     - include/**
     - .github/workflows/build.yml
     - CMakeLists.txt
+    - CMakePresets.json
     - Makefile
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    name: ${{ matrix.os }} - ${{ matrix.build_type }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        build_type: [Debug, Release]
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Install packages
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Linux dependencies
+      if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev libglu1-mesa-dev
-    - name: make
-      run: make
+        sudo apt-get install -y xorg-dev libglu1-mesa-dev libwayland-dev wayland-protocols libxkbcommon-dev ninja-build
+
+    - name: Install macOS dependencies
+      if: runner.os == 'macOS'
+      run: |
+        brew install ninja
+
+    - name: Install Windows dependencies
+      if: runner.os == 'Windows'
+      run: |
+        choco install ninja
+
+    - name: Configure CMake
+      run: cmake --preset=${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}
+
+    - name: Build
+      run: cmake --build build/${{ matrix.build_type == 'Debug' && 'debug' || 'release' }} --parallel
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: glfw-skeleton-${{ matrix.os }}-${{ matrix.build_type }}
+        path: |
+          build/${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}/bin/
+          build/${{ matrix.build_type == 'Debug' && 'debug' || 'release' }}/shaders/

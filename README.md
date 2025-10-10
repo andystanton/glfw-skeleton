@@ -2,7 +2,7 @@
 
 A skeleton C++20 OpenGL 4.1 app that uses [glfw](http://www.glfw.org), [glad](https://glad.dav1d.de), and [glm](http://glm.g-truc.net) libraries and builds with [CMake](http://www.cmake.org/) to enable rapid cross-platform hacking with OpenGL.
 
-All libraries are retrieved and built using CMake's FetchContent capability to ensure portability.
+glfw and glm are retrieved and built using CMake's FetchContent. glad uses pre-generated OpenGL loader files committed to the repository.
 
 <img src="docs/images/content/5.0/glfw-skeleton.png" width="700"/>
 
@@ -10,25 +10,51 @@ All libraries are retrieved and built using CMake's FetchContent capability to e
 
 - C++20
 - OpenGL 4.1
-- CMake 3.16
-- Make (macOS/Linux)
-- Visual Studio 2019 (Windows)
+- CMake 3.21+
+- Make (macOS/Linux, optional)
+- Modern C++ compiler (GCC 10+, Clang 11+, MSVC 2019+)
+
+To regenerate glad OpenGL loader files (optional):
+- Python 3 with jinja2 module (installed automatically in `.venv` by `make regenerate-glad`)
 
 ## Quick Start
 
-### macOS and Linux
+### Using Make (macOS/Linux)
 
 ```sh
 git clone https://github.com/andystanton/glfw-skeleton.git
 cd glfw-skeleton
-make run
+make run              # Build and run (debug by default)
+make release          # Build release version
+make help             # Show all available targets
 ```
 
-### Windows
+### Using CMake directly (all platforms)
 
-- Clone the repository.
-- Open the folder in Visual Studio and switch to CMake Targets View as described in [CMake projects in Visual Studio](https://docs.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio).
-- Right click on the `glfw-skeleton` target and choose Debug.
+```sh
+git clone https://github.com/andystanton/glfw-skeleton.git
+cd glfw-skeleton
+
+# Configure and build (debug)
+cmake --preset=debug
+cmake --build build/debug
+
+# Run
+./build/debug/bin/glfw-skeleton
+
+# Or for release build
+cmake --preset=release
+cmake --build build/release
+./build/release/bin/glfw-skeleton
+```
+
+### Windows (Visual Studio)
+
+- Clone the repository
+- Open the folder in Visual Studio 2019+ (CMake support required)
+- Visual Studio will automatically detect CMakePresets.json
+- Select your desired preset (debug/release) from the configuration dropdown
+- Build and run using F5
 
 ## Compatibility
 
