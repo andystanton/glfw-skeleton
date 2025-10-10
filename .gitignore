@@ -1,5 +1,45 @@
-build
-.idea
-cmake-build-*
-out
-.vs
+# Build directories
+build/
+cmake-build-*/
+out/
+
+# Python virtual environment
+.venv/
+
+# IDE files
+.idea/
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Compiled Object files
+*.o
+*.obj
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Ninja
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja
