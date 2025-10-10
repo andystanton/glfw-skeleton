@@ -38,7 +38,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y xorg-dev libglu1-mesa-dev ninja-build
+        sudo apt-get install -y xorg-dev libglu1-mesa-dev libwayland-dev wayland-protocols libxkbcommon-dev ninja-build
 
     - name: Install macOS dependencies
       if: runner.os == 'macOS'
